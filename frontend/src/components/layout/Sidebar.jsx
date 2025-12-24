@@ -1,6 +1,6 @@
 /**
  * Sidebar Component
- * 
+ *
  * TODO:
  * 1. Add navigation items based on user role (student/teacher/admin)
  * 2. Highlight active menu item
@@ -8,42 +8,48 @@
  * 4. Make it responsive (hide on mobile, show on toggle)
  */
 
-import { useAuthStore } from '../../store/authStore';
+import useAuthStore from "../../store/authStore";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const { user } = useAuthStore();
-  
-  // TODO: Define menu items based on user role
+
+  // Testing menu - access all routes
   const menuItems = [
-    { icon: '📊', label: 'Dashboard', path: '/dashboard' },
-    { icon: '📚', label: 'Assessments', path: '/assessments' },
-    { icon: '📈', label: 'Progress', path: '/progress' },
-    { icon: '⚙️', label: 'Settings', path: '/settings' }
+    { icon: "📊", label: "Student Dashboard", path: "/student/dashboard" },
+    { icon: "📈", label: "Student Progress", path: "/student/progress" },
+    { icon: "📚", label: "Student Resources", path: "/student/resources" },
+    { icon: "👨‍🏫", label: "Teacher Dashboard", path: "/teacher/dashboard" },
+    { icon: "⚙️", label: "Admin Dashboard", path: "/admin/dashboard" },
   ];
-  
+
   return (
-    <aside className="w-64 bg-white shadow-lg h-screen sticky top-0">
-      <div className="p-6">
+    <aside className="hidden lg:block w-64 bg-white shadow-sm h-screen sticky top-0 border-r border-gray-200">
+      <div className="p-4 lg:p-6">
         {/* User Profile Section */}
-        <div className="mb-8 text-center">
-          <div className="w-20 h-20 bg-blue-100 rounded-full mx-auto mb-3 flex items-center justify-center">
-            <span className="text-3xl">👤</span>
+        <div className="mb-6 lg:mb-8 text-center">
+          <div className="w-12 h-12 lg:w-16 lg:h-16 bg-gray-200 rounded-full mx-auto mb-2 lg:mb-3 flex items-center justify-center">
+            <span className="text-xl lg:text-2xl">👤</span>
           </div>
-          <h3 className="font-semibold text-gray-800">{user?.name}</h3>
-          <p className="text-sm text-gray-500 capitalize">{user?.role}</p>
+          <h3 className="font-semibold text-gray-800 text-sm lg:text-base">
+            {user?.name || "Guest"}
+          </h3>
+          <p className="text-xs lg:text-sm text-gray-500 capitalize">
+            {user?.role || "User"}
+          </p>
         </div>
-        
+
         {/* Navigation Menu */}
-        <nav className="space-y-2">
+        <nav className="space-y-1">
           {menuItems.map((item, index) => (
-            <a
+            <Link
               key={index}
-              href={item.path}
-              className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              to={item.path}
+              className="flex items-center space-x-3 px-3 lg:px-4 py-2 lg:py-3 rounded-md text-gray-700 hover:bg-gray-100 transition-colors text-sm lg:text-base"
             >
-              <span className="text-xl">{item.icon}</span>
-              <span>{item.label}</span>
-            </a>
+              <span className="text-lg lg:text-xl">{item.icon}</span>
+              <span className="truncate">{item.label}</span>
+            </Link>
           ))}
         </nav>
       </div>
