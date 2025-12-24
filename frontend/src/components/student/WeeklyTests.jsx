@@ -5,26 +5,28 @@ import Button from "../common/Button";
 
 const WeeklyTests = ({ tests = [] }) => {
   return (
-    <div className="space-y-8">
-      <Card title="Weekly Tests" className="overflow-visible">
-        <p className="text-gray-600 mb-8 text-lg">
+    <div className="space-y-4 sm:space-y-6">
+      <Card title="Weekly Tests">
+        <p className="text-sm sm:text-base text-gray-600 mb-4 sm:mb-6">
           Complete weekly tests to track your progress and reinforce your
           learning.
         </p>
 
-        <div className="space-y-6">
+        <div className="space-y-3 sm:space-y-4">
           {tests.length > 0 ? (
             tests.map((test, index) => (
               <div
                 key={index}
-                className="group p-6 border-2 border-gray-200 rounded-2xl hover:border-blue-400 hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-white to-gray-50"
+                className="p-3 sm:p-4 border border-gray-200 rounded-lg hover:border-gray-300 hover:shadow-sm transition-all bg-white"
               >
-                <div className="flex justify-between items-start mb-4">
+                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3 gap-2">
                   <div className="flex-1">
-                    <h4 className="font-bold text-xl text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                    <h4 className="font-semibold text-gray-900 mb-1 text-sm sm:text-base">
                       {test.title}
                     </h4>
-                    <p className="text-sm text-gray-600">{test.description}</p>
+                    <p className="text-xs sm:text-sm text-gray-600">
+                      {test.description}
+                    </p>
                   </div>
                   <Badge
                     variant={

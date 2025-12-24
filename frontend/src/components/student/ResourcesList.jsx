@@ -12,7 +12,7 @@ const ResourcesList = ({ resources = [] }) => {
     filter === "all" ? resources : resources.filter((r) => r.type === filter);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Filters */}
       <Card>
         <div className="flex flex-wrap gap-2">
@@ -20,6 +20,7 @@ const ResourcesList = ({ resources = [] }) => {
             variant={filter === "all" ? "primary" : "ghost"}
             size="sm"
             onClick={() => setFilter("all")}
+            className="text-xs sm:text-sm"
           >
             All Resources
           </Button>
@@ -27,6 +28,7 @@ const ResourcesList = ({ resources = [] }) => {
             variant={filter === "video" ? "primary" : "ghost"}
             size="sm"
             onClick={() => setFilter("video")}
+            className="text-xs sm:text-sm"
           >
             Videos
           </Button>
@@ -34,6 +36,7 @@ const ResourcesList = ({ resources = [] }) => {
             variant={filter === "article" ? "primary" : "ghost"}
             size="sm"
             onClick={() => setFilter("article")}
+            className="text-xs sm:text-sm"
           >
             Articles
           </Button>
@@ -41,6 +44,7 @@ const ResourcesList = ({ resources = [] }) => {
             variant={filter === "exercise" ? "primary" : "ghost"}
             size="sm"
             onClick={() => setFilter("exercise")}
+            className="text-xs sm:text-sm"
           >
             Exercises
           </Button>
@@ -48,7 +52,7 @@ const ResourcesList = ({ resources = [] }) => {
       </Card>
 
       {/* Resources Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {filteredResources.length > 0 ? (
           filteredResources.map((resource, index) => (
             <Card

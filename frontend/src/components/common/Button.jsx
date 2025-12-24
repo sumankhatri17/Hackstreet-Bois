@@ -24,20 +24,15 @@ const Button = ({
 }) => {
   // Define base styles
   const baseStyles =
-    "font-semibold rounded-xl transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed transform hover:scale-105 active:scale-95 shadow-md hover:shadow-xl";
+    "font-medium rounded-md transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed";
 
   // Define variant styles
   const variants = {
-    primary:
-      "bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700",
-    secondary:
-      "bg-gradient-to-r from-gray-200 to-gray-300 text-gray-800 hover:from-gray-300 hover:to-gray-400",
-    outline:
-      "border-2 border-blue-600 text-blue-600 hover:bg-blue-50 hover:border-purple-600 hover:text-purple-600",
-    danger:
-      "bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700",
-    success:
-      "bg-gradient-to-r from-green-500 to-green-600 text-white hover:from-green-600 hover:to-green-700",
+    primary: "bg-blue-600 text-white hover:bg-blue-700",
+    secondary: "bg-gray-600 text-white hover:bg-gray-700",
+    outline: "border-2 border-gray-300 text-gray-700 hover:bg-gray-50",
+    danger: "bg-red-600 text-white hover:bg-red-700",
+    success: "bg-green-600 text-white hover:bg-green-700",
     ghost: "text-gray-700 hover:bg-gray-100",
   };
 

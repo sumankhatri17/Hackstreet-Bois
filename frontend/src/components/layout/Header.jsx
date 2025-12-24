@@ -11,56 +11,85 @@
 
 import useAuthStore from "../../store/authStore";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Header = () => {
   const { user, logout } = useAuthStore();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white shadow-lg border-b border-gray-200 sticky top-0 z-50 backdrop-blur-lg bg-opacity-90">
-      <div className="container mx-auto px-6 py-5">
+    <header className="bg-white shadow-sm border-b border-gray-200">
+      <div className="container mx-auto px-4 sm:px-6 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="text-4xl transform group-hover:scale-110 transition-transform duration-300">
-              🎓
-            </div>
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <Link to="/" className="flex items-center space-x-2">
+            <span className="text-xl sm:text-2xl">🎓</span>
+            <h1 className="text-lg sm:text-xl font-semibold text-gray-900">
               EduAssess
             </h1>
           </Link>
 
-          {/* Navigation - Testing: All routes accessible */}
-          <nav className="hidden md:flex space-x-2">
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="md:hidden p-2 text-gray-600 hover:text-gray-900"
+          >
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              {mobileMenuOpen ? (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              ) : (
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              )}
+            </svg>
+          </button>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex space-x-6">
             <Link
               to="/student/dashboard"
-              className="px-5 py-2.5 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-600 font-medium transition-all duration-300 hover:shadow-md"
+              className="text-gray-600 hover:text-gray-900 transition-colors"
             >
               Student
             </Link>
             <Link
               to="/teacher/dashboard"
-              className="px-5 py-2.5 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-600 font-medium transition-all duration-300 hover:shadow-md"
+              className="text-gray-600 hover:text-gray-900 transition-colors"
             >
               Teacher
             </Link>
             <Link
               to="/admin/dashboard"
-              className="px-5 py-2.5 rounded-xl text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-600 font-medium transition-all duration-300 hover:shadow-md"
+              className="text-gray-600 hover:text-gray-900 transition-colors"
             >
               Admin
             </Link>
           </nav>
 
-          {/* User Menu */}
-          <div className="flex items-center space-x-4">
+          {/* Desktop User Menu */}
+          <div className="hidden md:flex items-center space-x-4">
             {user ? (
               <>
-                <span className="text-gray-700 font-medium">
+                <span className="text-gray-700 text-sm">
                   Hello, {user.name}
                 </span>
                 <button
                   onClick={logout}
-                  className="px-5 py-2.5 rounded-xl bg-red-500 text-white hover:bg-red-600 font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
+                  className="px-4 py-2 rounded-md bg-red-600 text-white hover:bg-red-700 transition-colors text-sm"
                 >
                   Logout
                 </button>
@@ -68,13 +97,59 @@ const Header = () => {
             ) : (
               <Link
                 to="/login"
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700 font-medium transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105"
+                className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors text-sm"
               >
                 Login
               </Link>
             )}
           </div>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden mt-4 pb-4 space-y-2 border-t pt-4">
+            <Link
+              to="/student/dashboard"
+              className="block px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Student
+            </Link>
+            <Link
+              to="/teacher/dashboard"
+              className="block px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Teacher
+            </Link>
+            <Link
+              to="/admin/dashboard"
+              className="block px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Admin
+            </Link>
+            {user ? (
+              <button
+                onClick={() => {
+                  logout();
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded-md"
+              >
+                Logout
+              </button>
+            ) : (
+              <Link
+                to="/login"
+                className="block px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-md"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Login
+              </Link>
+            )}
+          </div>
+        )}
       </div>
     </header>
   );

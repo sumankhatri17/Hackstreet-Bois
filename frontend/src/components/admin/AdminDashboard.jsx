@@ -33,17 +33,19 @@ const AdminDashboard = ({ admin }) => {
   const alerts = admin?.alerts || [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-6 text-white">
-        <h1 className="text-3xl font-bold mb-2">Admin Dashboard</h1>
-        <p className="text-purple-100">
+      <div className="bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg p-4 sm:p-6 text-white">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2">
+          Admin Dashboard
+        </h1>
+        <p className="text-sm sm:text-base text-purple-100">
           Manage schools, users, and monitor system performance.
         </p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
         {stats.map((stat, index) => (
           <Card key={index}>
             <div className="flex items-center space-x-4">

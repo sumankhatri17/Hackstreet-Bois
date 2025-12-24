@@ -30,33 +30,25 @@ const StudentDashboard = ({ student }) => {
   const upcomingTests = student?.upcomingTests || [];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 sm:space-y-6">
       {/* Welcome Section */}
-      <div className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 rounded-3xl p-8 text-white shadow-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full -mr-32 -mt-32"></div>
-        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-10 rounded-full -ml-24 -mb-24"></div>
-        <div className="relative z-10">
-          <h1 className="text-4xl font-bold mb-3">
-            Welcome back, {student?.name}! 🎉
-          </h1>
-          <p className="text-blue-100 text-lg">
-            Let's continue your learning journey today.
-          </p>
-        </div>
+      <div className="bg-blue-600 rounded-lg p-4 sm:p-6 text-white">
+        <h1 className="text-xl sm:text-2xl font-semibold mb-2">
+          Welcome back, {student?.name}!
+        </h1>
+        <p className="text-sm sm:text-base text-blue-100">
+          Let's continue your learning journey today.
+        </p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
         {stats.map((stat, index) => (
-          <Card
-            key={index}
-            className="text-center group hover:scale-105 transition-transform duration-300"
-            hoverable
-          >
-            <div className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-3">
+          <Card key={index} className="text-center" hoverable padding="sm">
+            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
               {stat.value}
             </div>
-            <div className="text-sm font-medium text-gray-600">
+            <div className="text-xs sm:text-sm font-medium text-gray-600">
               {stat.label}
             </div>
           </Card>
@@ -64,7 +56,7 @@ const StudentDashboard = ({ student }) => {
       </div>
 
       {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Recent Activities */}
         <Card title="Recent Activities">
           {recentActivities.length > 0 ? (

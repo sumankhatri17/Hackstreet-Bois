@@ -42,15 +42,21 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4 sm:p-6">
       <div className="max-w-md w-full">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-2">EduAssess</h1>
-          <p className="text-blue-100">Adaptive Learning Assessment Platform</p>
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
+            EduAssess
+          </h1>
+          <p className="text-sm sm:text-base text-blue-100">
+            Adaptive Learning Assessment Platform
+          </p>
         </div>
 
         <Card>
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Login</h2>
+          <h2 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">
+            Login
+          </h2>
 
           {error && (
             <Alert type="error" message={error} onClose={() => setError("")} />
