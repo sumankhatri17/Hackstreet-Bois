@@ -738,7 +738,6 @@ while True:
             print("========================")
     except Exception as e:
         print(f"Chat model call failed: {e}")
-        # optionally show full exception stack in Colab
         import traceback
         traceback.print_exc()
 
