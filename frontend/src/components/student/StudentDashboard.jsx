@@ -1,10 +1,12 @@
 import { useState } from "react";
+import useAuthStore from "../../store/authStore";
 import Badge from "../common/Badge";
 import Card from "../common/Card";
 import PeerLearnerCard from "../peers/PeerLearnerCard";
 import PeerTutorCard from "../peers/PeerTutorCard";
 
-const StudentDashboard = ({ student }) => {
+const StudentDashboard = () => {
+  const { user } = useAuthStore();
   const [selectedPeer, setSelectedPeer] = useState(null);
   const [modalType, setModalType] = useState(null);
 
@@ -28,42 +30,39 @@ const StudentDashboard = ({ student }) => {
   const stats = [
     {
       label: "Current Grade",
-      value: `Grade ${student?.grade || student?.currentLevel || "?"}`,
+      value: user?.current_level ? `Grade ${user.current_level}` : "Not Set",
       color: "primary",
     },
     {
       label: "Math Level",
-      value: `${student?.math_level || "?"}%`,
+      value: user?.math_level ? `${user.math_level}%` : "Not Assessed",
       color: "success",
     },
     {
-      label: "English Level",
-      value: `${student?.reading_level || "?"}%`,
+      label: "Reading Level",
+      value: user?.reading_level ? `${user.reading_level}%` : "Not Assessed",
       color: "info",
     },
     {
-      label: "Tests Completed",
-      value: student?.testsCompleted || student?.tests_completed || 0,
+      label: "Writing Level",
+      value: user?.writing_level ? `${user.writing_level}%` : "Not Assessed",
       color: "warning",
     },
   ];
 
-  const recentActivities =
-    student?.recentActivities || student?.recent_activities || [];
-  const upcomingTests = student?.upcomingTests || student?.upcoming_tests || [];
-  const weaknesses = student?.weaknesses || student?.weak_areas || [];
-  const strongAreas = student?.strongAreas || student?.strong_areas || [];
-  const peerTutors = student?.peerTutors || student?.peer_tutors_for_me || [];
-  const peersToHelp = student?.peersICanHelp || student?.peers_i_can_help || [];
-  const studyMaterials =
-    student?.studyMaterials || student?.study_materials || [];
-  const teachingMaterials =
-    student?.teachingMaterials || student?.teaching_materials || [];
+  // Mock data for now - in real app, fetch from API using user.id
+  const recentActivities = [];
+  const upcomingTests = [];
+  const weaknesses = [];
+  const strongAreas = [];
+  const peerTutors = [];
+  const peersToHelp = [];
+  const studyMaterials = [];
+  const teachingMaterials = [];
   const helpStats = {
-    given: student?.helpSessionsGiven || student?.help_sessions_given || 0,
-    received:
-      student?.helpSessionsReceived || student?.help_sessions_received || 0,
-    peersHelped: student?.peersHelped || student?.peers_helped || 0,
+    given: 0,
+    received: 0,
+    peersHelped: 0,
   };
 
   return (
@@ -73,7 +72,7 @@ const StudentDashboard = ({ student }) => {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
           <div>
             <h1 className="text-3xl sm:text-4xl font-bold mb-3 tracking-tight">
-              Welcome back, {student?.name}
+              Welcome back, {user?.name || "Student"}
             </h1>
             <p className="text-base sm:text-lg text-slate-300 font-light">
               Continue your learning journey
@@ -84,7 +83,7 @@ const StudentDashboard = ({ student }) => {
             className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl transition-all font-medium text-sm whitespace-nowrap shadow-lg hover:shadow-xl hover:opacity-90"
             style={{ backgroundColor: "#323232", color: "#DDD0C8" }}
           >
-            Retake Assessment
+            {user?.current_level ? "Retake Assessment" : "Take Assessment"}
           </a>
         </div>
       </div>

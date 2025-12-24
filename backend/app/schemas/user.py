@@ -1,10 +1,11 @@
 """
 User schemas for API request/response validation
 """
-from pydantic import BaseModel, EmailStr
-from typing import Optional
 from datetime import datetime
+from typing import Optional
+
 from app.models.user import UserRole
+from pydantic import BaseModel, EmailStr
 
 
 class UserBase(BaseModel):
@@ -46,3 +47,8 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     email: Optional[str] = None
+
+
+class LoginRequest(BaseModel):
+    email: EmailStr
+    password: str

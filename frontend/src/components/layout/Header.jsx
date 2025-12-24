@@ -10,12 +10,18 @@
  */
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useAuthStore from "../../store/authStore";
 
 const Header = () => {
+  const navigate = useNavigate();
   const { user, logout } = useAuthStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <header
@@ -115,7 +121,7 @@ const Header = () => {
                   </span>
                 </div>
                 <button
-                  onClick={logout}
+                  onClick={handleLogout}
                   className="px-4 py-2 rounded-lg transition-colors text-sm font-medium"
                   style={{ backgroundColor: "#323232", color: "#DDD0C8" }}
                 >
@@ -151,7 +157,7 @@ const Header = () => {
             {user ? (
               <button
                 onClick={() => {
-                  logout();
+                  handleLogout();
                   setMobileMenuOpen(false);
                 }}
                 className="w-full text-left px-4 py-2 rounded-lg transition-colors"

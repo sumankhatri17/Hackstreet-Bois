@@ -3,32 +3,27 @@ import { Link, useNavigate } from "react-router-dom";
 import Alert from "../../components/common/Alert";
 import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
+import useAuthStore from "../../store/authStore";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login, loading, error: authError, clearError } = useAuthStore();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    setLoading(true);
+    clearError();
 
     try {
-      // API call would go here
-      // const response = await authService.login(formData);
-
-      // Mock navigation - everyone goes to dashboard
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1000);
+      await login(formData);
+      navigate("/dashboard");
     } catch (err) {
-      setError("Invalid credentials. Please try again.");
-      setLoading(false);
+      setError(err.message || "Invalid credentials. Please try again.");
     }
   };
 

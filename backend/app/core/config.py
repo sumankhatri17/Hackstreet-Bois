@@ -1,8 +1,9 @@
 """
 Application configuration using Pydantic Settings
 """
-from pydantic_settings import BaseSettings
 from typing import Optional
+
+from pydantic_settings import BaseSettings
 
 
 class Settings(BaseSettings):
@@ -19,9 +20,9 @@ class Settings(BaseSettings):
     DATABASE_URL: str = "sqlite:///./eduassess.db"
     
     # Security
-    SECRET_KEY: str = "your-secret-key-change-in-production-min-32-characters"
+    SECRET_KEY: str = "your-secret-key-change-in-production-min-32-characters-long-eduassess-2024"
     ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440  # 24 hours
     
     # Email (optional)
     SMTP_TLS: bool = True

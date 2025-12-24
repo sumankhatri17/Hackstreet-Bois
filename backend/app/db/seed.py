@@ -4,6 +4,8 @@ Seed database with sample data for development/testing
 from app.core.security import get_password_hash
 from app.db.database import SessionLocal
 from app.models.assessment import DifficultyLevel, Question, QuestionType
+from app.models.progress import Progress
+from app.models.resource import Resource
 from app.models.school import School
 from app.models.user import User, UserRole
 from sqlalchemy.orm import Session
@@ -165,6 +167,163 @@ def seed_questions(db: Session):
     print(f"✓ Created {len(questions)} sample questions")
 
 
+def seed_resources(db: Session):
+    """Create sample learning resources"""
+    resources = [
+        # Mathematics Resources
+        Resource(
+            type="video",
+            title="Introduction to Algebra",
+            description="Learn the basics of algebraic expressions and equations with step-by-step examples",
+            subject="Mathematics",
+            difficulty="Beginner",
+            level=6,
+            duration="15 min",
+            url="https://example.com/algebra-intro"
+        ),
+        Resource(
+            type="video",
+            title="Advanced Algebra Techniques",
+            description="Master advanced algebraic concepts including quadratic equations and factoring",
+            subject="Mathematics",
+            difficulty="Advanced",
+            level=8,
+            duration="25 min",
+            url="https://example.com/algebra-advanced"
+        ),
+        Resource(
+            type="exercise",
+            title="Multiplication Practice",
+            description="Interactive exercises to master multiplication tables up to 12",
+            subject="Mathematics",
+            difficulty="Beginner",
+            level=3,
+            duration="20 min",
+            url="https://example.com/multiplication-practice"
+        ),
+        
+        # English Resources
+        Resource(
+            type="article",
+            title="Essay Writing Techniques",
+            description="Master the art of writing compelling essays with proper structure and arguments",
+            subject="English",
+            difficulty="Intermediate",
+            level=7,
+            duration="10 min",
+            url="https://example.com/essay-writing"
+        ),
+        Resource(
+            type="exercise",
+            title="Grammar Practice",
+            description="Interactive exercises to improve your grammar skills including punctuation and sentence structure",
+            subject="English",
+            difficulty="Beginner",
+            level=5,
+            duration="15 min",
+            url="https://example.com/grammar-practice"
+        ),
+        Resource(
+            type="video",
+            title="Reading Comprehension Strategies",
+            description="Learn effective strategies to understand and analyze complex texts",
+            subject="English",
+            difficulty="Intermediate",
+            level=6,
+            duration="18 min",
+            url="https://example.com/reading-comprehension"
+        ),
+        
+        # Science Resources
+        Resource(
+            type="video",
+            title="Introduction to Photosynthesis",
+            description="Understand how plants convert sunlight into energy through photosynthesis",
+            subject="Science",
+            difficulty="Beginner",
+            level=5,
+            duration="12 min",
+            url="https://example.com/photosynthesis"
+        ),
+        Resource(
+            type="article",
+            title="The Solar System",
+            description="Explore the planets, moons, and other celestial bodies in our solar system",
+            subject="Science",
+            difficulty="Beginner",
+            level=4,
+            duration="15 min",
+            url="https://example.com/solar-system"
+        ),
+        Resource(
+            type="exercise",
+            title="Scientific Method Practice",
+            description="Apply the scientific method to real-world problems and experiments",
+            subject="Science",
+            difficulty="Intermediate",
+            level=6,
+            duration="25 min",
+            url="https://example.com/scientific-method"
+        ),
+        
+        # Flashcard Resources
+        Resource(
+            type="flashcard",
+            title="Vocabulary Builder",
+            description="Expand your vocabulary with common academic words and their meanings",
+            subject="English",
+            difficulty="Intermediate",
+            level=5,
+            duration="10 min",
+            content='[{"term": "Analyze", "definition": "To examine in detail"}, {"term": "Synthesize", "definition": "To combine elements to form a whole"}]'
+        ),
+    ]
+    
+    for resource in resources:
+        db.add(resource)
+    db.commit()
+    print(f"✓ Created {len(resources)} learning resources")
+
+
+def seed_progress(db: Session):
+    """Create sample progress data for test student"""
+    # Create progress for the test student (ID 3)
+    progress = Progress(
+        student_id=3,
+        overall_progress=65.5,
+        total_assessments=5,
+        total_tests_completed=12,
+        subject_progress={
+            "Mathematics": {
+                "level": 4,
+                "progress": 60,
+                "completed_lessons": 15,
+                "completed_tests": 4
+            },
+            "English": {
+                "level": 5,
+                "progress": 70,
+                "completed_lessons": 20,
+                "completed_tests": 5
+            },
+            "Science": {
+                "level": 6,
+                "progress": 68,
+                "completed_lessons": 18,
+                "completed_tests": 3
+            }
+        },
+        strengths=["Reading Comprehension", "Problem Solving", "Scientific Method"],
+        weaknesses=["Grammar", "Algebra", "Essay Writing"],
+        recommended_topics=["Advanced Grammar", "Quadratic Equations", "Persuasive Writing"],
+        attendance_rate=92.5
+    )
+    
+    db.add(progress)
+    db.commit()
+    print(f"✓ Created progress data for test student")
+
+
 def seed_database():
     """Seed the database with sample data"""
     db = SessionLocal()
@@ -181,6 +340,8 @@ def seed_database():
         seed_schools(db)
         seed_users(db)
         seed_questions(db)
+        seed_resources(db)
+        seed_progress(db)
         
         print("\n✅ Database seeding completed successfully!")
         print("\nSample credentials:")

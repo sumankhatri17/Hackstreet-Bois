@@ -4,9 +4,11 @@ import Alert from "../../components/common/Alert";
 import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
 import Select from "../../components/common/Select";
+import useAuthStore from "../../store/authStore";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { register, loading, error: authError, clearError } = useAuthStore();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,29 +18,32 @@ const Register = () => {
     gradeLevel: "",
   });
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setSuccess(false);
+    clearError();
 
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
       return;
     }
 
-    setLoading(true);
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return;
+    }
 
     try {
-      // API call would go here
-      // await authService.register(formData);
-
+      await register(formData);
+      setSuccess(true);
       setTimeout(() => {
         navigate("/login");
-      }, 1000);
+      }, 2000);
     } catch (err) {
-      setError("Registration failed. Please try again.");
-      setLoading(false);
+      setError(err.message || "Registration failed. Please try again.");
     }
   };
 
@@ -85,6 +90,14 @@ const Register = () => {
 
           {error && (
             <Alert type="error" message={error} onClose={() => setError("")} />
+          )}
+
+          {success && (
+            <Alert
+              type="success"
+              message="Registration successful! Redirecting to login..."
+              onClose={() => setSuccess(false)}
+            />
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -160,7 +173,7 @@ const Register = () => {
               required
             />
 
-            <div className="p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
+            {/* <div className="p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
               <p className="text-sm text-gray-800 leading-relaxed">
                 <strong>📚 Peer-to-Peer Learning:</strong> You'll take
                 assessments in Math and English based on your grade level. Based
@@ -177,7 +190,7 @@ const Register = () => {
                 </li>
                 <li>✓ Learn by teaching and being taught by fellow students</li>
               </ul>
-            </div>
+            </div> */}
 
             <Button type="submit" fullWidth loading={loading}>
               Register

@@ -1,20 +1,27 @@
-import apiService from "./api.service";
+import api from "./api";
 
 class AuthService {
   async login(credentials) {
-    const response = await apiService.post("/auth/login", credentials);
-    if (response.token) {
-      localStorage.setItem("authToken", response.token);
-      localStorage.setItem("user", JSON.stringify(response.user));
+    const response = await api.post("/v1/auth/login", credentials);
+    if (response.data.token) {
+      localStorage.setItem("authToken", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
     }
-    return response;
+    return response.data;
   }
 
   async register(userData) {
-    return await apiService.post("/auth/register", userData);
+    const response = await api.post("/v1/auth/register", {
+      email: userData.email,
+      name: userData.name,
+      password: userData.password,
+      role: "student",
+      school_id: null,
+    });
+    return response.data;
   }
 
-  async logout() {
+  logout() {
     localStorage.removeItem("authToken");
     localStorage.removeItem("user");
     return true;
@@ -33,15 +40,12 @@ class AuthService {
     return localStorage.getItem("authToken");
   }
 
-  async forgotPassword(email) {
-    return await apiService.post("/auth/forgot-password", { email });
-  }
-
-  async resetPassword(token, newPassword) {
-    return await apiService.post("/auth/reset-password", {
-      token,
-      newPassword,
-    });
+  async getMe() {
+    const response = await api.get("/v1/auth/me");
+    if (response.data) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+    return response.data;
   }
 }
 

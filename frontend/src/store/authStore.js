@@ -14,8 +14,10 @@ const useAuthStore = create((set) => ({
       set({ user: response.user, isAuthenticated: true, loading: false });
       return response;
     } catch (error) {
-      set({ error: error.message, loading: false });
-      throw error;
+      const errorMessage =
+        error.response?.data?.detail || error.message || "Login failed";
+      set({ error: errorMessage, loading: false });
+      throw new Error(errorMessage);
     }
   },
 
@@ -26,14 +28,21 @@ const useAuthStore = create((set) => ({
       set({ loading: false });
       return response;
     } catch (error) {
-      set({ error: error.message, loading: false });
-      throw error;
+      const errorMessage =
+        error.response?.data?.detail || error.message || "Registration failed";
+      set({ error: errorMessage, loading: false });
+      throw new Error(errorMessage);
     }
   },
 
   logout: () => {
     authService.logout();
     set({ user: null, isAuthenticated: false });
+  },
+
+  updateUser: (userData) => {
+    set({ user: userData });
+    localStorage.setItem("user", JSON.stringify(userData));
   },
 
   clearError: () => set({ error: null }),
