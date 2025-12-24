@@ -1,12 +1,12 @@
 """
 Seed database with sample data for development/testing
 """
-from sqlalchemy.orm import Session
-from app.db.database import SessionLocal
-from app.models.user import User, UserRole
-from app.models.school import School
-from app.models.assessment import Question, DifficultyLevel, QuestionType
 from app.core.security import get_password_hash
+from app.db.database import SessionLocal
+from app.models.assessment import DifficultyLevel, Question, QuestionType
+from app.models.school import School
+from app.models.user import User, UserRole
+from sqlalchemy.orm import Session
 
 
 def seed_schools(db: Session):
@@ -42,6 +42,7 @@ def seed_schools(db: Session):
 
 def seed_users(db: Session):
     """Create sample users"""
+    # bcrypt has a 72 byte limit, so use shorter passwords
     users = [
         User(
             email="admin@eduassess.com",
