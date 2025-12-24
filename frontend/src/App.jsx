@@ -1,35 +1,104 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import useAuthStore from "./store/authStore";
 
+// Auth Pages
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+
+// Student Pages
+import StudentDashboardPage from "./pages/student/StudentDashboardPage";
+import ProgressPage from "./pages/student/ProgressPage";
+import ResourcesPage from "./pages/student/ResourcesPage";
+
+// Teacher Pages
+import TeacherDashboardPage from "./pages/teacher/TeacherDashboardPage";
+
+// Admin Pages
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
+
+// Protected Route Component - DISABLED FOR TESTING
+const ProtectedRoute = ({ children, requiredRole }) => {
+  // const { isAuthenticated, user } = useAuthStore();
+
+  // if (!isAuthenticated) {
+  //   return <Navigate to="/login" replace />;
+  // }
+
+  // if (requiredRole && user?.role !== requiredRole) {
+  //   return <Navigate to={`/${user?.role}/dashboard`} replace />;
+  // }
+
+  return children;
+};
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-2xl shadow-xl p-8 text-center">
-            <div className="mb-6">
-              <span className="text-6xl">🎓</span>
-            </div>
-            <h1 className="text-4xl font-bold text-gray-800 mb-4">
-              EduAdapt Platform
-            </h1>
-            <p className="text-gray-600 mb-6">
-              Adaptive Learning System - Frontend Ready!
-            </p>
-            <div className="flex gap-4 justify-center">
-              <button className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
-                Get Started
-              </button>
-              <button className="px-6 py-3 border-2 border-blue-600 text-blue-600 rounded-lg font-semibold hover:bg-blue-50 transition-colors">
-                Learn More
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        {/* Public Routes */}
+        <Route
+          path="/"
+          element={<Navigate to="/student/dashboard" replace />}
+        />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Student Routes */}
+        <Route
+          path="/student/dashboard"
+          element={
+            <ProtectedRoute requiredRole="student">
+              <StudentDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/progress"
+          element={
+            <ProtectedRoute requiredRole="student">
+              <ProgressPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/student/resources"
+          element={
+            <ProtectedRoute requiredRole="student">
+              <ResourcesPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Teacher Routes */}
+        <Route
+          path="/teacher/dashboard"
+          element={
+            <ProtectedRoute requiredRole="teacher">
+              <TeacherDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin Routes */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute requiredRole="admin">
+              <AdminDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Catch all */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
+      </Routes>
+    </Router>
   );
 }
 
