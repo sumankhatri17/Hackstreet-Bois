@@ -1,0 +1,355 @@
+{
+  "chapter_analysis": {
+    "Real Numbers": {
+      "total_questions": 5,
+      "correct": 5,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Polynomials": {
+      "total_questions": 5,
+      "correct": 4,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 80,
+      "chapter_score_out_of_10": 8,
+      "weakness_level": "mild"
+    },
+    "Linear Equations": {
+      "total_questions": 5,
+      "correct": 5,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Quadratic Equations": {
+      "total_questions": 5,
+      "correct": 5,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Arithmetic Progressions": {
+      "total_questions": 5,
+      "correct": 5,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Triangles": {
+      "total_questions": 5,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 5,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Coordinate Geometry": {
+      "total_questions": 5,
+      "correct": 5,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Trigonometry": {
+      "total_questions": 5,
+      "correct": 4,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 80,
+      "chapter_score_out_of_10": 8,
+      "weakness_level": "mild"
+    },
+    "Circles": {
+      "total_questions": 5,
+      "correct": 2,
+      "partial": 0,
+      "incorrect": 3,
+      "accuracy_percentage": 40,
+      "chapter_score_out_of_10": 4,
+      "weakness_level": "severe"
+    },
+    "Statistics": {
+      "total_questions": 5,
+      "correct": 5,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Probability": {
+      "total_questions": 5,
+      "correct": 4,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 80,
+      "chapter_score_out_of_10": 8,
+      "weakness_level": "mild"
+    }
+  },
+  "question_analysis": {
+    "rn-01": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "rn-02": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "rn-03": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "rn-04": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "rn-05": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "pl-01": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "pl-02": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "pl-03": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "pl-04": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "pl-05": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect zeroes for x\u00b2+1"
+    },
+    "le-01": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "le-02": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "le-03": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "le-04": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "le-05": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "qe-01": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "qe-02": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "qe-03": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "qe-04": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "qe-05": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "ap-01": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "ap-02": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "ap-03": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "ap-04": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "ap-05": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "tr-01": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect statement of Pythagoras theorem"
+    },
+    "tr-02": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect statement about areas of similar triangles"
+    },
+    "tr-03": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect application of Pythagoras theorem"
+    },
+    "tr-04": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect ratio of areas of similar triangles"
+    },
+    "tr-05": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect type of triangle with one 90\u00b0 angle"
+    },
+    "cg-01": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "cg-02": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "cg-03": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "cg-04": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "cg-05": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "tg-01": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "tg-02": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "tg-03": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "tg-04": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect value of sin 60\u00b0"
+    },
+    "tg-05": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "ci-01": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "ci-02": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect formula for circumference"
+    },
+    "ci-03": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect number of points a tangent touches a circle"
+    },
+    "ci-04": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect relationship between diameter and radius"
+    },
+    "ci-05": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect number of tangents to a circle"
+    },
+    "st-01": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "st-02": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "st-03": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "st-04": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "st-05": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "pb-01": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "pb-02": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "pb-03": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "pb-04": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "pb-05": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect probability of an impossible event"
+    }
+  },
+  "overall_analysis": {
+    "final_score_out_of_100": 82,
+    "estimated_student_grade_level": 9,
+    "strongest_chapters": [
+      "Real Numbers",
+      "Linear Equations"
+    ],
+    "weakest_chapters": [
+      "Triangles",
+      "Circles",
+      "Probability"
+    ],
+    "learning_gap_summary": [
+      "Triangles chapter shows severe gaps in understanding basic properties and theorems, particularly Pythagoras theorem and properties of similar triangles.",
+      "Circles chapter reveals confusion about fundamental concepts like circumference calculation, tangents, and the relationship between diameter and radius.",
+      "Probability chapter indicates a lack of understanding of basic probability concepts, especially regarding impossible events and simple outcomes."
+    ]
+  }
+}
