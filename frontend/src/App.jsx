@@ -17,9 +17,6 @@ import StudentDashboardPage from "./pages/student/StudentDashboardPage";
 // Assessment Pages
 import InitialAssessmentPage from "./pages/assessment/InitialAssessmentPage";
 
-// Admin Pages
-import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
-
 // Protected Route Component - DISABLED FOR TESTING
 const ProtectedRoute = ({ children, requiredRole }) => {
   // const { isAuthenticated, user } = useAuthStore();
@@ -76,16 +73,6 @@ function App() {
           element={
             <ProtectedRoute>
               <ResourcesPage />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Admin Routes */}
-        <Route
-          path="/admin/dashboard"
-          element={
-            <ProtectedRoute requiredRole="admin">
-              <AdminDashboardPage />
             </ProtectedRoute>
           }
         />

@@ -80,20 +80,15 @@ npm run dev
 
 After seeding the database, use these credentials:
 
-### Admin
+### Student
 
-- Email: admin@eduassess.com
-- Password: admin123
+- Email: student@eduassess.com
+- Password: student123
 
 ### Teacher
 
 - Email: teacher@eduassess.com
 - Password: teacher123
-
-### Student
-
-- Email: student@eduassess.com
-- Password: student123
 
 ## Common Commands
 

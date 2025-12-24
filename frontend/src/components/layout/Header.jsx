@@ -66,12 +66,6 @@ const Header = () => {
             >
               Dashboard
             </Link>
-            <Link
-              to="/admin/dashboard"
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Admin
-            </Link>
           </nav>
 
           {/* Desktop User Menu */}
@@ -108,20 +102,6 @@ const Header = () => {
               onClick={() => setMobileMenuOpen(false)}
             >
               Dashboard
-            </Link>
-            <Link
-              to="/admin/dashboard"
-              className="block px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Teacher
-            </Link>
-            <Link
-              to="/admin/dashboard"
-              className="block px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Admin
             </Link>
             {user ? (
               <button

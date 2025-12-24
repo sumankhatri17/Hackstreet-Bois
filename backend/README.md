@@ -7,7 +7,7 @@ Backend API for the EduAssess adaptive learning assessment platform built with F
 ## Features
 
 - ✅ User authentication with JWT tokens
-- ✅ Role-based access control (Student, Teacher, Admin)
+- ✅ Role-based access control (Student, Teacher)
 - ✅ School management
 - ✅ Adaptive assessments
 - ✅ Progress tracking
@@ -140,43 +140,44 @@ The API will be available at:
 
 - `GET /api/v1/users/me` - Get current user profile
 - `PUT /api/v1/users/me` - Update current user
-- `GET /api/v1/users/{user_id}` - Get user by ID (admin/teacher)
-- `GET /api/v1/users/` - List all users (admin/teacher)
+- `GET /api/v1/users/{user_id}` - Get user by ID (teacher)
+- `GET /api/v1/users/` - List all users (teacher)
 
 ### Assessments
 
 - `POST /api/v1/assessments/` - Create assessment
 - `GET /api/v1/assessments/{id}` - Get assessment
 - `GET /api/v1/assessments/student/{id}` - Get student assessments
-- `POST /api/v1/assessments/questions` - Create question (admin/teacher)
+- `POST /api/v1/assessments/questions` - Create question (teacher)
 - `GET /api/v1/assessments/questions/{id}` - Get question
 - `GET /api/v1/assessments/questions/` - List questions with filters
 - `POST /api/v1/assessments/responses` - Submit answer
 
 ### Schools
 
-- `POST /api/v1/schools/` - Create school (admin)
+- `POST /api/v1/schools/` - Create school
 - `GET /api/v1/schools/{id}` - Get school
-- `GET /api/v1/schools/` - List schools (admin)
-- `PUT /api/v1/schools/{id}` - Update school (admin)
-- `DELETE /api/v1/schools/{id}` - Delete school (admin)
+- `GET /api/v1/schools/` - List schools
+- `PUT /api/v1/schools/{id}` - Update school
+- `DELETE /api/v1/schools/{id}` - Delete school
 
 ### Progress
 
 - `GET /api/v1/progress/student/{id}` - Get student progress
-- `PUT /api/v1/progress/student/{id}` - Update progress (admin/teacher)
+- `PUT /api/v1/progress/student/{id}` - Update progress (teacher)
 
 ## Sample Credentials (after seeding)
 
-- **Admin**: admin@eduassess.com / admin123
 - **Teacher**: teacher@eduassess.com / teacher123
 - **Student**: student@eduassess.com / student123
+
+**Note:** AI model for student assessment evaluation is currently being developed by a team member.
 
 ## Database Models
 
 ### User
 
-- Supports three roles: Student, Teacher, Admin
+- Supports two roles: Student, Teacher
 - Tracks student learning levels (current, reading, writing, math)
 - Associated with schools
 

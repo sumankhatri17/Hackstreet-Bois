@@ -163,62 +163,17 @@
 
 ---
 
-## 👔 Admin Features
+## 🤖 AI Model Integration
 
-### 1. User Management
+**Note:** A team member is currently developing the AI model for student assessment evaluation.
 
-- View all users (students, teachers, admins)
-- Filter by role, school, grade, status
-- Activate/deactivate accounts
-- View user statistics
+### Planned AI Capabilities:
 
-### 2. School Management
-
-- Register and manage schools
-- View school-wise student/teacher distribution
-- Track school performance metrics
-- Assign school administrators
-
-### 3. Assessment Management
-
-- Create and manage question banks
-- Add questions for all grades (6-12)
-- Organize by subject and topic
-- Set difficulty levels
-- Bulk upload questions
-- Review and approve student-generated content
-
-### 4. System Analytics
-
-- Platform-wide performance metrics:
-  - Total users by role
-  - Assessment completion rates
-  - Average student improvement
-  - Teacher utilization rates
-  - Popular topics/subjects
-- Generate reports
-- Export data for analysis
-
-### 5. Teacher Level Override
-
-- Manually adjust teacher grade assignments if needed
-- Override automatic evaluation results
-- Reassign specializations
-- Manage teacher-student matches
-
-### 6. Content Moderation
-
-- Review study materials
-- Approve/reject teacher-created content
-- Monitor assessment questions
-- Ensure quality standards
-
-### 7. Platform Configuration
-
-- Manage system settings
-- Configure evaluation thresholds
-- Set matching algorithm parameters
-- Control notification preferences
+- Automated scoring of written answers (short answer/essay)
+- Evaluation of understanding depth
+- Identification of weak topics from assessment results
+- Personalized feedback generation
+- Question difficulty adjustment based on student performance
 
 ---
 
@@ -477,15 +432,6 @@
 - Material usage metrics
 - Teaching effectiveness scores
 
-### Platform Analytics
-
-- User growth metrics
-- Assessment completion rates
-- Average improvement percentages
-- Most challenging topics
-- Teacher utilization rates
-- Geographic distribution (by school)
-
 ---
 
 ## 🚀 Unique Selling Points
@@ -554,4 +500,9 @@
 
 ---
 
-**Current Status**: Frontend fully implemented, Backend structure ready - awaiting complete backend implementation with AI integration.
+**Current Status**:
+
+- Frontend fully implemented for peer-to-peer learning model
+- Backend structure ready
+- AI model for student assessment evaluation is currently being developed by a team member
+- Admin features removed (not needed for current scope)

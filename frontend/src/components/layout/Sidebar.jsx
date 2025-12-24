@@ -20,7 +20,6 @@ const Sidebar = () => {
     { icon: "📈", label: "My Progress", path: "/dashboard/progress" },
     { icon: "📚", label: "Resources", path: "/dashboard/resources" },
     { icon: "🎓", label: "Initial Assessment", path: "/assessment/initial" },
-    { icon: "⚙️", label: "Admin Dashboard", path: "/admin/dashboard" },
   ];
 
   return (

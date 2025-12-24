@@ -135,17 +135,6 @@ EduAssess is an adaptive learning assessment platform that connects students wit
   "Algebra,Geometry,Linear Equations"
   ```
 
-### 3. Admin Role
-
-**Admin Capabilities:**
-
-- Manage schools
-- View all users
-- View system analytics
-- Manage assessments and questions
-- Override teacher assignments
-- Monitor platform performance
-
 ---
 
 ## Database Schema Requirements
@@ -158,7 +147,7 @@ CREATE TABLE users (
   email VARCHAR UNIQUE NOT NULL,
   name VARCHAR NOT NULL,
   hashed_password VARCHAR NOT NULL,
-  role ENUM('student', 'teacher', 'admin') NOT NULL,
+  role ENUM('student', 'teacher') NOT NULL,
   is_active BOOLEAN DEFAULT TRUE,
   school_id INTEGER REFERENCES schools(id),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -373,16 +362,11 @@ CREATE TABLE study_materials (
 - `POST /api/materials` - Create new material (teacher/admin)
 - `GET /api/materials/:id` - Get specific material with content
 
-### Admin Endpoints
-
-- `GET /api/admin/users` - List all users with filters
-- `GET /api/admin/analytics` - System analytics
-- `POST /api/admin/questions/bulk` - Bulk upload questions
-- `PUT /api/admin/teachers/:id/override-level` - Manually adjust teaching level
-
 ---
 
 ## AI Integration Requirements
+
+**NOTE: AI model for student assessment evaluation is currently being developed by a team member.**
 
 ### 1. Assessment AI (Question Generation & Scoring)
 
@@ -720,7 +704,7 @@ GET /api/teachers/me/dashboard
 
    - Students can only access their own data
    - Teachers can only see their assigned students
-   - Admins have full access
+   - Proper authentication and authorization for all endpoints
 
 6. **Testing:** Create test fixtures for:
    - Multiple students at different grades
