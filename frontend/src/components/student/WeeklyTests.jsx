@@ -1,7 +1,6 @@
-import React from "react";
-import Card from "../common/Card";
 import Badge from "../common/Badge";
 import Button from "../common/Button";
+import Card from "../common/Card";
 
 const WeeklyTests = ({ tests = [] }) => {
   return (
@@ -17,7 +16,8 @@ const WeeklyTests = ({ tests = [] }) => {
             tests.map((test, index) => (
               <div
                 key={index}
-                className="p-3 sm:p-4 border border-gray-200 rounded-lg hover:border-gray-300 hover:shadow-sm transition-all bg-white"
+                className="p-3 sm:p-4 border rounded-lg hover:shadow-sm transition-all"
+                style={{ backgroundColor: "#F5EDE5", borderColor: "#C9BDB3" }}
               >
                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-3 gap-2">
                   <div className="flex-1">

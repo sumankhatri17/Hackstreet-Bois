@@ -18,16 +18,22 @@ const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50 backdrop-blur-sm bg-white/95">
+    <header
+      className="sticky top-0 z-50 backdrop-blur-md shadow-sm"
+      style={{ backgroundColor: "#DDD0C8", borderBottom: "1px solid #C9BDB3" }}
+    >
       <div className="container mx-auto px-4 sm:px-6 py-3.5">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-3">
-            <div className="w-9 h-9 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-lg flex items-center justify-center">
+            <div
+              className="w-9 h-9 rounded-lg flex items-center justify-center shadow-md"
+              style={{ backgroundColor: "#323232" }}
+            >
               <svg
-                className="w-5 h-5 text-white"
+                className="w-5 h-5"
                 fill="none"
-                stroke="currentColor"
+                stroke="#DDD0C8"
                 viewBox="0 0 24 24"
               >
                 <path
@@ -38,13 +44,16 @@ const Header = () => {
                 />
               </svg>
             </div>
-            <h1 className="text-xl font-bold text-gray-900">EduAssess</h1>
+            <h1 className="text-xl font-bold" style={{ color: "#323232" }}>
+              EduAssess
+            </h1>
           </Link>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-gray-600 hover:text-gray-900"
+            className="md:hidden p-2 transition-colors"
+            style={{ color: "#5A5A5A" }}
           >
             <svg
               className="w-6 h-6"
@@ -74,7 +83,8 @@ const Header = () => {
           <nav className="hidden md:flex space-x-1">
             <Link
               to="/dashboard"
-              className="px-4 py-2 text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-lg transition-all font-medium text-sm"
+              className="px-4 py-2 rounded-lg transition-all font-medium text-sm"
+              style={{ color: "#323232" }}
             >
               Dashboard
             </Link>
@@ -84,17 +94,30 @@ const Header = () => {
           <div className="hidden md:flex items-center space-x-3">
             {user ? (
               <>
-                <div className="flex items-center space-x-2 px-3 py-2 bg-gray-50 rounded-lg">
-                  <div className="w-8 h-8 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-semibold">
+                <div
+                  className="flex items-center space-x-2 px-3 py-2 rounded-lg"
+                  style={{
+                    backgroundColor: "#E8DDD3",
+                    border: "1px solid #C9BDB3",
+                  }}
+                >
+                  <div
+                    className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold shadow-md"
+                    style={{ backgroundColor: "#323232", color: "#DDD0C8" }}
+                  >
                     {user.name?.charAt(0).toUpperCase()}
                   </div>
-                  <span className="text-gray-700 text-sm font-medium">
+                  <span
+                    className="text-sm font-medium"
+                    style={{ color: "#323232" }}
+                  >
                     {user.name}
                   </span>
                 </div>
                 <button
                   onClick={logout}
-                  className="px-4 py-2 rounded-lg bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors text-sm font-medium"
+                  className="px-4 py-2 rounded-lg transition-colors text-sm font-medium"
+                  style={{ backgroundColor: "#323232", color: "#DDD0C8" }}
                 >
                   Logout
                 </button>
@@ -102,7 +125,8 @@ const Header = () => {
             ) : (
               <Link
                 to="/login"
-                className="px-4 py-2 rounded-md bg-blue-600 text-white hover:bg-blue-700 transition-colors text-sm"
+                className="px-4 py-2 rounded-md transition-colors text-sm"
+                style={{ backgroundColor: "#323232", color: "#DDD0C8" }}
               >
                 Login
               </Link>
@@ -112,10 +136,14 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 space-y-2 border-t pt-4">
+          <div
+            className="md:hidden mt-4 pb-4 space-y-2 pt-4"
+            style={{ borderTop: "1px solid #C9BDB3" }}
+          >
             <Link
               to="/dashboard"
-              className="block px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"
+              className="block px-4 py-2 rounded-lg transition-colors"
+              style={{ color: "#323232" }}
               onClick={() => setMobileMenuOpen(false)}
             >
               Dashboard
@@ -126,14 +154,16 @@ const Header = () => {
                   logout();
                   setMobileMenuOpen(false);
                 }}
-                className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50 rounded-md"
+                className="w-full text-left px-4 py-2 rounded-lg transition-colors"
+                style={{ color: "#323232", backgroundColor: "#F5EDE5" }}
               >
                 Logout
               </button>
             ) : (
               <Link
                 to="/login"
-                className="block px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-md"
+                className="block px-4 py-2 rounded-lg transition-colors"
+                style={{ color: "#323232", backgroundColor: "#F5EDE5" }}
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Login

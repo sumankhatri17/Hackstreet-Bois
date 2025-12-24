@@ -1,4 +1,3 @@
-import React from "react";
 import Card from "../common/Card";
 
 const QuestionDisplay = ({ question, questionNumber, totalQuestions }) => {
@@ -29,8 +28,8 @@ const QuestionDisplay = ({ question, questionNumber, totalQuestions }) => {
         )}
 
         {question.context && (
-          <div className="p-4 bg-blue-50 border-l-4 border-blue-500 rounded mb-4">
-            <p className="text-gray-700">{question.context}</p>
+          <div className="p-4 bg-[#F5EDE5] border-l-4 border-[#C9BDB3] rounded mb-4">
+            <p className="text-[#323232]">{question.context}</p>
           </div>
         )}
       </div>

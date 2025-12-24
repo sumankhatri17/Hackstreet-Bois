@@ -2,10 +2,10 @@ import Badge from "../common/Badge";
 
 const PeerTutorCard = ({ peer, onRequestHelp }) => {
   return (
-    <div className="p-4 border border-gray-200 rounded-lg hover:border-blue-300 hover:shadow-md transition">
+    <div className="p-4 border border-[#C9BDB3] rounded-lg hover:border-[#5A5A5A] hover:shadow-sm transition">
       <div className="flex items-start space-x-3 mb-3">
         {/* Avatar */}
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-400 to-blue-500 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+        <div className="w-12 h-12 rounded-full bg-[#E8DDD3] flex items-center justify-center text-[#323232] font-bold text-lg flex-shrink-0 border border-[#C9BDB3]">
           {peer.name.charAt(0)}
         </div>
 
@@ -30,7 +30,7 @@ const PeerTutorCard = ({ peer, onRequestHelp }) => {
           {peer.can_help_with?.map((topic, idx) => (
             <span
               key={idx}
-              className="px-2 py-1 bg-green-100 text-green-700 text-xs rounded-full"
+              className="px-2 py-1 bg-[#F5EDE5] text-[#323232] text-xs rounded-full border border-[#C9BDB3]"
             >
               {topic}
             </span>
@@ -40,8 +40,8 @@ const PeerTutorCard = ({ peer, onRequestHelp }) => {
 
       {/* Scores */}
       {peer.their_scores && (
-        <div className="mb-3 p-2 bg-blue-50 border border-blue-200 rounded">
-          <p className="text-xs text-blue-800">
+        <div className="mb-3 p-2 bg-[#F5EDE5] border border-[#C9BDB3] rounded">
+          <p className="text-xs text-[#323232]">
             <strong>Their scores:</strong>{" "}
             {Object.entries(peer.their_scores).map(([topic, score], idx) => (
               <span key={idx}>
@@ -55,8 +55,8 @@ const PeerTutorCard = ({ peer, onRequestHelp }) => {
 
       {/* Match Reason */}
       {peer.match_reason && (
-        <div className="mb-3 p-2 bg-purple-50 border border-purple-200 rounded">
-          <p className="text-xs text-purple-700">
+        <div className="mb-3 p-2 bg-[#E8DDD3] border border-[#C9BDB3] rounded">
+          <p className="text-xs text-[#323232]">
             <strong>Why matched:</strong> {peer.match_reason}
           </p>
         </div>
@@ -65,7 +65,7 @@ const PeerTutorCard = ({ peer, onRequestHelp }) => {
       {/* Action Button */}
       <button
         onClick={() => onRequestHelp(peer)}
-        className="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transition text-sm font-medium"
+        className="w-full px-4 py-2 bg-[#323232] text-white rounded-lg hover:bg-[#5A5A5A] transition text-sm font-medium"
       >
         Request Help
       </button>

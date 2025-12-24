@@ -19,15 +19,21 @@ const HelpRequestModal = ({ peer, type = "request", onClose, onSubmit }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg max-w-md w-full p-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-4">
+    <div
+      className="fixed inset-0 flex items-center justify-center p-4 z-50"
+      style={{ backgroundColor: "rgba(50, 50, 50, 0.5)" }}
+    >
+      <div
+        className="rounded-lg max-w-md w-full p-6"
+        style={{ backgroundColor: "#F5EDE5", border: "1px solid #C9BDB3" }}
+      >
+        <h3 className="text-xl font-bold mb-4" style={{ color: "#323232" }}>
           {type === "request" ? "Request Help" : "Offer Help"} - {peer.name}
         </h3>
 
         <div className="mb-4">
           <div className="flex items-center space-x-3 mb-3">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-500 flex items-center justify-center text-white font-bold text-lg">
+            <div className="w-12 h-12 rounded-full bg-[#E8DDD3] flex items-center justify-center text-[#323232] font-bold text-lg border border-[#C9BDB3]">
               {peer.name.charAt(0)}
             </div>
             <div>
@@ -37,16 +43,16 @@ const HelpRequestModal = ({ peer, type = "request", onClose, onSubmit }) => {
           </div>
 
           {type === "request" && peer.can_help_with && (
-            <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg mb-3">
-              <p className="text-sm text-blue-800">
+            <div className="p-3 bg-[#F5EDE5] border border-[#C9BDB3] rounded-lg mb-3">
+              <p className="text-sm text-[#323232]">
                 <strong>Can help with:</strong> {peer.can_help_with.join(", ")}
               </p>
             </div>
           )}
 
           {type === "offer" && peer.needs_help_with && (
-            <div className="p-3 bg-green-50 border border-green-200 rounded-lg mb-3">
-              <p className="text-sm text-green-800">
+            <div className="p-3 bg-[#F5EDE5] border border-[#C9BDB3] rounded-lg mb-3">
+              <p className="text-sm text-[#323232]">
                 <strong>Needs help with:</strong>{" "}
                 {Array.isArray(peer.needs_help_with)
                   ? peer.needs_help_with.join(", ")

@@ -11,18 +11,18 @@ const AnswerInput = ({ question, value, onChange }) => {
             onClick={() => onChange(option)}
             className={`w-full p-4 text-left border-2 rounded-lg transition-all ${
               value === option
-                ? "border-blue-500 bg-blue-50"
-                : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                ? "border-[#5A5A5A] bg-[#E8DDD3]"
+                : "border-[#C9BDB3] hover:border-[#5A5A5A] hover:bg-[#F5EDE5]"
             }`}
           >
             <div className="flex items-center">
               <div
                 className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
-                  value === option ? "border-blue-500" : "border-gray-300"
+                  value === option ? "border-[#5A5A5A]" : "border-[#C9BDB3]"
                 }`}
               >
                 {value === option && (
-                  <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-[#5A5A5A]"></div>
                 )}
               </div>
               <span className="font-medium text-gray-700 mr-2">
@@ -43,23 +43,23 @@ const AnswerInput = ({ question, value, onChange }) => {
           onClick={() => onChange("true")}
           className={`flex-1 p-6 border-2 rounded-lg transition-all ${
             value === "true"
-              ? "border-green-500 bg-green-50"
-              : "border-gray-200 hover:border-gray-300"
+              ? "border-[#5A5A5A] bg-[#E8DDD3]"
+              : "border-[#C9BDB3] hover:border-[#5A5A5A] hover:bg-[#F5EDE5]"
           }`}
         >
           <div className="text-4xl mb-2">✓</div>
-          <div className="font-semibold text-gray-900">True</div>
+          <div className="font-semibold text-[#323232]">True</div>
         </button>
         <button
           onClick={() => onChange("false")}
           className={`flex-1 p-6 border-2 rounded-lg transition-all ${
             value === "false"
-              ? "border-red-500 bg-red-50"
-              : "border-gray-200 hover:border-gray-300"
+              ? "border-[#5A5A5A] bg-[#E8DDD3]"
+              : "border-[#C9BDB3] hover:border-[#5A5A5A] hover:bg-[#F5EDE5]"
           }`}
         >
           <div className="text-4xl mb-2">✗</div>
-          <div className="font-semibold text-gray-900">False</div>
+          <div className="font-semibold text-[#323232]">False</div>
         </button>
       </div>
     );

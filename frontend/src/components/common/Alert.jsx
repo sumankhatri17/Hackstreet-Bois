@@ -1,11 +1,9 @@
-import React from "react";
-
 const Alert = ({ type = "info", message, onClose, className = "" }) => {
   const types = {
     success: {
-      bg: "bg-green-50",
-      border: "border-green-200",
-      text: "text-green-800",
+      bg: "bg-[#F5EDE5]",
+      border: "border-[#C9BDB3]",
+      text: "text-[#323232]",
       icon: (
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path
@@ -17,9 +15,9 @@ const Alert = ({ type = "info", message, onClose, className = "" }) => {
       ),
     },
     error: {
-      bg: "bg-red-50",
-      border: "border-red-200",
-      text: "text-red-800",
+      bg: "bg-[#EBE1D8]",
+      border: "border-[#C9BDB3]",
+      text: "text-[#323232]",
       icon: (
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path
@@ -31,9 +29,9 @@ const Alert = ({ type = "info", message, onClose, className = "" }) => {
       ),
     },
     warning: {
-      bg: "bg-yellow-50",
-      border: "border-yellow-200",
-      text: "text-yellow-800",
+      bg: "bg-[#E8DDD3]",
+      border: "border-[#C9BDB3]",
+      text: "text-[#323232]",
       icon: (
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path
@@ -45,9 +43,9 @@ const Alert = ({ type = "info", message, onClose, className = "" }) => {
       ),
     },
     info: {
-      bg: "bg-blue-50",
-      border: "border-blue-200",
-      text: "text-blue-800",
+      bg: "bg-[#F5EDE5]",
+      border: "border-[#C9BDB3]",
+      text: "text-[#5A5A5A]",
       icon: (
         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
           <path

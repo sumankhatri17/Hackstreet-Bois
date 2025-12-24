@@ -1,5 +1,3 @@
-import React from "react";
-
 const Loading = ({
   size = "md",
   fullScreen = false,
@@ -14,15 +12,23 @@ const Loading = ({
   const spinner = (
     <div className="flex flex-col items-center justify-center">
       <div
-        className={`${sizes[size]} border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin`}
+        className={`${sizes[size]} border-4 rounded-full animate-spin`}
+        style={{ borderColor: "#E8DDD3", borderTopColor: "#323232" }}
       ></div>
-      {message && <p className="mt-4 text-gray-600">{message}</p>}
+      {message && (
+        <p className="mt-4" style={{ color: "#323232" }}>
+          {message}
+        </p>
+      )}
     </div>
   );
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 bg-white bg-opacity-90 flex items-center justify-center z-50">
+      <div
+        className="fixed inset-0 flex items-center justify-center z-50"
+        style={{ backgroundColor: "rgba(221, 208, 200, 0.95)" }}
+      >
         {spinner}
       </div>
     );

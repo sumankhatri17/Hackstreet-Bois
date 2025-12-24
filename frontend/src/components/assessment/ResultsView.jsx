@@ -1,7 +1,6 @@
-import React from "react";
-import Card from "../common/Card";
-import Button from "../common/Button";
 import Badge from "../common/Badge";
+import Button from "../common/Button";
+import Card from "../common/Card";
 
 const ResultsView = ({ results, onRetake, onViewDetails }) => {
   const {
@@ -69,13 +68,13 @@ const ResultsView = ({ results, onRetake, onViewDetails }) => {
       {/* Level Assessment */}
       <Card title="Your Assessment">
         <div className="space-y-4">
-          <div className="p-4 bg-blue-50 rounded-lg">
-            <h4 className="font-semibold text-gray-900 mb-2">
+          <div className="p-4 bg-[#F5EDE5] rounded-lg border border-[#C9BDB3]">
+            <h4 className="font-semibold text-[#323232] mb-2">
               Determined Level
             </h4>
-            <p className="text-gray-700">
+            <p className="text-[#323232]">
               Based on your performance, your current level is assessed as{" "}
-              <span className="font-bold text-blue-600">Grade {level}</span>
+              <span className="font-bold text-[#323232]">Grade {level}</span>
             </p>
           </div>
 

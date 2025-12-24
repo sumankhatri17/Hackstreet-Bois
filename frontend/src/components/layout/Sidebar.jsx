@@ -8,11 +8,12 @@
  * 3. Make it responsive (hide on mobile, show on toggle)
  */
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useAuthStore from "../../store/authStore";
 
 const Sidebar = () => {
   const { user } = useAuthStore();
+  const location = useLocation();
 
   // Menu items for peer-to-peer learning platform
   const menuItems = [
@@ -95,33 +96,62 @@ const Sidebar = () => {
   ];
 
   return (
-    <aside className="hidden lg:block w-64 bg-white h-screen sticky top-0 border-r border-gray-100">
+    <aside
+      className="hidden lg:block w-64 h-screen sticky top-0 shadow-sm"
+      style={{ backgroundColor: "#E8DDD3", borderRight: "1px solid #C9BDB3" }}
+    >
       <div className="p-6">
         {/* User Profile Section */}
-        <div className="mb-8 pb-6 border-b border-gray-100">
-          <div className="w-14 h-14 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-xl mx-auto mb-3 flex items-center justify-center text-white text-xl font-bold">
+        <div
+          className="mb-8 pb-6"
+          style={{ borderBottom: "1px solid #C9BDB3" }}
+        >
+          <div
+            className="w-14 h-14 rounded-xl mx-auto mb-3 flex items-center justify-center text-xl font-bold shadow-lg"
+            style={{ backgroundColor: "#323232", color: "#DDD0C8" }}
+          >
             {user?.name?.charAt(0).toUpperCase() || "U"}
           </div>
-          <h3 className="font-semibold text-gray-900 text-center text-base">
+          <h3
+            className="font-semibold text-center text-base"
+            style={{ color: "#323232" }}
+          >
             {user?.name || "Guest"}
           </h3>
-          <p className="text-sm text-gray-500 text-center mt-1">Student</p>
+          <p className="text-sm text-center mt-1" style={{ color: "#5A5A5A" }}>
+            Student
+          </p>
         </div>
 
         {/* Navigation Menu */}
         <nav className="space-y-1">
-          {menuItems.map((item, index) => (
-            <Link
-              key={index}
-              to={item.path}
-              className="flex items-center space-x-3 px-4 py-3 rounded-lg text-gray-600 hover:bg-indigo-50 hover:text-indigo-600 transition-all text-sm font-medium group"
-            >
-              <span className="text-gray-400 group-hover:text-indigo-600 transition-colors">
-                {item.icon}
-              </span>
-              <span>{item.label}</span>
-            </Link>
-          ))}
+          {menuItems.map((item, index) => {
+            const isActive = location.pathname === item.path;
+            return (
+              <Link
+                key={index}
+                to={item.path}
+                className="flex items-center space-x-3 px-4 py-3 rounded-lg transition-all text-sm font-medium group"
+                style={{
+                  color: "#323232",
+                  backgroundColor: isActive ? "#F5EDE5" : "transparent",
+                  borderLeft: isActive
+                    ? "3px solid #5A5A5A"
+                    : "3px solid transparent",
+                }}
+              >
+                <span
+                  className="transition-colors"
+                  style={{ color: isActive ? "#323232" : "#5A5A5A" }}
+                >
+                  {item.icon}
+                </span>
+                <span style={{ fontWeight: isActive ? "600" : "500" }}>
+                  {item.label}
+                </span>
+              </Link>
+            );
+          })}
         </nav>
       </div>
     </aside>

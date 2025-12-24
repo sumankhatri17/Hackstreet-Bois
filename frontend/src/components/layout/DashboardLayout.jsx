@@ -1,11 +1,13 @@
-import React from "react";
+import Footer from "./Footer";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import Footer from "./Footer";
 
 const DashboardLayout = ({ children, user, onLogout }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div
+      className="min-h-screen flex flex-col"
+      style={{ backgroundColor: "#DDD0C8" }}
+    >
       <Header user={user} onLogout={onLogout} />
       <div className="flex flex-1">
         <Sidebar role={user?.role} />

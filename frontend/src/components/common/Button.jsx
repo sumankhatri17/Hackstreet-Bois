@@ -28,16 +28,34 @@ const Button = ({
 
   // Define variant styles
   const variants = {
-    primary:
-      "bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700",
-    secondary: "bg-gray-600 text-white hover:bg-gray-700",
-    outline:
-      "border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400",
+    primary: "text-white hover:opacity-90",
+    secondary: "hover:opacity-90",
+    outline: "border-2 hover:opacity-80",
     danger:
-      "bg-gradient-to-r from-rose-600 to-pink-600 text-white hover:from-rose-700 hover:to-pink-700",
-    success:
-      "bg-gradient-to-r from-emerald-600 to-green-600 text-white hover:from-emerald-700 hover:to-green-700",
-    ghost: "text-gray-700 hover:bg-gray-100",
+      "bg-gradient-to-r from-rose-600 to-red-700 text-white hover:from-rose-700 hover:to-red-800",
+    success: "hover:opacity-90",
+    ghost: "hover:opacity-80",
+  };
+
+  const getVariantStyle = (variant) => {
+    switch (variant) {
+      case "primary":
+        return { backgroundColor: "#323232", color: "#DDD0C8" };
+      case "secondary":
+        return { backgroundColor: "#4A4A4A", color: "#DDD0C8" };
+      case "outline":
+        return {
+          borderColor: "#323232",
+          color: "#323232",
+          backgroundColor: "transparent",
+        };
+      case "success":
+        return { backgroundColor: "#323232", color: "#DDD0C8" };
+      case "ghost":
+        return { color: "#323232", backgroundColor: "transparent" };
+      default:
+        return { backgroundColor: "#323232", color: "#DDD0C8" };
+    }
   };
 
   // Define size styles
@@ -53,6 +71,7 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+      style={variant !== "danger" ? getVariantStyle(variant) : {}}
     >
       {children}
     </button>

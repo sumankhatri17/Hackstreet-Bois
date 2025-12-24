@@ -2,10 +2,10 @@ import Badge from "../common/Badge";
 
 const PeerLearnerCard = ({ peer, onOfferHelp }) => {
   return (
-    <div className="p-4 border border-gray-200 rounded-lg hover:border-green-300 hover:shadow-md transition">
+    <div className="p-4 border border-[#C9BDB3] rounded-lg hover:border-[#5A5A5A] hover:shadow-sm transition">
       <div className="flex items-start space-x-3 mb-3">
         {/* Avatar */}
-        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+        <div className="w-12 h-12 rounded-full bg-[#E8DDD3] flex items-center justify-center text-[#323232] font-bold text-lg flex-shrink-0 border border-[#C9BDB3]">
           {peer.name.charAt(0)}
         </div>
 
@@ -31,7 +31,7 @@ const PeerLearnerCard = ({ peer, onOfferHelp }) => {
           ).map((topic, idx) => (
             <span
               key={idx}
-              className="px-2 py-1 bg-orange-100 text-orange-700 text-xs rounded-full"
+              className="px-2 py-1 bg-[#F5EDE5] text-[#323232] text-xs rounded-full border border-[#C9BDB3]"
             >
               {topic}
             </span>
@@ -41,15 +41,15 @@ const PeerLearnerCard = ({ peer, onOfferHelp }) => {
 
       {/* Score Comparison */}
       {peer.their_score !== undefined && peer.your_score !== undefined && (
-        <div className="mb-3 p-2 bg-green-50 border border-green-200 rounded">
+        <div className="mb-3 p-2 bg-[#F5EDE5] border border-[#C9BDB3] rounded">
           <div className="flex justify-between text-xs">
-            <span className="text-gray-600">
+            <span className="text-[#323232]">
               Their score:{" "}
-              <strong className="text-red-600">{peer.their_score}%</strong>
+              <strong className="text-[#323232]">{peer.their_score}%</strong>
             </span>
-            <span className="text-gray-600">
+            <span className="text-[#323232]">
               Your score:{" "}
-              <strong className="text-green-600">{peer.your_score}%</strong>
+              <strong className="text-[#323232]">{peer.your_score}%</strong>
             </span>
           </div>
         </div>
@@ -57,8 +57,8 @@ const PeerLearnerCard = ({ peer, onOfferHelp }) => {
 
       {/* Match Reason */}
       {peer.match_reason && (
-        <div className="mb-3 p-2 bg-blue-50 border border-blue-200 rounded">
-          <p className="text-xs text-blue-700">
+        <div className="mb-3 p-2 bg-[#E8DDD3] border border-[#C9BDB3] rounded">
+          <p className="text-xs text-[#323232]">
             <strong>Why you can help:</strong> {peer.match_reason}
           </p>
         </div>
@@ -67,11 +67,7 @@ const PeerLearnerCard = ({ peer, onOfferHelp }) => {
       {/* Action Button */}
       <button
         onClick={() => onOfferHelp(peer)}
-        className={`w-full px-4 py-2 rounded-lg transition text-sm font-medium ${
-          peer.requested_help
-            ? "bg-gradient-to-r from-green-500 to-teal-500 text-white hover:from-green-600 hover:to-teal-600"
-            : "bg-gradient-to-r from-yellow-500 to-orange-500 text-white hover:from-yellow-600 hover:to-orange-600"
-        }`}
+        className="w-full px-4 py-2 bg-[#323232] text-white rounded-lg hover:bg-[#5A5A5A] transition text-sm font-medium"
       >
         {peer.requested_help ? "Accept Request" : "Offer Help"}
       </button>

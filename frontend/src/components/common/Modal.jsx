@@ -20,16 +20,21 @@ const Modal = ({ isOpen, onClose, title, children }) => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-black bg-opacity-50"
+        className="absolute inset-0"
+        style={{ backgroundColor: "rgba(50, 50, 50, 0.5)" }}
         onClick={onClose}
       />
 
       {/* Modal */}
-      <div className="relative bg-white rounded-lg sm:rounded-2xl shadow-xl max-w-md w-full p-4 sm:p-6">
+      <div
+        className="relative rounded-lg sm:rounded-2xl shadow-xl max-w-md w-full p-4 sm:p-6"
+        style={{ backgroundColor: "#F5EDE5", border: "1px solid #C9BDB3" }}
+      >
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 sm:top-4 sm:right-4 text-gray-400 hover:text-gray-600 text-xl"
+          className="absolute top-3 right-3 sm:top-4 sm:right-4 text-xl hover:opacity-70 transition-opacity"
+          style={{ color: "#5A5A5A" }}
         >
           ✕
         </button>

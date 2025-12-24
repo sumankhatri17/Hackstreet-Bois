@@ -1,6 +1,6 @@
 /**
  * Reusable Input Component
- * 
+ *
  * Props:
  * - label: Input label text
  * - type: Input type (text, email, password, etc.)
@@ -9,9 +9,9 @@
  * - error: Error message to display
  * - placeholder: Placeholder text
  * - required: Boolean for required field
- * 
+ *
  * Usage:
- * <Input 
+ * <Input
  *   label="Email"
  *   type="email"
  *   value={email}
@@ -22,19 +22,22 @@
 
 const Input = ({
   label,
-  type = 'text',
+  type = "text",
   value,
   onChange,
   error,
   placeholder,
   required = false,
-  className = ''
+  className = "",
 }) => {
   return (
     <div className={`mb-4 ${className}`}>
       {label && (
-        <label className="block text-sm font-medium text-gray-700 mb-2">
-          {label} {required && <span className="text-red-500">*</span>}
+        <label
+          className="block text-sm font-medium mb-2"
+          style={{ color: "#323232" }}
+        >
+          {label} {required && <span className="text-red-600">*</span>}
         </label>
       )}
       <input
@@ -43,13 +46,17 @@ const Input = ({
         onChange={onChange}
         placeholder={placeholder}
         required={required}
-        className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent ${
-          error ? 'border-red-500' : 'border-gray-300'
+        className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:border-transparent transition-all ${
+          error ? "border-red-500" : ""
         }`}
+        style={{
+          backgroundColor: "#F5EDE5",
+          color: "#323232",
+          borderColor: error ? "#ef4444" : "#C9BDB3",
+          boxShadow: "0 1px 2px 0 rgba(50, 50, 50, 0.05)",
+        }}
       />
-      {error && (
-        <p className="mt-1 text-sm text-red-600">{error}</p>
-      )}
+      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
     </div>
   );
 };
