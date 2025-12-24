@@ -219,6 +219,10 @@ async def submit_assessment(
     try:
         # Create assessment record
         assessment_data = {
+            "assessment_id": str(uuid.uuid4()),
+            "user_id": current_user.id,
+            "user_name": current_user.name,
+            "user_email": current_user.email,
             "chapter": submission.chapter,
             "subject": submission.subject,
             "answers": [
@@ -241,7 +245,7 @@ async def submit_assessment(
         assessments_dir = Path(__file__).parent.parent.parent.parent / "assessments"
         assessments_dir.mkdir(exist_ok=True)
         
-        assessment_id = str(uuid.uuid4())
+        assessment_id = assessment_data["assessment_id"]
         user_dir = assessments_dir / str(current_user.id)
         user_dir.mkdir(exist_ok=True)
         
