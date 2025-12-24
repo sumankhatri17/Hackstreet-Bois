@@ -1,23 +1,21 @@
-import React from "react";
 import {
+  Navigate,
+  Route,
   BrowserRouter as Router,
   Routes,
-  Route,
-  Navigate,
 } from "react-router-dom";
-import useAuthStore from "./store/authStore";
 
 // Auth Pages
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 
-// Student Pages
-import StudentDashboardPage from "./pages/student/StudentDashboardPage";
+// Dashboard Pages - For all peer learners
 import ProgressPage from "./pages/student/ProgressPage";
 import ResourcesPage from "./pages/student/ResourcesPage";
+import StudentDashboardPage from "./pages/student/StudentDashboardPage";
 
-// Teacher Pages
-import TeacherDashboardPage from "./pages/teacher/TeacherDashboardPage";
+// Assessment Pages
+import InitialAssessmentPage from "./pages/assessment/InitialAssessmentPage";
 
 // Admin Pages
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
@@ -42,45 +40,42 @@ function App() {
     <Router>
       <Routes>
         {/* Public Routes */}
-        <Route
-          path="/"
-          element={<Navigate to="/student/dashboard" replace />}
-        />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Student Routes */}
+        {/* Assessment Routes */}
         <Route
-          path="/student/dashboard"
+          path="/assessment/initial"
           element={
-            <ProtectedRoute requiredRole="student">
+            <ProtectedRoute>
+              <InitialAssessmentPage />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Dashboard Routes - All users are peers */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
               <StudentDashboardPage />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/student/progress"
+          path="/dashboard/progress"
           element={
-            <ProtectedRoute requiredRole="student">
+            <ProtectedRoute>
               <ProgressPage />
             </ProtectedRoute>
           }
         />
         <Route
-          path="/student/resources"
+          path="/dashboard/resources"
           element={
-            <ProtectedRoute requiredRole="student">
+            <ProtectedRoute>
               <ResourcesPage />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Teacher Routes */}
-        <Route
-          path="/teacher/dashboard"
-          element={
-            <ProtectedRoute requiredRole="teacher">
-              <TeacherDashboardPage />
             </ProtectedRoute>
           }
         />

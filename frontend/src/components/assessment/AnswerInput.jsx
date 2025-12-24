@@ -1,4 +1,3 @@
-import React from "react";
 import Input from "../common/Input";
 import Textarea from "../common/Textarea";
 
@@ -68,22 +67,35 @@ const AnswerInput = ({ question, value, onChange }) => {
 
   if (question.type === "short-answer") {
     return (
-      <Input
-        placeholder="Type your answer here..."
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      />
+      <div>
+        <Input
+          placeholder="Type your answer here..."
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+        />
+        <p className="text-xs text-gray-500 mt-2">
+          Tip: Be concise and specific in your answer
+        </p>
+      </div>
     );
   }
 
-  if (question.type === "essay") {
+  if (question.type === "essay" || question.type === "written") {
     return (
-      <Textarea
-        placeholder="Write your detailed answer here..."
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        rows={8}
-      />
+      <div>
+        <Textarea
+          placeholder="Write your detailed answer here... Our AI will evaluate your response for accuracy, clarity, and understanding."
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          rows={10}
+        />
+        <div className="flex justify-between items-center mt-2">
+          <p className="text-xs text-gray-500">
+            {value?.length || 0} characters
+          </p>
+          <p className="text-xs text-gray-500">AI evaluation enabled ✓</p>
+        </div>
+      </div>
     );
   }
 

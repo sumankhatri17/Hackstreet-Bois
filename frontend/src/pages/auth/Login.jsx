@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Card from "../../components/common/Card";
-import Button from "../../components/common/Button";
-import Input from "../../components/common/Input";
-import Select from "../../components/common/Select";
 import Alert from "../../components/common/Alert";
+import Button from "../../components/common/Button";
+import Card from "../../components/common/Card";
+import Input from "../../components/common/Input";
 
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    role: "student",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,15 +23,9 @@ const Login = () => {
       // API call would go here
       // const response = await authService.login(formData);
 
-      // Mock navigation based on role
+      // Mock navigation - everyone goes to dashboard
       setTimeout(() => {
-        if (formData.role === "student") {
-          navigate("/student/dashboard");
-        } else if (formData.role === "teacher") {
-          navigate("/teacher/dashboard");
-        } else if (formData.role === "admin") {
-          navigate("/admin/dashboard");
-        }
+        navigate("/dashboard");
       }, 1000);
     } catch (err) {
       setError("Invalid credentials. Please try again.");
@@ -83,19 +75,6 @@ const Login = () => {
               }
               placeholder="Enter your password"
               required
-            />
-
-            <Select
-              label="Login as"
-              value={formData.role}
-              onChange={(e) =>
-                setFormData({ ...formData, role: e.target.value })
-              }
-              options={[
-                { value: "student", label: "Student" },
-                { value: "teacher", label: "Teacher" },
-                { value: "admin", label: "Admin" },
-              ]}
             />
 
             <Button type="submit" fullWidth loading={loading}>

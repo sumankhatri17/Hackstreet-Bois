@@ -9,9 +9,9 @@
  * 5. Make responsive with mobile menu
  */
 
-import useAuthStore from "../../store/authStore";
-import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import useAuthStore from "../../store/authStore";
 
 const Header = () => {
   const { user, logout } = useAuthStore();
@@ -61,16 +61,10 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-6">
             <Link
-              to="/student/dashboard"
+              to="/dashboard"
               className="text-gray-600 hover:text-gray-900 transition-colors"
             >
-              Student
-            </Link>
-            <Link
-              to="/teacher/dashboard"
-              className="text-gray-600 hover:text-gray-900 transition-colors"
-            >
-              Teacher
+              Dashboard
             </Link>
             <Link
               to="/admin/dashboard"
@@ -109,14 +103,14 @@ const Header = () => {
         {mobileMenuOpen && (
           <div className="md:hidden mt-4 pb-4 space-y-2 border-t pt-4">
             <Link
-              to="/student/dashboard"
+              to="/dashboard"
               className="block px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"
               onClick={() => setMobileMenuOpen(false)}
             >
-              Student
+              Dashboard
             </Link>
             <Link
-              to="/teacher/dashboard"
+              to="/admin/dashboard"
               className="block px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-md"
               onClick={() => setMobileMenuOpen(false)}
             >

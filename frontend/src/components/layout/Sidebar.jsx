@@ -1,25 +1,25 @@
 /**
  * Sidebar Component
+ * Peer-to-Peer Learning Platform Navigation
  *
  * TODO:
- * 1. Add navigation items based on user role (student/teacher/admin)
- * 2. Highlight active menu item
- * 3. Add collapsible functionality
- * 4. Make it responsive (hide on mobile, show on toggle)
+ * 1. Highlight active menu item
+ * 2. Add collapsible functionality
+ * 3. Make it responsive (hide on mobile, show on toggle)
  */
 
-import useAuthStore from "../../store/authStore";
 import { Link } from "react-router-dom";
+import useAuthStore from "../../store/authStore";
 
 const Sidebar = () => {
   const { user } = useAuthStore();
 
-  // Testing menu - access all routes
+  // Menu items for peer-to-peer learning platform
   const menuItems = [
-    { icon: "📊", label: "Student Dashboard", path: "/student/dashboard" },
-    { icon: "📈", label: "Student Progress", path: "/student/progress" },
-    { icon: "📚", label: "Student Resources", path: "/student/resources" },
-    { icon: "👨‍🏫", label: "Teacher Dashboard", path: "/teacher/dashboard" },
+    { icon: "📊", label: "Dashboard", path: "/dashboard" },
+    { icon: "📈", label: "My Progress", path: "/dashboard/progress" },
+    { icon: "📚", label: "Resources", path: "/dashboard/resources" },
+    { icon: "🎓", label: "Initial Assessment", path: "/assessment/initial" },
     { icon: "⚙️", label: "Admin Dashboard", path: "/admin/dashboard" },
   ];
 

@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Card from "../../components/common/Card";
+import Alert from "../../components/common/Alert";
 import Button from "../../components/common/Button";
+import Card from "../../components/common/Card";
 import Input from "../../components/common/Input";
 import Select from "../../components/common/Select";
-import Alert from "../../components/common/Alert";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -13,8 +13,8 @@ const Register = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "student",
-    schoolId: "",
+    schoolName: "",
+    gradeLevel: "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -108,26 +108,53 @@ const Register = () => {
               required
             />
 
-            <Select
-              label="Register as"
-              value={formData.role}
+            <Input
+              label="School / Educational Institution"
+              value={formData.schoolName}
               onChange={(e) =>
-                setFormData({ ...formData, role: e.target.value })
+                setFormData({ ...formData, schoolName: e.target.value })
               }
-              options={[
-                { value: "student", label: "Student" },
-                { value: "teacher", label: "Teacher" },
-              ]}
+              placeholder="Enter your school, college, or university name"
+              required
             />
 
-            <Input
-              label="School ID (Optional)"
-              value={formData.schoolId}
+            <Select
+              label="Current Grade Level"
+              value={formData.gradeLevel}
               onChange={(e) =>
-                setFormData({ ...formData, schoolId: e.target.value })
+                setFormData({ ...formData, gradeLevel: e.target.value })
               }
-              placeholder="Enter school ID if available"
+              options={[
+                { value: "", label: "Select your grade" },
+                { value: "6", label: "Grade 6" },
+                { value: "7", label: "Grade 7" },
+                { value: "8", label: "Grade 8" },
+                { value: "9", label: "Grade 9" },
+                { value: "10", label: "Grade 10" },
+                { value: "11", label: "Grade 11" },
+                { value: "12", label: "Grade 12" },
+              ]}
+              required
             />
+
+            <div className="p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
+              <p className="text-sm text-gray-800 leading-relaxed">
+                <strong>📚 Peer-to-Peer Learning:</strong> You'll take
+                assessments in Math and English based on your grade level. Based
+                on your performance:
+              </p>
+              <ul className="text-sm text-gray-700 mt-2 ml-4 space-y-1">
+                <li>
+                  ✓ Get matched with <strong>peer tutors</strong> who excel in
+                  your weak areas
+                </li>
+                <li>
+                  ✓ Help <strong>other peers</strong> in topics where you're
+                  strong
+                </li>
+                <li>✓ Learn by teaching and being taught by fellow students</li>
+              </ul>
+            </div>
 
             <Button type="submit" fullWidth loading={loading}>
               Register
