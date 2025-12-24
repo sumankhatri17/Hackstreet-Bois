@@ -28,16 +28,18 @@ const Card = ({
 
   return (
     <div
-      className={`bg-white rounded-lg shadow border border-gray-200 ${
+      className={`bg-white rounded-xl shadow-sm border border-gray-100 ${
         paddingStyles[padding]
       } ${className} ${
         hoverable
-          ? "hover:shadow-md transition-shadow duration-200 cursor-pointer"
+          ? "hover:shadow-md hover:border-gray-200 transition-all duration-200 cursor-pointer"
           : ""
       }`}
     >
       {title && (
-        <h3 className="text-xl font-semibold text-gray-900 mb-4">{title}</h3>
+        <h3 className="text-lg font-bold text-gray-900 mb-5 border-b border-gray-100 pb-3">
+          {title}
+        </h3>
       )}
       {children}
     </div>

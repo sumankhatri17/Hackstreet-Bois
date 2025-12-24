@@ -1,31 +1,33 @@
 /**
  * Reusable Badge Component
- * 
+ *
  * Props:
  * - children: Badge text
  * - variant: 'success' | 'warning' | 'danger' | 'info'
  * - size: 'sm' | 'md' | 'lg'
- * 
+ *
  * Usage:
  * <Badge variant="success">Active</Badge>
  */
 
-const Badge = ({ children, variant = 'info', size = 'md' }) => {
+const Badge = ({ children, variant = "info", size = "md" }) => {
   const variants = {
-    success: 'bg-green-100 text-green-800',
-    warning: 'bg-yellow-100 text-yellow-800',
-    danger: 'bg-red-100 text-red-800',
-    info: 'bg-blue-100 text-blue-800'
+    success: "bg-emerald-100 text-emerald-700 ring-1 ring-emerald-600/20",
+    warning: "bg-amber-100 text-amber-700 ring-1 ring-amber-600/20",
+    danger: "bg-rose-100 text-rose-700 ring-1 ring-rose-600/20",
+    info: "bg-blue-100 text-blue-700 ring-1 ring-blue-600/20",
   };
-  
+
   const sizes = {
-    sm: 'text-xs px-2 py-0.5',
-    md: 'text-sm px-3 py-1',
-    lg: 'text-base px-4 py-1.5'
+    sm: "text-xs px-2.5 py-0.5",
+    md: "text-xs px-3 py-1 font-semibold",
+    lg: "text-sm px-4 py-1.5 font-semibold",
   };
-  
+
   return (
-    <span className={`inline-flex items-center rounded-full font-medium ${variants[variant]} ${sizes[size]}`}>
+    <span
+      className={`inline-flex items-center rounded-full ${variants[variant]} ${sizes[size]}`}
+    >
       {children}
     </span>
   );

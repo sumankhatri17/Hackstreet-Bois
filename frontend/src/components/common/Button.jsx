@@ -24,23 +24,27 @@ const Button = ({
 }) => {
   // Define base styles
   const baseStyles =
-    "font-medium rounded-md transition-colors duration-150 disabled:opacity-50 disabled:cursor-not-allowed";
+    "font-semibold rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md";
 
   // Define variant styles
   const variants = {
-    primary: "bg-blue-600 text-white hover:bg-blue-700",
+    primary:
+      "bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700",
     secondary: "bg-gray-600 text-white hover:bg-gray-700",
-    outline: "border-2 border-gray-300 text-gray-700 hover:bg-gray-50",
-    danger: "bg-red-600 text-white hover:bg-red-700",
-    success: "bg-green-600 text-white hover:bg-green-700",
+    outline:
+      "border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400",
+    danger:
+      "bg-gradient-to-r from-rose-600 to-pink-600 text-white hover:from-rose-700 hover:to-pink-700",
+    success:
+      "bg-gradient-to-r from-emerald-600 to-green-600 text-white hover:from-emerald-700 hover:to-green-700",
     ghost: "text-gray-700 hover:bg-gray-100",
   };
 
   // Define size styles
   const sizes = {
-    sm: "px-3 py-1.5 text-sm",
-    md: "px-4 py-2",
-    lg: "px-6 py-3 text-lg",
+    sm: "px-4 py-2 text-sm",
+    md: "px-5 py-2.5 text-sm",
+    lg: "px-6 py-3 text-base",
   };
 
   return (

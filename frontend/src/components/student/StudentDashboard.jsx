@@ -67,39 +67,39 @@ const StudentDashboard = ({ student }) => {
   };
 
   return (
-    <div className="space-y-4 sm:space-y-6">
+    <div className="space-y-6">
       {/* Welcome Section */}
-      <div className="bg-blue-600 rounded-lg p-4 sm:p-6 text-white">
+      <div className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 rounded-xl p-6 sm:p-8 text-white shadow-lg">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
-            <h1 className="text-xl sm:text-2xl font-semibold mb-2">
-              Welcome back, {student?.name}!
+            <h1 className="text-2xl sm:text-3xl font-bold mb-2">
+              Welcome back, {student?.name}
             </h1>
-            <p className="text-sm sm:text-base text-blue-100">
-              Let's continue your learning journey today.
+            <p className="text-sm sm:text-base text-white/90">
+              Continue your learning journey
             </p>
           </div>
           <a
             href="/assessment/initial"
-            className="inline-flex items-center justify-center px-4 py-2 bg-white text-blue-600 rounded-lg hover:bg-blue-50 transition-colors font-medium text-sm whitespace-nowrap"
+            className="inline-flex items-center justify-center px-6 py-3 bg-white text-indigo-600 rounded-lg hover:bg-white/90 transition-all font-semibold text-sm whitespace-nowrap shadow-md hover:shadow-lg"
           >
-            <span className="mr-2">📝</span>
             Retake Assessment
           </a>
         </div>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat, index) => (
-          <Card key={index} className="text-center" hoverable padding="sm">
-            <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2">
-              {stat.value}
-            </div>
-            <div className="text-xs sm:text-sm font-medium text-gray-600">
+          <div
+            key={index}
+            className="bg-white rounded-xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-shadow"
+          >
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">
               {stat.label}
             </div>
-          </Card>
+            <div className="text-3xl font-bold text-gray-900">{stat.value}</div>
+          </div>
         ))}
       </div>
 
@@ -108,17 +108,44 @@ const StudentDashboard = ({ student }) => {
         {/* Recent Activities */}
         <Card title="Recent Activities">
           {recentActivities.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {recentActivities.map((activity, index) => (
                 <div
                   key={index}
-                  className="flex items-start space-x-3 pb-4 border-b last:border-0"
+                  className="flex items-center space-x-4 p-3 rounded-lg hover:bg-gray-50 transition-colors border-l-4 border-indigo-500"
                 >
-                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-semibold">
-                    {activity.type === "assessment" ? "📝" : "✅"}
+                  <div
+                    className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                      activity.type === "assessment"
+                        ? "bg-indigo-100 text-indigo-600"
+                        : "bg-green-100 text-green-600"
+                    }`}
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      {activity.type === "assessment" ? (
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      ) : (
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      )}
+                    </svg>
                   </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-gray-900">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-gray-900 truncate">
                       {activity.title}
                     </p>
                     <p className="text-sm text-gray-500">{activity.date}</p>
@@ -134,7 +161,7 @@ const StudentDashboard = ({ student }) => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-500 text-center py-8">
+            <p className="text-gray-400 text-center py-8">
               No recent activities
             </p>
           )}
@@ -163,43 +190,60 @@ const StudentDashboard = ({ student }) => {
       </div>
 
       {/* Weaknesses & Improvement Areas */}
-      <Card title="🎯 Areas for Improvement (Math & English)">
-        <p className="text-sm text-gray-600 mb-4">
-          Based on your Grade {student?.currentLevel || "?"} assessments
+      <Card title="Areas for Improvement">
+        <p className="text-sm text-gray-500 mb-5">
+          Topics where you scored below 60% - Let's work on these together
         </p>
         {weaknesses.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {weaknesses.map((weakness, index) => (
               <div
                 key={index}
-                className="p-4 bg-red-50 border border-red-200 rounded-lg"
+                className="p-5 bg-gradient-to-br from-rose-50 to-pink-50 border border-rose-200 rounded-xl hover:shadow-md transition-shadow"
               >
-                <div className="flex items-start justify-between mb-2">
+                <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h4 className="font-semibold text-gray-900">
+                    <h4 className="font-bold text-gray-900 text-lg">
                       {weakness.topic}
                     </h4>
-                    <p className="text-sm text-gray-600">{weakness.subject}</p>
+                    <p className="text-sm text-gray-600 mt-1">
+                      {weakness.subject}
+                    </p>
                   </div>
-                  <Badge variant="danger">{weakness.score}%</Badge>
+                  <div className="flex flex-col items-end">
+                    <Badge variant="danger">{weakness.score}%</Badge>
+                    <span className="text-xs text-gray-500 mt-1">
+                      Grade {weakness.gradeLevel}
+                    </span>
+                  </div>
                 </div>
-                <div className="mt-2 p-2 bg-white border border-red-100 rounded">
-                  <p className="text-xs text-gray-600">
-                    Grade {weakness.gradeLevel} level topic
-                  </p>
-                </div>
-                <button className="w-full mt-3 text-sm text-blue-600 hover:text-blue-700 font-medium text-center">
-                  View Study Materials →
+                <button className="w-full mt-3 px-4 py-2 bg-white hover:bg-gray-50 text-indigo-600 rounded-lg font-medium text-sm transition-colors border border-rose-200">
+                  View Study Materials
                 </button>
               </div>
             ))}
           </div>
         ) : (
-          <div className="text-center py-8">
-            <p className="text-gray-500 mb-2">
-              Great job! No major weaknesses detected yet.
+          <div className="text-center py-12 bg-gradient-to-br from-emerald-50 to-green-50 rounded-xl">
+            <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <svg
+                className="w-8 h-8 text-emerald-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+            </div>
+            <p className="text-gray-700 font-medium mb-1">
+              Great job! No major weaknesses detected.
             </p>
-            <p className="text-sm text-gray-400">
+            <p className="text-sm text-gray-500">
               Complete more assessments to get personalized feedback.
             </p>
           </div>
@@ -207,9 +251,9 @@ const StudentDashboard = ({ student }) => {
       </Card>
 
       {/* Peer Tutors Who Can Help Me */}
-      <Card title="🎓 Your Peer Tutors">
-        <p className="text-sm text-gray-600 mb-4">
-          Other students who excel in your weak areas and can help you improve
+      <Card title="Your Peer Tutors">
+        <p className="text-sm text-gray-500 mb-5">
+          Connect with students who excel in areas where you need help
         </p>
         {peerTutors.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -222,9 +266,26 @@ const StudentDashboard = ({ student }) => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-8">
-            <p className="text-gray-500 mb-2">No peer tutors matched yet.</p>
-            <p className="text-sm text-gray-400">
+          <div className="text-center py-12 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl">
+            <div className="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-3">
+              <svg
+                className="w-8 h-8 text-indigo-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                />
+              </svg>
+            </div>
+            <p className="text-gray-700 font-medium mb-1">
+              No peer tutors matched yet
+            </p>
+            <p className="text-sm text-gray-500">
               Complete your assessment to get matched with peers who can help!
             </p>
           </div>
@@ -233,9 +294,9 @@ const StudentDashboard = ({ student }) => {
 
       {/* Your Strong Areas */}
       {strongAreas.length > 0 && (
-        <Card title="💪 Your Strong Areas">
-          <p className="text-sm text-gray-600 mb-4">
-            Topics where you excel (score &gt; 75%)
+        <Card title="Your Strong Areas">
+          <p className="text-sm text-gray-500 mb-5">
+            Topics where you scored above 75% - You can help others here!
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {strongAreas.map((area, index) => (
