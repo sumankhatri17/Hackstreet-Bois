@@ -10,6 +10,9 @@ const StudentDashboard = () => {
   const [selectedPeer, setSelectedPeer] = useState(null);
   const [modalType, setModalType] = useState(null);
 
+  // Debug: Log user data
+  console.log("Dashboard user data:", user);
+
   const handleRequestHelp = (peer) => {
     setSelectedPeer(peer);
     setModalType("request");
@@ -39,13 +42,13 @@ const StudentDashboard = () => {
       color: "success",
     },
     {
-      label: "Reading Level",
-      value: user?.reading_level ? `${user.reading_level}%` : "Not Assessed",
+      label: "Science Level",
+      value: user?.science_level ? `${user.science_level}%` : "Not Assessed",
       color: "info",
     },
     {
-      label: "Writing Level",
-      value: user?.writing_level ? `${user.writing_level}%` : "Not Assessed",
+      label: "English Level",
+      value: user?.english_level ? `${user.english_level}%` : "Not Assessed",
       color: "warning",
     },
   ];

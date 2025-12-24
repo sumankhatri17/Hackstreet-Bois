@@ -24,6 +24,9 @@ class Settings(BaseSettings):
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440  # 24 hours
     
+    # RAG/AI Service
+    MISTRAL_API_KEY: Optional[str] = "CvKE1esO9Z2w9uBvOzoP9M4ZGBuWn99m"
+    
     # Email (optional)
     SMTP_TLS: bool = True
     SMTP_PORT: Optional[int] = None

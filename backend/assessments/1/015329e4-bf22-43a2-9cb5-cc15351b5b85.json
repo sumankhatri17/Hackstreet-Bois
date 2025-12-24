@@ -1,0 +1,74 @@
+{
+  "chapter": "All Chapters",
+  "subject": "maths",
+  "answers": [
+    {
+      "question_id": "dced07d7-3aca-4e29-a4a3-2f7c9317f128",
+      "answer": "sss",
+      "chapter": "Real Numbers",
+      "question": "Prove that \u221a5 is an irrational number using the method of contradiction."
+    },
+    {
+      "question_id": "c790dba0-426e-4059-83f7-ba667b23d070",
+      "answer": "ddd",
+      "chapter": "Polynomials",
+      "question": "If one zero of the polynomial \\( p(x) = 2x^2 - 5x + k \\) is 2, find the value of \\( k \\) and the other zero."
+    },
+    {
+      "question_id": "d3ccd8e4-2143-43cc-aad1-64b8842d5203",
+      "answer": "sads",
+      "chapter": "Linear Equations",
+      "question": "Solve the following pair of linear equations using the substitution method:"
+    },
+    {
+      "question_id": "e8c19003-9a66-4217-9df9-91ec29a48d4d",
+      "answer": "guiggu",
+      "chapter": "Quadratic Equations",
+      "question": "Find the roots of the quadratic equation \\( x^2 - 6x + 9 = 0 \\) by completing the square. Verify your answer using the quadratic formula."
+    },
+    {
+      "question_id": "4d68bd0a-eacf-4979-a390-0da8d15d4eb7",
+      "answer": "hviyvib",
+      "chapter": "Arithmetic Progressions",
+      "question": "The 5th term of an arithmetic progression (AP) is 18, and the 12th term is 46. Find the first term and the common difference of the AP."
+    },
+    {
+      "question_id": "002b84aa-5378-4423-97a4-dd56b827662d",
+      "answer": "opioihoh",
+      "chapter": "Triangles",
+      "question": "In \u0394ABC, if \\( AB = 6 \\) cm, \\( AC = 8 \\) cm, and \\( BC = 10 \\) cm, prove that the triangle is right-angled. Also, find the length of the altitude from vertex A to side BC."
+    },
+    {
+      "question_id": "9d3b059a-1b00-40aa-bb96-da298955e742",
+      "answer": "uogouoih",
+      "chapter": "Coordinate Geometry",
+      "question": "Find the coordinates of the point that divides the line segment joining \\( A(2, -3) \\) and \\( B(5, 6) \\) internally in the ratio 2:1."
+    },
+    {
+      "question_id": "d9675769-6444-4895-bf33-dd2eaedf765a",
+      "answer": "ophih'hi",
+      "chapter": "Trigonometry",
+      "question": "If \\( \\sin \\theta = \\frac{3}{5} \\), find the value of \\( \\cos \\theta \\) and \\( \\tan \\theta \\) without using a calculator."
+    },
+    {
+      "question_id": "ac3a42d5-d1b5-4e75-80f0-45e4864a24e0",
+      "answer": "hio'hiphpi",
+      "chapter": "Circles",
+      "question": "A chord of length 16 cm is drawn in a circle of radius 10 cm. Find the perpendicular distance of the chord from the center of the circle."
+    },
+    {
+      "question_id": "590af0d5-3e4b-4c4a-bac6-932c7e5b32a5",
+      "answer": "phihniknihp",
+      "chapter": "Statistics",
+      "question": "The marks obtained by 10 students in a test are: 45, 58, 62, 70, 55, 68, 72, 50, 65, 60. Calculate the mean and median of the data."
+    },
+    {
+      "question_id": "af6a94a2-1ccf-4859-84ed-2e27307c436a",
+      "answer": "ihnpihih\n",
+      "chapter": "Probability",
+      "question": "A bag contains 5 red balls, 3 blue balls, and 2 green balls. If a ball is drawn at random, what is the probability that it is either red or green?"
+    }
+  ],
+  "submitted_at": "2025-12-24T17:51:48.026888",
+  "status": "pending_evaluation"
+}

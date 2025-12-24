@@ -11,7 +11,7 @@ const resourceService = {
     if (filters.difficulty) params.append("difficulty", filters.difficulty);
     if (filters.type) params.append("resource_type", filters.type);
 
-    const response = await api.get(`/v1/resources?${params.toString()}`);
+    const response = await api.get(`/resources?${params.toString()}`);
     return response.data;
   },
 
@@ -19,7 +19,7 @@ const resourceService = {
    * Get a specific resource by ID
    */
   async getResource(resourceId) {
-    const response = await api.get(`/v1/resources/${resourceId}`);
+    const response = await api.get(`/resources/${resourceId}`);
     return response.data;
   },
 
@@ -32,7 +32,7 @@ const resourceService = {
       throw new Error("User not authenticated");
     }
 
-    const response = await api.get(`/v1/resources/recommended/${user.id}`);
+    const response = await api.get(`/resources/recommended/${user.id}`);
     return response.data;
   },
 
@@ -40,7 +40,7 @@ const resourceService = {
    * Get recommended resources for a specific student (teacher/admin only)
    */
   async getStudentRecommendedResources(studentId) {
-    const response = await api.get(`/v1/resources/recommended/${studentId}`);
+    const response = await api.get(`/resources/recommended/${studentId}`);
     return response.data;
   },
 

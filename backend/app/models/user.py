@@ -1,11 +1,13 @@
 """
 User model for students, teachers, and admins
 """
-from sqlalchemy import Column, Integer, String, Enum, DateTime, ForeignKey, Boolean
-from sqlalchemy.orm import relationship
-from datetime import datetime
 import enum
+from datetime import datetime
+
 from app.db.database import Base
+from sqlalchemy import (Boolean, Column, DateTime, Enum, ForeignKey, Integer,
+                        String)
+from sqlalchemy.orm import relationship
 
 
 class UserRole(str, enum.Enum):
@@ -39,6 +41,6 @@ class User(Base):
     
     # Student-specific fields
     current_level = Column(Integer, nullable=True)
-    reading_level = Column(Integer, nullable=True)
-    writing_level = Column(Integer, nullable=True)
     math_level = Column(Integer, nullable=True)
+    science_level = Column(Integer, nullable=True)
+    english_level = Column(Integer, nullable=True)

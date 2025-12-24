@@ -17,6 +17,7 @@ class UserBase(BaseModel):
 class UserCreate(UserBase):
     password: str
     school_id: Optional[int] = None
+    current_level: Optional[int] = None
 
 
 class UserUpdate(BaseModel):
@@ -31,9 +32,9 @@ class UserResponse(UserBase):
     is_active: bool
     school_id: Optional[int] = None
     current_level: Optional[int] = None
-    reading_level: Optional[int] = None
-    writing_level: Optional[int] = None
     math_level: Optional[int] = None
+    science_level: Optional[int] = None
+    english_level: Optional[int] = None
     created_at: datetime
     
     class Config:

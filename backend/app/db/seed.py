@@ -68,9 +68,9 @@ def seed_users(db: Session):
             role=UserRole.STUDENT,
             school_id=1,
             current_level=5,
-            reading_level=6,
-            writing_level=5,
             math_level=4,
+            science_level=5,
+            english_level=6,
             is_active=True
         ),
     ]

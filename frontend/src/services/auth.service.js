@@ -2,7 +2,7 @@ import api from "./api";
 
 class AuthService {
   async login(credentials) {
-    const response = await api.post("/v1/auth/login", credentials);
+    const response = await api.post("/auth/login", credentials);
     if (response.data.token) {
       localStorage.setItem("authToken", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
@@ -11,12 +11,13 @@ class AuthService {
   }
 
   async register(userData) {
-    const response = await api.post("/v1/auth/register", {
+    const response = await api.post("/auth/register", {
       email: userData.email,
       name: userData.name,
       password: userData.password,
       role: "student",
       school_id: null,
+      current_level: userData.gradeLevel ? parseInt(userData.gradeLevel) : null,
     });
     return response.data;
   }
@@ -41,7 +42,7 @@ class AuthService {
   }
 
   async getMe() {
-    const response = await api.get("/v1/auth/me");
+    const response = await api.get("/auth/me");
     if (response.data) {
       localStorage.setItem("user", JSON.stringify(response.data));
     }

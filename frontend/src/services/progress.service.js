@@ -10,7 +10,7 @@ const progressService = {
       throw new Error("User not authenticated");
     }
 
-    const response = await api.get(`/v1/progress/student/${user.id}`);
+    const response = await api.get(`/progress/student/${user.id}`);
     return response.data;
   },
 
@@ -18,7 +18,7 @@ const progressService = {
    * Get progress data for a specific student (teacher/admin only)
    */
   async getStudentProgress(studentId) {
-    const response = await api.get(`/v1/progress/student/${studentId}`);
+    const response = await api.get(`/progress/student/${studentId}`);
     return response.data;
   },
 
@@ -27,7 +27,7 @@ const progressService = {
    */
   async updateStudentProgress(studentId, progressData) {
     const response = await api.put(
-      `/v1/progress/student/${studentId}`,
+      `/progress/student/${studentId}`,
       progressData
     );
     return response.data;

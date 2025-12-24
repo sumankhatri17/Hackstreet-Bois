@@ -12,6 +12,7 @@ import Register from "./pages/auth/Register";
 
 // Dashboard Pages - For all peer learners
 import ProgressPage from "./pages/student/ProgressPage";
+import RAGAssessmentPage from "./pages/student/RAGAssessmentPage";
 import ResourcesPage from "./pages/student/ResourcesPage";
 import StudentDashboardPage from "./pages/student/StudentDashboardPage";
 
@@ -81,6 +82,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ResourcesPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dashboard/rag-assessment"
+          element={
+            <ProtectedRoute>
+              <RAGAssessmentPage />
             </ProtectedRoute>
           }
         />
