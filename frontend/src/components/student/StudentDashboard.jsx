@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ragQuestionService from "../../services/ragQuestion.service";
 import useAuthStore from "../../store/authStore";
 import Badge from "../common/Badge";
 import Card from "../common/Card";
@@ -9,9 +10,66 @@ const StudentDashboard = () => {
   const { user } = useAuthStore();
   const [selectedPeer, setSelectedPeer] = useState(null);
   const [modalType, setModalType] = useState(null);
+  const [recentActivities, setRecentActivities] = useState([]);
+  const [areasForImprovement, setAreasForImprovement] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // Debug: Log user data
   console.log("Dashboard user data:", user);
+
+  // Fetch recent activities and areas for improvement
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        setLoading(true);
+
+        // Fetch recent activities
+        const activitiesData = await ragQuestionService.getRecentActivities(5);
+        setRecentActivities(activitiesData.activities || []);
+
+        // Fetch progress for all subjects to get areas for improvement
+        const progressData = await ragQuestionService.getAllSubjectsProgress();
+        const allWeaknesses = [];
+
+        // Collect critical weaknesses and areas to improve from all subjects
+        Object.entries(progressData.subjects_progress || {}).forEach(
+          ([subject, data]) => {
+            if (data.has_data) {
+              // Add critical weaknesses
+              (data.critical_weaknesses || []).forEach((weakness) => {
+                allWeaknesses.push({
+                  subject: subject.charAt(0).toUpperCase() + subject.slice(1),
+                  chapter: weakness.chapter,
+                  accuracy: weakness.accuracy,
+                  severity: "critical",
+                });
+              });
+
+              // Add top 2 areas to improve
+              (data.areas_to_improve || []).slice(0, 2).forEach((area) => {
+                allWeaknesses.push({
+                  subject: subject.charAt(0).toUpperCase() + subject.slice(1),
+                  chapter: area.chapter,
+                  accuracy: area.accuracy,
+                  severity: "moderate",
+                });
+              });
+            }
+          }
+        );
+
+        // Sort by accuracy (worst first) and limit to top 6
+        allWeaknesses.sort((a, b) => a.accuracy - b.accuracy);
+        setAreasForImprovement(allWeaknesses.slice(0, 6));
+      } catch (error) {
+        console.error("Failed to load dashboard data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
 
   const handleRequestHelp = (peer) => {
     setSelectedPeer(peer);
@@ -37,6 +95,13 @@ const StudentDashboard = () => {
       color: "primary",
     },
     {
+      label: "Fit to Teach",
+      value: user?.fit_to_teach_level
+        ? `Grade ${user.fit_to_teach_level}`
+        : "Complete Assessment",
+      color: "purple",
+    },
+    {
       label: "Math Level",
       value: user?.math_level ? `${user.math_level}%` : "Not Assessed",
       color: "success",
@@ -53,10 +118,8 @@ const StudentDashboard = () => {
     },
   ];
 
-  // Mock data for now - in real app, fetch from API using user.id
-  const recentActivities = [];
+  // Mock data - in real app, fetch from API
   const upcomingTests = [];
-  const weaknesses = [];
   const strongAreas = [];
   const peerTutors = [];
   const peersToHelp = [];
@@ -82,7 +145,7 @@ const StudentDashboard = () => {
             </p>
           </div>
           <a
-            href="/assessment/initial"
+            href="/assessment"
             className="inline-flex items-center justify-center px-7 py-3.5 rounded-xl transition-all font-medium text-sm whitespace-nowrap shadow-lg hover:shadow-xl hover:opacity-90"
             style={{ backgroundColor: "#323232", color: "#DDD0C8" }}
           >
@@ -116,63 +179,91 @@ const StudentDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
         {/* Recent Activities */}
         <Card title="Recent Activities">
-          {recentActivities.length > 0 ? (
-            <div className="space-y-3">
-              {recentActivities.map((activity, index) => (
-                <div
-                  key={index}
-                  className="flex items-center space-x-4 p-3 rounded-lg transition-colors border-l-4"
-                  style={{ borderColor: "#323232" }}
-                >
+          {loading ? (
+            <div className="text-center py-8">
+              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            </div>
+          ) : recentActivities.length > 0 ? (
+            <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+              {recentActivities.map((activity, index) => {
+                const submittedDate = new Date(activity.submitted_at);
+                const formattedDate = submittedDate.toLocaleDateString(
+                  "en-US",
+                  {
+                    month: "short",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }
+                );
+
+                return (
                   <div
-                    className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                      activity.type === "assessment" ? "" : ""
-                    }`}
-                    style={{ backgroundColor: "#E8DDD3", color: "#323232" }}
+                    key={activity.id}
+                    className="flex items-center space-x-4 p-3 rounded-lg transition-colors border-l-4"
+                    style={{ borderColor: "#323232" }}
                   >
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="#5A5A5A"
-                      viewBox="0 0 24 24"
+                    <div
+                      className="w-10 h-10 rounded-lg flex items-center justify-center"
+                      style={{ backgroundColor: "#E8DDD3", color: "#323232" }}
                     >
-                      {activity.type === "assessment" ? (
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="#5A5A5A"
+                        viewBox="0 0 24 24"
+                      >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           strokeWidth={2}
                           d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                         />
-                      ) : (
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      )}
-                    </svg>
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-gray-900 truncate">
+                        Completed{" "}
+                        {activity.subject.charAt(0).toUpperCase() +
+                          activity.subject.slice(1)}{" "}
+                        Assessment
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        {formattedDate} • {activity.total_questions} questions
+                        {activity.score !== undefined &&
+                          ` • ${activity.score}%`}
+                      </p>
+                    </div>
+                    <Badge
+                      variant={
+                        activity.status === "evaluated"
+                          ? "success"
+                          : activity.status === "evaluating"
+                          ? "warning"
+                          : "secondary"
+                      }
+                    >
+                      {activity.status === "evaluated"
+                        ? "Done"
+                        : activity.status === "evaluating"
+                        ? "Processing"
+                        : activity.status}
+                    </Badge>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="font-medium text-gray-900 truncate">
-                      {activity.title}
-                    </p>
-                    <p className="text-sm text-gray-500">{activity.date}</p>
-                  </div>
-                  <Badge
-                    variant={
-                      activity.status === "completed" ? "success" : "warning"
-                    }
-                  >
-                    {activity.status}
-                  </Badge>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
-            <p className="text-gray-400 text-center py-8">
-              No recent activities
-            </p>
+            <div className="text-center py-8">
+              <p className="text-gray-400 mb-4">No recent activities</p>
+              <a
+                href="/assessment"
+                className="text-sm font-medium"
+                style={{ color: "#323232" }}
+              >
+                Take your first assessment →
+              </a>
+            </div>
           )}
         </Card>
 
@@ -205,74 +296,87 @@ const StudentDashboard = () => {
       {/* Weaknesses & Improvement Areas */}
       <Card title="Areas for Improvement">
         <p className="text-sm text-gray-500 mb-5">
-          Topics where you scored below 60% - Let's work on these together
+          Topics where you need more practice - Let's work on these together
         </p>
-        {weaknesses.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {weaknesses.map((weakness, index) => (
+        {loading ? (
+          <div className="text-center py-8">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+          </div>
+        ) : areasForImprovement.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[32rem] overflow-y-auto pr-2">
+            {areasForImprovement.map((area, index) => (
               <div
                 key={index}
                 className="p-5 rounded-xl border transition-shadow hover:shadow-md"
                 style={{ backgroundColor: "#F5EDE5", borderColor: "#C9BDB3" }}
               >
                 <div className="flex items-start justify-between mb-3">
-                  <div>
+                  <div className="flex-1">
                     <h4 className="font-bold text-gray-900 text-lg">
-                      {weakness.topic}
+                      {area.chapter}
                     </h4>
-                    <p className="text-sm text-gray-600 mt-1">
-                      {weakness.subject}
-                    </p>
+                    <p className="text-sm text-gray-600 mt-1">{area.subject}</p>
                   </div>
-                  <div className="flex flex-col items-end">
-                    <Badge variant="danger">{weakness.score}%</Badge>
+                  <div className="flex flex-col items-end ml-3">
+                    <span
+                      className="text-2xl font-bold"
+                      style={{
+                        color:
+                          area.accuracy < 30
+                            ? "#dc2626"
+                            : area.accuracy < 50
+                            ? "#f59e0b"
+                            : "#6b7280",
+                      }}
+                    >
+                      {area.accuracy}%
+                    </span>
                     <span className="text-xs text-gray-500 mt-1">
-                      Grade {weakness.gradeLevel}
+                      {area.severity === "critical" ? "Critical" : "Needs work"}
                     </span>
                   </div>
                 </div>
-                <button
-                  className="w-full mt-3 px-4 py-2 rounded-lg font-medium text-sm transition-colors border"
-                  style={{
-                    backgroundColor: "#F5EDE5",
-                    color: "#323232",
-                    borderColor: "#C9BDB3",
-                  }}
+                <a
+                  href="/resources"
+                  className="inline-flex items-center text-sm font-medium transition-colors"
+                  style={{ color: "#323232" }}
                 >
-                  View Study Materials
-                </button>
+                  Find resources
+                  <svg
+                    className="w-4 h-4 ml-1"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </a>
               </div>
             ))}
           </div>
         ) : (
-          <div
-            className="text-center py-12 rounded-xl"
-            style={{ backgroundColor: "#F5EDE5", border: "1px solid #C9BDB3" }}
-          >
-            <div
-              className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3"
-              style={{ backgroundColor: "#E8DDD3" }}
-            >
-              <svg
-                className="w-8 h-8"
-                fill="none"
-                stroke="#5A5A5A"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                />
-              </svg>
-            </div>
-            <p className="font-medium mb-1" style={{ color: "#323232" }}>
-              Great job! No major weaknesses detected.
+          <div className="text-center py-8">
+            <p className="text-gray-400 mb-4">
+              {user?.math_level || user?.science_level || user?.english_level
+                ? "Great job! No major areas of concern."
+                : "Take an assessment to see your areas for improvement"}
             </p>
-            <p className="text-sm" style={{ color: "#5A5A5A" }}>
-              Complete more assessments to get personalized feedback.
-            </p>
+            {!user?.math_level &&
+              !user?.science_level &&
+              !user?.english_level && (
+                <a
+                  href="/assessment"
+                  className="text-sm font-medium"
+                  style={{ color: "#323232" }}
+                >
+                  Take your first assessment →
+                </a>
+              )}
           </div>
         )}
       </Card>
@@ -283,7 +387,7 @@ const StudentDashboard = () => {
           Connect with students who excel in areas where you need help
         </p>
         {peerTutors.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto pr-2">
             {peerTutors.map((peer, index) => (
               <PeerTutorCard
                 key={index}

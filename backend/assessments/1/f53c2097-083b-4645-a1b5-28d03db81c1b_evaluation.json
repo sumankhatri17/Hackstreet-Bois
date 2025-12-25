@@ -1,0 +1,210 @@
+{
+  "chapter_analysis": {
+    "Chemical Reactions": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Acids, Bases and Salts": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Metals and Non-metals": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Carbon Compounds": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Periodic Classification": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Life Processes": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Control and Coordination": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Reproduction": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Heredity and Evolution": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Light \u2013 Reflection and Refraction": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Human Eye": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Electricity": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Magnetic Effects of Current": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    }
+  },
+  "question_analysis": {
+    "748905e2-0dd0-4871-90f9-be7edd4bbc5f": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "fc40dc3e-b77d-4ee4-8129-5422d3d74fc3": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect pH scale descriptions and examples."
+    },
+    "20ea2b77-24c3-49eb-b776-d9d3c9ca0efa": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect explanation of atomic packing and bonding."
+    },
+    "7cf9300f-d504-4ce4-8ef8-5b1d05ec584d": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Missing chemical test explanation."
+    },
+    "ae055806-9764-4762-aa74-346653cfa059": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect arrangement criteria and limitation."
+    },
+    "94558e6b-4d74-4970-91c3-9955be137309": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect explanation of respiration as exothermic."
+    },
+    "3a822805-6b80-4359-8003-27afc3aa30ba": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Missing example of homeostasis maintenance."
+    },
+    "44bd2175-f30f-437f-b91a-9c3f7828e330": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect description of genetic variation in sexual reproduction."
+    },
+    "835f115b-f803-4412-936c-cb62271f8715": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "a4198887-14a9-4dcb-8de8-4948435d15fd": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "c5bb523a-6cd3-4530-9b20-97506f17b852": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect lens type for myopia correction."
+    },
+    "1894a9a9-9a79-47bf-931e-77822ed9be8a": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect resistance change description."
+    },
+    "8f19d144-2f3e-4727-9a5a-01617e7d7499": {
+      "correctness": "correct",
+      "score": 1
+    }
+  },
+  "overall_analysis": {
+    "final_score_out_of_100": 30,
+    "estimated_student_grade_level": 6,
+    "strongest_chapters": [
+      "Chemical Reactions",
+      "Heredity and Evolution",
+      "Light \u2013 Reflection and Refraction"
+    ],
+    "weakest_chapters": [
+      "Acids, Bases and Salts",
+      "Metals and Non-metals",
+      "Carbon Compounds",
+      "Periodic Classification",
+      "Life Processes",
+      "Control and Coordination",
+      "Reproduction",
+      "Human Eye",
+      "Electricity"
+    ],
+    "learning_gap_summary": [
+      "The student demonstrates severe weaknesses in understanding acids, bases, and salts, particularly in interpreting the pH scale and identifying examples. This indicates a fundamental misunderstanding of chemical properties and classifications.",
+      "Conceptual gaps in metals and non-metals are evident, particularly in explaining reactivity based on electronic configuration. The student's description of atomic packing and bonding is incorrect, suggesting a lack of foundational knowledge in chemical bonding.",
+      "The student struggles with distinguishing between saturated and unsaturated hydrocarbons and fails to provide a chemical test to differentiate them. This indicates a lack of understanding of organic chemistry principles and practical applications."
+    ]
+  },
+  "evaluated_at": "2025-12-24T19:31:09.954691"
+}

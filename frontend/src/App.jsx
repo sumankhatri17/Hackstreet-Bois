@@ -11,13 +11,11 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 
 // Dashboard Pages - For all peer learners
+import AssessmentEvaluationPage from "./pages/student/AssessmentEvaluationPage";
 import ProgressPage from "./pages/student/ProgressPage";
 import RAGAssessmentPage from "./pages/student/RAGAssessmentPage";
 import ResourcesPage from "./pages/student/ResourcesPage";
 import StudentDashboardPage from "./pages/student/StudentDashboardPage";
-
-// Assessment Pages
-import InitialAssessmentPage from "./pages/assessment/InitialAssessmentPage";
 
 // Protected Route Component
 const ProtectedRoute = ({ children }) => {
@@ -52,10 +50,10 @@ function App() {
 
         {/* Assessment Routes */}
         <Route
-          path="/assessment/initial"
+          path="/assessment"
           element={
             <ProtectedRoute>
-              <InitialAssessmentPage />
+              <RAGAssessmentPage />
             </ProtectedRoute>
           }
         />
@@ -90,6 +88,14 @@ function App() {
           element={
             <ProtectedRoute>
               <RAGAssessmentPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/assessment-evaluation/:assessmentId"
+          element={
+            <ProtectedRoute>
+              <AssessmentEvaluationPage />
             </ProtectedRoute>
           }
         />

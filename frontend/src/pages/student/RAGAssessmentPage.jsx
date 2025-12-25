@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import ragQuestionService from "../../services/ragQuestion.service";
 import useAuthStore from "../../store/authStore";
 
 const RAGAssessmentPage = () => {
-  const { user } = useAuthStore();
+  const { user, refreshUser } = useAuthStore();
+  const navigate = useNavigate();
   const [step, setStep] = useState("select"); // 'select', 'loading', 'questions', 'submitted'
 
   // Chapter selection state
@@ -98,7 +100,16 @@ const RAGAssessmentPage = () => {
       );
 
       setSubmittedAssessment(result);
-      setStep("submitted");
+
+      // Refresh user data to get updated levels
+      try {
+        await refreshUser();
+      } catch (refreshError) {
+        console.error("Failed to refresh user data:", refreshError);
+      }
+
+      // Redirect to evaluation page
+      navigate(`/assessment-evaluation/${result.assessment_id}`);
     } catch (err) {
       setError(
         "Failed to submit assessment: " +

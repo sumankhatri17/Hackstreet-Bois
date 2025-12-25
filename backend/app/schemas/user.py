@@ -35,6 +35,7 @@ class UserResponse(UserBase):
     math_level: Optional[int] = None
     science_level: Optional[int] = None
     english_level: Optional[int] = None
+    fit_to_teach_level: Optional[int] = None
     created_at: datetime
     
     class Config:

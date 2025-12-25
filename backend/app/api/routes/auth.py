@@ -52,7 +52,7 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)):
             detail="Email already registered"
         )
     
-    # Create new user with default levels for students
+    # Create new user without default subject levels
     user = User(
         email=user_data.email,
         name=user_data.name,
@@ -60,9 +60,10 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)):
         role=user_data.role,
         school_id=user_data.school_id,
         current_level=user_data.current_level if user_data.current_level else (10 if user_data.role == "student" else None),
-        math_level=50 if user_data.role == "student" else None,
-        science_level=50 if user_data.role == "student" else None,
-        english_level=50 if user_data.role == "student" else None
+        math_level=None,
+        science_level=None,
+        english_level=None,
+        fit_to_teach_level=None
     )
     
     db.add(user)

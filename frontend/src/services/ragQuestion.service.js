@@ -60,6 +60,40 @@ const ragQuestionService = {
     const response = await api.get(`/rag/assessment/${assessmentId}`);
     return response.data;
   },
+
+  /**
+   * Get evaluation results for an assessment
+   */
+  async getEvaluation(assessmentId) {
+    const response = await api.get(`/rag/evaluate-assessment/${assessmentId}`);
+    return response.data;
+  },
+
+  /**
+   * Get recent activities (assessments taken)
+   */
+  async getRecentActivities(limit = 10) {
+    const response = await api.get("/rag/recent-activities", {
+      params: { limit },
+    });
+    return response.data;
+  },
+
+  /**
+   * Get subject-specific progress analysis
+   */
+  async getSubjectProgress(subject) {
+    const response = await api.get(`/rag/subject-progress/${subject}`);
+    return response.data;
+  },
+
+  /**
+   * Get progress for all subjects
+   */
+  async getAllSubjectsProgress() {
+    const response = await api.get("/rag/all-subjects-progress");
+    return response.data;
+  },
 };
 
 export default ragQuestionService;

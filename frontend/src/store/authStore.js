@@ -45,6 +45,17 @@ const useAuthStore = create((set) => ({
     localStorage.setItem("user", JSON.stringify(userData));
   },
 
+  refreshUser: async () => {
+    try {
+      const userData = await authService.getMe();
+      set({ user: userData });
+      return userData;
+    } catch (error) {
+      console.error("Failed to refresh user data:", error);
+      throw error;
+    }
+  },
+
   clearError: () => set({ error: null }),
 }));
 

@@ -1,0 +1,203 @@
+{
+  "chapter_analysis": {
+    "Chemical Reactions": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Acids, Bases and Salts": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Metals and Non-metals": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Carbon Compounds": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Periodic Classification": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Life Processes": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Control and Coordination": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Reproduction": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Heredity and Evolution": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Light \u2013 Reflection and Refraction": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Human Eye": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Electricity": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Magnetic Effects of Current": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    }
+  },
+  "question_analysis": {
+    "0e3b30db-3055-462f-871f-d41528000239": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "e2dd73a9-3b04-439a-a5a9-3ed44a7ab2c0": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect pH scale descriptions and examples."
+    },
+    "3cb32bef-4116-49f9-a856-f4f0ad830d22": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect explanation of atomic structure."
+    },
+    "0eae91eb-f3f2-4db5-85a9-1fcae26c801e": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "af8716a0-a399-4340-80f3-16f9044b96e5": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect arrangement criteria."
+    },
+    "d5689996-950d-4865-b84b-f1c117ba2116": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect explanation of respiration."
+    },
+    "b3bb1985-d040-45db-86ef-2aba39c7c934": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect explanation of homeostasis."
+    },
+    "15a1956d-5018-459b-8727-77ecf3d8f6dc": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect description of genetic variation."
+    },
+    "0aec97f6-a50a-403e-b6a6-a04310c2b960": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "93f4b697-dfc1-4a3d-ab28-427ddc30ad2f": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "596886ff-842c-4690-8cdd-4cf4709ac861": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect lens type for myopia."
+    },
+    "8b831ec1-292b-4f2f-86cf-e8597a6a0561": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect resistance calculation."
+    },
+    "5d37b720-9de2-4ff6-a11d-6118088c48aa": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect explanation of magnetic field reversal."
+    }
+  },
+  "overall_analysis": {
+    "final_score_out_of_100": 30,
+    "estimated_student_grade_level": 6,
+    "strongest_chapters": [
+      "Chemical Reactions",
+      "Carbon Compounds"
+    ],
+    "weakest_chapters": [
+      "Acids, Bases and Salts",
+      "Metals and Non-metals",
+      "Periodic Classification"
+    ],
+    "learning_gap_summary": [
+      "The student struggles with foundational concepts in Acids, Bases and Salts, particularly the pH scale and its applications. There is a clear misunderstanding of basic definitions and examples.",
+      "In Metals and Non-metals, the student demonstrates a lack of understanding of atomic structure and its relation to conductivity. This indicates a significant gap in basic chemistry concepts.",
+      "The student's performance in Periodic Classification shows a lack of understanding of the arrangement criteria for elements, suggesting a need for review of historical and modern periodic table structures."
+    ]
+  },
+  "evaluated_at": "2025-12-24T19:34:39.224294"
+}

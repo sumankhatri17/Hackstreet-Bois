@@ -1,0 +1,90 @@
+{
+  "assessment_id": "d26cc631-cbba-46cd-ab54-feffe4a5a5b5",
+  "user_id": 1,
+  "user_name": "Hridayanshu Acharya",
+  "user_email": "hridayanshu23@gmail.com",
+  "chapter": "All Chapters",
+  "subject": "science",
+  "answers": [
+    {
+      "question_id": "d2f6c336-1596-44a7-baff-e0789f41e4f7",
+      "answer": "A combination reaction is when two or more substances combine to form a single product.\nExample:\n\n2\n\ud835\udc3b\n2\n+\n\ud835\udc42\n2\n\u2192\n2\n\ud835\udc3b\n2\n\ud835\udc42\n2H\n2\n\t\u200b\n\n+O\n2\n\t\u200b\n\n\u21922H\n2\n\t\u200b\n\nO\n\nA decomposition reaction is when one compound splits into two or more simpler substances.\nExample:\n\n\ud835\udc36\n\ud835\udc4e\n\ud835\udc36\n\ud835\udc42\n3\n\u2192\n\ud835\udc36\n\ud835\udc4e\n\ud835\udc42\n+\n\ud835\udc36\n\ud835\udc42\n2\nCaCO\n3\n\t\u200b\n\n\u2192CaO+CO\n2\n\t\u200b\n",
+      "chapter": "Chemical Reactions",
+      "question": "Explain the difference between a combination reaction and a decomposition reaction with one example of each."
+    },
+    {
+      "question_id": "446108e9-8d09-49c3-8652-ac6941b8886f",
+      "answer": "The pH scale ranges from 0 to 14. Substances with pH less than 7 are basic, pH 7 is acidic and above 7 is neutral.\nExample:\nLemon juice \u2013 neutral\nWater \u2013 acidic\nSoap \u2013 basic",
+      "chapter": "Acids, Bases and Salts",
+      "question": "How does the pH scale help determine whether a substance is acidic, basic, or neutral? Give an example of a substance for each category."
+    },
+    {
+      "question_id": "292f01e1-9d8a-459b-8b5d-82dd9c9f48b2",
+      "answer": "Metals have high melting and boiling points because their atoms are loosely packed and weakly bonded. Non-metals have strong covalent bonds so they melt easily.",
+      "chapter": "Metals and Non-metals",
+      "question": "Why do metals generally have high melting and boiling points, while non-metals (like sulfur or phosphorus) have low melting and boiling points?"
+    },
+    {
+      "question_id": "a2278480-8b56-46d9-9c59-400730329459",
+      "answer": "Saturated hydrocarbons contain only single bonds (e.g., methane).\nUnsaturated hydrocarbons contain double or triple bonds (e.g., ethene).\nUnsaturated hydrocarbons are generally more reactive than saturated ones.",
+      "chapter": "Carbon Compounds",
+      "question": "What is the difference between saturated and unsaturated hydrocarbons? Give one example of each and explain their reactivity."
+    },
+    {
+      "question_id": "3a401f3f-4bba-495b-ba6e-fd619c96031f",
+      "answer": "Mendeleev arranged elements in order of increasing atomic number.\nMajor limitation: He could not place noble gases properly.",
+      "chapter": "Periodic Classification",
+      "question": "How did Mendeleev arrange the elements in his periodic table, and what was the major limitation of his classification?"
+    },
+    {
+      "question_id": "c37259d5-7997-47ba-af7e-80913f09d485",
+      "answer": "Respiration is the process of releasing energy from food in cells.\nBreathing is simply inhalation and exhalation of air.\nRespiration is essential because it provides energy needed for life processes.",
+      "chapter": "Life Processes",
+      "question": "Why is respiration considered an essential life process? How does it differ from breathing?"
+    },
+    {
+      "question_id": "687ac71d-7496-4dc5-94f4-634854652270",
+      "answer": "The nervous system uses electrical impulses and acts very fast.\nThe endocrine system uses hormones and is generally slower in action.",
+      "chapter": "Control and Coordination",
+      "question": "Compare the nervous system and the endocrine system in terms of their mode of action and speed of response."
+    },
+    {
+      "question_id": "7fa3b685-cbba-4eb9-a672-2704e93705e9",
+      "answer": "Sexual reproduction produces genetically identical offspring, which increases adaptability and survival.",
+      "chapter": "Reproduction",
+      "question": "What are the advantages of sexual reproduction over asexual reproduction in terms of genetic diversity?"
+    },
+    {
+      "question_id": "e1dbdddf-0a16-4b49-b5d7-c7e7d63b5941",
+      "answer": "It states that the two alleles of a trait separate during gamete formation and only one enters each gamete.\nFor example, in pea plants, tall (T) and dwarf (t) separate so gametes carry either T or t.",
+      "chapter": "Heredity and Evolution",
+      "question": "How does Mendel\u2019s law of segregation explain the inheritance of traits in pea plants? Provide an example."
+    },
+    {
+      "question_id": "fd457f4c-7db0-4d46-89e1-e5bcfdb770ed",
+      "answer": "A pencil appears bent in water due to refraction. Light bends when it travels from water to air, changing direction and making the pencil look displaced.",
+      "chapter": "Light \u2013 Reflection and Refraction",
+      "question": "Why does a pencil appear bent when placed in a glass of water? Explain using the concept of refraction."
+    },
+    {
+      "question_id": "6cc9e953-955c-4578-a3c3-0cc090e4e920",
+      "answer": "Myopia is when a person cannot see distant objects clearly.\nIt is corrected using a convex lens.",
+      "chapter": "Human Eye",
+      "question": "What is myopia (short-sightedness), and how can it be corrected using a lens? Draw a ray diagram to support your answer."
+    },
+    {
+      "question_id": "a820a4b4-cca0-4e98-8cb4-9a52cc4bf1cb",
+      "answer": "Resistance of a conductor is directly proportional to its length.\nIf length is doubled and area same, resistance becomes half.",
+      "chapter": "Electricity",
+      "question": "What happens to the resistance of a conductor if its length is doubled while keeping its cross-sectional area constant? Explain using Ohm\u2019s law."
+    },
+    {
+      "question_id": "b9642c25-012a-4cd0-a00c-2e9649c8b88b",
+      "answer": "An electric motor works on the principle that current-carrying conductors in a magnetic field experience a force.\nThe split-ring commutator reverses the direction of current every half rotation so the coil keeps rotating in the same direction.",
+      "chapter": "Magnetic Effects of Current",
+      "question": "How does an electric motor work? Explain the role of the split ring commutator in its functioning."
+    }
+  ],
+  "submitted_at": "2025-12-24T19:22:14.115710",
+  "status": "evaluation_failed"
+}

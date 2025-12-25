@@ -44,3 +44,4 @@ class User(Base):
     math_level = Column(Integer, nullable=True)
     science_level = Column(Integer, nullable=True)
     english_level = Column(Integer, nullable=True)
+    fit_to_teach_level = Column(Integer, nullable=True)  # Grade level student can teach
