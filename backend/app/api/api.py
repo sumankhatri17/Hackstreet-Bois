@@ -2,7 +2,7 @@
 API router configuration
 """
 from app.api.routes import (assessments, auth, progress, rag_questions,
-                            resources, schools, users, matching)
+                            resources, schools, users, matching, learning_materials)
 from fastapi import APIRouter
 
 api_router = APIRouter()
@@ -15,3 +15,4 @@ api_router.include_router(progress.router, prefix="/progress", tags=["progress"]
 api_router.include_router(resources.router, prefix="/resources", tags=["resources"])
 api_router.include_router(rag_questions.router, prefix="/rag", tags=["rag-questions"])
 api_router.include_router(matching.router, prefix="/matching", tags=["peer-matching"])
+api_router.include_router(learning_materials.router, prefix="/learning-materials", tags=["learning-materials"])

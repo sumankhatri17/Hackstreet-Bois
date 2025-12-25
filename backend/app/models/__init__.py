@@ -13,6 +13,7 @@ from app.models.matching import (
     ChatMessage,
     SharedResource
 )
+from app.models.learning_material import LearningMaterial
 
 __all__ = [
     "User",
@@ -29,4 +30,5 @@ __all__ = [
     "HelpOffer",
     "ChatMessage",
     "SharedResource",
+    "LearningMaterial",
 ]

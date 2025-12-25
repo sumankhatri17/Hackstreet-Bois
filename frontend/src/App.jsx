@@ -12,6 +12,7 @@ import Register from "./pages/auth/Register";
 
 // Dashboard Pages - For all peer learners
 import AssessmentEvaluationPage from "./pages/student/AssessmentEvaluationPage";
+import MyProgressPage from "./pages/student/MyProgressPage";
 import ProgressPage from "./pages/student/ProgressPage";
 import RAGAssessmentPage from "./pages/student/RAGAssessmentPage";
 import ResourcesPage from "./pages/student/ResourcesPage";
@@ -72,6 +73,22 @@ function App() {
           element={
             <ProtectedRoute>
               <ProgressPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/my-progress"
+          element={
+            <ProtectedRoute>
+              <MyProgressPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/resources"
+          element={
+            <ProtectedRoute>
+              <ResourcesPage />
             </ProtectedRoute>
           }
         />

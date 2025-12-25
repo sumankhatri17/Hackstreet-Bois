@@ -1,14 +1,29 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import DashboardLayout from "../../components/layout/DashboardLayout";
 import ResourcesList from "../../components/student/ResourcesList";
+import LearningRoadmap from "../../components/student/LearningRoadmap";
 import resourceService from "../../services/resource.service";
 import useAuthStore from "../../store/authStore";
 
 const ResourcesPage = () => {
   const { user } = useAuthStore();
+  const [searchParams] = useSearchParams();
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  // Get subject from URL params
+  const subjectParam = searchParams.get("subject");
+  
+  const [selectedSubject, setSelectedSubject] = useState(subjectParam || "Maths");
+
+  const subjects = ["Maths", "English", "Science"];
+
+  // Update when URL params change
+  useEffect(() => {
+    if (subjectParam) setSelectedSubject(subjectParam);
+  }, [subjectParam]);
 
   useEffect(() => {
     const fetchResources = async () => {
@@ -43,24 +58,36 @@ const ResourcesPage = () => {
   return (
     <DashboardLayout user={user}>
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">
+        <h1 className="text-3xl font-bold mb-6" style={{ color: "#323232" }}>
           Learning Resources
         </h1>
 
-        {loading && (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="mt-4 text-gray-600">Loading resources...</p>
-          </div>
-        )}
+        {/* Subject Filter */}
+        <div className="flex gap-2 mb-6">{subjects.map((subject) => (
+            <button
+              key={subject}
+              onClick={() => setSelectedSubject(subject)}
+              className={`px-5 py-2.5 rounded-lg font-medium transition-all shadow-sm`}
+              style={
+                selectedSubject === subject
+                  ? {
+                      backgroundColor: "#323232",
+                      color: "#DDD0C8",
+                    }
+                  : {
+                      backgroundColor: "#F5EDE5",
+                      color: "#5A5A5A",
+                      border: "1px solid #C9BDB3",
+                    }
+              }
+            >
+              {subject}
+            </button>
+          ))}
+        </div>
 
-        {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-            <p className="text-red-800">{error}</p>
-          </div>
-        )}
-
-        {!loading && !error && <ResourcesList resources={resources} />}
+        {/* Content */}
+        <LearningRoadmap subject={selectedSubject} />
       </div>
     </DashboardLayout>
   );

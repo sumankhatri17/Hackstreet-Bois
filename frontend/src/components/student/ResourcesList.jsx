@@ -14,81 +14,86 @@ const ResourcesList = ({ resources = [] }) => {
   return (
     <div className="space-y-4 sm:space-y-6">
       {/* Filters */}
-      <Card>
+      <div
+        className="rounded-2xl p-4 shadow-sm border"
+        style={{ backgroundColor: "#F5EDE5", borderColor: "#C9BDB3" }}
+      >
         <div className="flex flex-wrap gap-2">
-          <Button
-            variant={filter === "all" ? "primary" : "ghost"}
-            size="sm"
-            onClick={() => setFilter("all")}
-            className="text-xs sm:text-sm"
-          >
-            All Resources
-          </Button>
-          <Button
-            variant={filter === "video" ? "primary" : "ghost"}
-            size="sm"
-            onClick={() => setFilter("video")}
-            className="text-xs sm:text-sm"
-          >
-            Videos
-          </Button>
-          <Button
-            variant={filter === "article" ? "primary" : "ghost"}
-            size="sm"
-            onClick={() => setFilter("article")}
-            className="text-xs sm:text-sm"
-          >
-            Articles
-          </Button>
-          <Button
-            variant={filter === "exercise" ? "primary" : "ghost"}
-            size="sm"
-            onClick={() => setFilter("exercise")}
-            className="text-xs sm:text-sm"
-          >
-            Exercises
-          </Button>
+          {[
+            { id: "all", label: "All Resources" },
+            { id: "video", label: "Videos" },
+            { id: "article", label: "Articles" },
+            { id: "exercise", label: "Exercises" },
+          ].map((btn) => (
+            <button
+              key={btn.id}
+              onClick={() => setFilter(btn.id)}
+              className="px-4 py-2 rounded-lg font-medium transition-all text-xs sm:text-sm shadow-sm"
+              style={
+                filter === btn.id
+                  ? {
+                      backgroundColor: "#323232",
+                      color: "#DDD0C8",
+                    }
+                  : {
+                      backgroundColor: "#E8DDD3",
+                      color: "#5A5A5A",
+                      border: "1px solid #C9BDB3",
+                    }
+              }
+            >
+              {btn.label}
+            </button>
+          ))}
         </div>
-      </Card>
+      </div>
 
       {/* Resources Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
         {filteredResources.length > 0 ? (
           filteredResources.map((resource, index) => (
-            <Card
+            <div
               key={index}
-              hoverable
               onClick={() => setSelectedResource(resource)}
+              className="rounded-2xl p-5 shadow-sm border transition-all hover:shadow-md cursor-pointer"
+              style={{ backgroundColor: "#F5EDE5", borderColor: "#C9BDB3" }}
             >
-              <div className="mb-4">
-                <Badge variant="info" size="sm">
+              <div className="mb-4 flex gap-2">
+                <span
+                  className="px-3 py-1 rounded-full text-xs font-semibold"
+                  style={{ backgroundColor: "#E8DDD3", color: "#323232" }}
+                >
                   {resource.type}
-                </Badge>
+                </span>
                 {resource.difficulty && (
-                  <Badge variant="warning" size="sm" className="ml-2">
+                  <span
+                    className="px-3 py-1 rounded-full text-xs font-semibold"
+                    style={{ backgroundColor: "#DDD0C8", color: "#323232" }}
+                  >
                     {resource.difficulty}
-                  </Badge>
+                  </span>
                 )}
               </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="text-lg font-semibold mb-2" style={{ color: "#323232" }}>
                 {resource.title}
               </h3>
-              <p className="text-gray-600 text-sm mb-4">
+              <p className="text-sm mb-4" style={{ color: "#5A5A5A" }}>
                 {resource.description}
               </p>
-              <div className="flex items-center justify-between text-sm text-gray-500">
+              <div className="flex items-center justify-between text-sm" style={{ color: "#5A5A5A" }}>
                 <span>⏱ {resource.duration}</span>
                 <span>📚 {resource.subject}</span>
               </div>
-            </Card>
+            </div>
           ))
         ) : (
           <div className="col-span-full">
-            <Card>
-              <p className="text-center text-gray-500 py-8">
-                No resources found
-              </p>
-            </Card>
+            <div
+              className="rounded-2xl p-8 text-center shadow-sm border"
+              style={{ backgroundColor: "#F5EDE5", borderColor: "#C9BDB3" }}
+            >
+              <p style={{ color: "#5A5A5A" }}>No resources found</p>
+            </div>
           </div>
         )}
       </div>
@@ -103,22 +108,40 @@ const ResourcesList = ({ resources = [] }) => {
         {selectedResource && (
           <div className="space-y-4">
             <div className="flex gap-2">
-              <Badge variant="info">{selectedResource.type}</Badge>
-              <Badge variant="warning">{selectedResource.difficulty}</Badge>
+              <span
+                className="px-3 py-1 rounded-full text-xs font-semibold"
+                style={{ backgroundColor: "#E8DDD3", color: "#323232" }}
+              >
+                {selectedResource.type}
+              </span>
+              <span
+                className="px-3 py-1 rounded-full text-xs font-semibold"
+                style={{ backgroundColor: "#DDD0C8", color: "#323232" }}
+              >
+                {selectedResource.difficulty}
+              </span>
             </div>
-            <p className="text-gray-700">{selectedResource.description}</p>
-            <div className="pt-4 border-t">
-              <p className="text-sm text-gray-600 mb-2">
-                <strong>Subject:</strong> {selectedResource.subject}
+            <p style={{ color: "#323232" }}>{selectedResource.description}</p>
+            <div
+              className="pt-4 border-t"
+              style={{ borderColor: "#C9BDB3" }}
+            >
+              <p className="text-sm mb-2" style={{ color: "#5A5A5A" }}>
+                <strong style={{ color: "#323232" }}>Subject:</strong> {selectedResource.subject}
               </p>
-              <p className="text-sm text-gray-600 mb-2">
-                <strong>Duration:</strong> {selectedResource.duration}
+              <p className="text-sm mb-2" style={{ color: "#5A5A5A" }}>
+                <strong style={{ color: "#323232" }}>Duration:</strong> {selectedResource.duration}
               </p>
-              <p className="text-sm text-gray-600">
-                <strong>Level:</strong> Grade {selectedResource.level}
+              <p className="text-sm" style={{ color: "#5A5A5A" }}>
+                <strong style={{ color: "#323232" }}>Level:</strong> Grade {selectedResource.level}
               </p>
             </div>
-            <Button fullWidth>Start Learning</Button>
+            <button
+              className="w-full px-6 py-3 rounded-lg font-medium transition-all shadow-sm hover:shadow-md"
+              style={{ backgroundColor: "#323232", color: "#DDD0C8" }}
+            >
+              Start Learning
+            </button>
           </div>
         )}
       </Modal>

@@ -90,6 +90,10 @@ const StudentDashboard = () => {
             matchingService.getPotentialMatches(meetingType),
           ]);
 
+          console.log("My matches data:", myMatchesData);
+          console.log("Potential matches data:", potentialMatchesData);
+          console.log("Potential matches array:", potentialMatchesData.potential_matches);
+
           setPeerMatches(myMatchesData.matches || []);
           setPotentialMatches(potentialMatchesData.potential_matches || []);
         } catch (error) {
@@ -196,6 +200,7 @@ const StudentDashboard = () => {
   const teachingMaterials = [];
 
   // Process peer matching data
+  console.log("Processing potential matches:", potentialMatches);
   const peerTutors = potentialMatches
     .filter((match) => match.as_learner)
     .map((match) => ({
@@ -210,6 +215,7 @@ const StudentDashboard = () => {
       compatibility: match.compatibility_score,
     }))
     .slice(0, 6); // Limit to 6 tutors
+  console.log("Peer tutors after processing:", peerTutors);
 
   const peersToHelp = potentialMatches
     .filter((match) => match.as_tutor)
@@ -384,7 +390,7 @@ const StudentDashboard = () => {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
         {stats.map((stat, index) => (
           <div
             key={index}
@@ -540,11 +546,11 @@ const StudentDashboard = () => {
                   </div>
                 </div>
                 <a
-                  href="/resources"
+                  href={`/resources?tab=roadmap&subject=${encodeURIComponent(area.subject)}`}
                   className="inline-flex items-center text-sm font-medium transition-colors"
                   style={{ color: "#323232" }}
                 >
-                  Find resources
+                  View Learning Plan
                   <svg
                     className="w-4 h-4 ml-1"
                     fill="none"
@@ -716,51 +722,6 @@ const StudentDashboard = () => {
               />
             ))}
           </div>
-
-          {/* Help Statistics */}
-          <div
-            className="mt-6 p-4 rounded-lg border"
-            style={{ backgroundColor: "#F5EDE5", borderColor: "#C9BDB3" }}
-          >
-            <h4 className="font-semibold mb-3" style={{ color: "#323232" }}>
-              Your Teaching Impact ✨
-            </h4>
-            <div className="grid grid-cols-3 gap-4">
-              <div className="text-center">
-                <div
-                  className="text-2xl font-bold"
-                  style={{ color: "#323232" }}
-                >
-                  {helpStats.given}
-                </div>
-                <div className="text-xs" style={{ color: "#5A5A5A" }}>
-                  Sessions Given
-                </div>
-              </div>
-              <div className="text-center">
-                <div
-                  className="text-2xl font-bold"
-                  style={{ color: "#323232" }}
-                >
-                  {helpStats.received}
-                </div>
-                <div className="text-xs" style={{ color: "#5A5A5A" }}>
-                  Sessions Received
-                </div>
-              </div>
-              <div className="text-center">
-                <div
-                  className="text-2xl font-bold"
-                  style={{ color: "#323232" }}
-                >
-                  {helpStats.peersHelped}
-                </div>
-                <div className="text-xs" style={{ color: "#5A5A5A" }}>
-                  Peers Helped
-                </div>
-              </div>
-            </div>
-          </div>
         </Card>
       )}
 
@@ -845,64 +806,6 @@ const StudentDashboard = () => {
           </div>
         </Card>
       )}
-
-      {/* Study Materials & Flashcards */}
-      <Card
-        title={
-          <div className="flex items-center space-x-2">
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="#5A5A5A"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-              />
-            </svg>
-            <span>Recommended Study Materials</span>
-          </div>
-        }
-      >
-        {studyMaterials.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {studyMaterials.map((material, index) => (
-              <div
-                key={index}
-                className="p-4 rounded-lg border transition-shadow hover:shadow-sm"
-                style={{ backgroundColor: "#F5EDE5", borderColor: "#C9BDB3" }}
-              >
-                <div className="text-3xl mb-2">{material.icon}</div>
-                <h4 className="font-semibold text-gray-900 mb-1">
-                  {material.title}
-                </h4>
-                <p className="text-sm text-gray-600 mb-2">{material.topic}</p>
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-gray-500">{material.type}</span>
-                  <button
-                    className="text-sm font-medium transition-colors"
-                    style={{ color: "#323232" }}
-                  >
-                    {material.type === "Flashcards" ? "Study →" : "Read →"}
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-8">
-            <p className="text-gray-500 mb-2">
-              No study materials available yet.
-            </p>
-            <p className="text-sm text-gray-400">
-              Complete assessments to receive personalized learning resources.
-            </p>
-          </div>
-        )}
-      </Card>
 
       {/* Help Request Modal */}
       {selectedPeer && (

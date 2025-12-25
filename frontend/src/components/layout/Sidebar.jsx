@@ -53,7 +53,7 @@ const Sidebar = () => {
         </svg>
       ),
       label: "My Progress",
-      path: "/dashboard/progress",
+      path: "/my-progress",
     },
     {
       icon: (
@@ -72,7 +72,7 @@ const Sidebar = () => {
         </svg>
       ),
       label: "Resources",
-      path: "/dashboard/resources",
+      path: "/resources",
     },
     {
       icon: (
