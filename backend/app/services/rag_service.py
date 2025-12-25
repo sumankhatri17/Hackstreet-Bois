@@ -11,7 +11,8 @@ import random
 import faiss
 import numpy as np
 from mistralai import Mistral
-
+from dotenv import load_dotenv
+load_dotenv()
 
 class RAGService:
     """Service to generate questions using RAG and Mistral AI"""
@@ -24,7 +25,8 @@ class RAGService:
             api_key: Mistral AI API key
             data_folder: Path to folder containing data files
         """
-        self.client = Mistral(api_key=api_key)
+        # Only instantiate API client if a non-empty API key is provided
+        self.client = Mistral(api_key=api_key) if api_key else None
         self.data_folder = Path(data_folder)
         self.embed_model = "mistral-embed"
         self.chat_model = "mistral-large-latest"
@@ -249,6 +251,9 @@ class RAGService:
         if not self.all_chunks:
             return np.zeros((0, 0), dtype=np.float32), []
         
+        if self.client is None:
+            raise RuntimeError("Mistral API client not configured (MISTRAL_API_KEY missing). Cannot generate embeddings.")
+        
         texts = [c.get("text", "") for c in self.all_chunks]
         embeddings_list = []
         metadata_list = []
@@ -305,11 +310,63 @@ class RAGService:
         
         self.index.add(embeddings)
         print(f"FAISS index built with {self.index.ntotal} vectors of dimension {d}")
+
+    def load_faiss_index_from_disk(self, faiss_index_path: str, metadata_path: str):
+        """Load FAISS index and metadata JSONL from disk"""
+        if not faiss_index_path or not metadata_path:
+            raise ValueError("faiss_index_path and metadata_path must be provided")
+
+        idx = faiss.read_index(str(faiss_index_path))
+        self.index = idx
+
+        metas = []
+        with open(metadata_path, "r", encoding="utf-8") as mf:
+            for line in mf:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    metas.append(json.loads(line))
+                except json.JSONDecodeError:
+                    metas.append({})
+
+        self.metadata_list = metas
+
+        # Reconstruct simple all_chunks from metadata if not present
+        if not self.all_chunks:
+            self.all_chunks = []
+            for i, m in enumerate(self.metadata_list):
+                text = m.get("text") or m.get("chunk_text") or ""
+                chunk_doc = {
+                    "chunk_id": m.get("chunk_id") or m.get("id") or str(uuid.uuid4()),
+                    "source_id": m.get("source_id"),
+                    "source_file": m.get("source_file"),
+                    "section_label": m.get("section_label"),
+                    "chunk_index": m.get("chunk_index") if m.get("chunk_index") is not None else m.get("embedding_index", i),
+                    "text": text,
+                    "orig_length": m.get("orig_length", len(text) if isinstance(text, str) else 0),
+                }
+                self.all_chunks.append(chunk_doc)
+
+        return True
+
+    def refresh_faiss_index(self, faiss_index_path: str = None, metadata_path: str = None, force: bool = False):
+        """Reload FAISS index from disk if not loaded or if force=True"""
+        # If explicit paths provided, use them; otherwise keep existing metadata paths
+        if faiss_index_path and metadata_path:
+            if force or self.index is None:
+                return self.load_faiss_index_from_disk(faiss_index_path, metadata_path)
+
+        # No explicit paths: do nothing (module init already attempted to load defaults)
+        return False
     
     def retrieve_context(self, question: str, k: int = 5) -> List[Dict[str, Any]]:
         """Retrieve top-k relevant chunks for a question"""
         if self.index is None:
             raise RuntimeError("FAISS index not built. Call build_faiss_index first.")
+        
+        if self.client is None:
+            raise RuntimeError("Mistral API client not configured (MISTRAL_API_KEY missing). Cannot retrieve context.")
         
         # Generate query embedding
         resp = self.client.embeddings.create(
@@ -362,6 +419,9 @@ class RAGService:
         
         messages = [{"role": "user", "content": prompt}]
         
+        if self.client is None:
+            raise RuntimeError("Mistral API client not configured (MISTRAL_API_KEY missing). Cannot generate answers.")
+        
         try:
             chat_response = self.client.chat.complete(
                 model=self.chat_model,
@@ -401,26 +461,56 @@ class RAGService:
         for subj, chapters in structured_data.items():
             if subject and subj.lower() != subject.lower():
                 continue
-            
-            for chapter_data in chapters:
-                if chapter_data.get("chapter", "").lower() == chapter_name.lower():
-                    # Found matching chapter, return existing questions
-                    questions = chapter_data.get("questions", [])
-                    
-                    # Format as question objects
-                    formatted_questions = []
-                    for i, q_text in enumerate(questions[:num_questions]):
-                        formatted_questions.append({
-                            "id": str(uuid.uuid4()),
-                            "question": q_text,
-                            "chapter": chapter_name,
-                            "subject": subj,
-                            "type": "text",
-                            "difficulty": difficulty,
-                            "order": i + 1
-                        })
-                    
-                    return formatted_questions
+
+            # chapters may be a list of chapter dicts, or a dict mapping chapter->content
+            if isinstance(chapters, dict):
+                # iterate key->val where key may be chapter name
+                for ch_key, ch_val in chapters.items():
+                    if isinstance(ch_key, str) and ch_key.lower() == chapter_name.lower():
+                        # ch_val may contain 'questions' or be a list
+                        if isinstance(ch_val, dict) and isinstance(ch_val.get("questions"), list):
+                            questions = ch_val.get("questions", [])
+                        elif isinstance(ch_val, list):
+                            questions = ch_val
+                        else:
+                            questions = []
+
+                        formatted_questions = []
+                        for i, q_text in enumerate(questions[:num_questions]):
+                            formatted_questions.append({
+                                "id": str(uuid.uuid4()),
+                                "question": q_text,
+                                "chapter": chapter_name,
+                                "subject": subj,
+                                "type": "text",
+                                "difficulty": difficulty,
+                                "order": i + 1
+                            })
+                        return formatted_questions
+
+            elif isinstance(chapters, list):
+                for chapter_data in chapters:
+                    # chapter_data may be dict or string
+                    if isinstance(chapter_data, dict):
+                        ch_name = chapter_data.get("chapter") or chapter_data.get("title")
+                        if isinstance(ch_name, str) and ch_name.lower() == chapter_name.lower():
+                            questions = chapter_data.get("questions", []) if isinstance(chapter_data.get("questions"), list) else []
+                            formatted_questions = []
+                            for i, q_text in enumerate(questions[:num_questions]):
+                                formatted_questions.append({
+                                    "id": str(uuid.uuid4()),
+                                    "question": q_text,
+                                    "chapter": chapter_name,
+                                    "subject": subj,
+                                    "type": "text",
+                                    "difficulty": difficulty,
+                                    "order": i + 1
+                                })
+                            return formatted_questions
+                    elif isinstance(chapter_data, str):
+                        if chapter_data.lower() == chapter_name.lower():
+                            # no questions available in this representation
+                            return []
         
         # If no structured data found, generate using RAG
         return self._generate_questions_with_rag(chapter_name, subject, num_questions, difficulty)
@@ -531,8 +621,24 @@ class RAGService:
             }
         ]
         
-        chapters = all_chapters.get(subject.lower(), [])
-        
+        subject_lower = subject.lower() if subject else ""
+
+        # Collect chapters for the subject across grade entries
+        chapters = []
+        for entry in all_chapters:
+            if isinstance(entry, dict):
+                candidate = entry.get(subject_lower, [])
+                if candidate:
+                    # candidate expected to be a list of chapter names
+                    chapters.extend(candidate)
+
+        # Fallback: try grade 10 entry if still empty
+        if not chapters:
+            for entry in all_chapters:
+                if isinstance(entry, dict) and entry.get("grade") == 10:
+                    chapters = entry.get(subject_lower, []) or []
+                    break
+
         if not chapters:
             raise ValueError(f"No chapters found for subject: {subject}")
         
