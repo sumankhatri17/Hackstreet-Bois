@@ -62,8 +62,8 @@ class AsymmetricGaleShapleyMatcher:
         Returns score between 0-100
         """
         # Grade level filter - tutor must be same or higher grade
-        if tutor_grade and learner_grade and tutor_grade < learner_grade:
-            return 0.0  # Cannot tutor someone in a higher grade
+        # if tutor_grade and learner_grade and tutor_grade < learner_grade:
+        #     return 0.0  # Cannot tutor someone in a higher grade
         
         # Score difference (optimal gap is 3-5 points)
         score_gap = tutor_score - learner_score
