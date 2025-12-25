@@ -2,12 +2,13 @@
 User management routes
 """
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
-from app.db.database import get_db
+
 from app.api.deps import get_current_active_user
+from app.db.database import get_db
 from app.models.user import User
 from app.schemas.user import UserResponse, UserUpdate
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 
@@ -35,6 +36,30 @@ def update_current_user(
     db.commit()
     db.refresh(current_user)
     return current_user
+
+
+@router.get("/locations")
+def get_user_locations(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_active_user)
+):
+    """Get anonymized locations of all active users for usage map visualization"""
+    users = db.query(User).filter(
+        User.latitude.isnot(None),
+        User.longitude.isnot(None),
+        User.location.isnot(None)
+    ).all()
+    
+    locations = [
+        {
+            "latitude": user.latitude,
+            "longitude": user.longitude,
+            "location": user.location
+        }
+        for user in users
+    ]
+    
+    return {"locations": locations, "count": len(locations)}
 
 
 @router.get("/{user_id}", response_model=UserResponse)

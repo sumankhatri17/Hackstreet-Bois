@@ -1,7 +1,7 @@
 /**
  * Matching Service - API calls for peer-to-peer matching
  */
-import api from './api';
+import api from "./api";
 
 const matchingService = {
   /**
@@ -16,7 +16,7 @@ const matchingService = {
    * Create peer-to-peer matches for a specific chapter
    */
   createMatches: async (matchingData) => {
-    const response = await api.post('/matching/create-matches', matchingData);
+    const response = await api.post("/matching/create-matches", matchingData);
     return response.data;
   },
 
@@ -24,7 +24,7 @@ const matchingService = {
    * Get all matches for the current student
    */
   getMyMatches: async () => {
-    const response = await api.get('/matching/my-matches');
+    const response = await api.get("/matching/my-matches");
     return response.data;
   },
 
@@ -32,7 +32,9 @@ const matchingService = {
    * Update match status (accept, reject, complete)
    */
   updateMatchStatus: async (matchId, status) => {
-    const response = await api.patch(`/matching/match/${matchId}/status`, { status });
+    const response = await api.patch(`/matching/match/${matchId}/status`, {
+      status,
+    });
     return response.data;
   },
 
@@ -41,7 +43,7 @@ const matchingService = {
    */
   getAvailableChapters: async (subject = null) => {
     const params = subject ? { subject } : {};
-    const response = await api.get('/matching/available-chapters', { params });
+    const response = await api.get("/matching/available-chapters", { params });
     return response.data;
   },
 
@@ -52,7 +54,7 @@ const matchingService = {
     const params = {};
     if (subject) params.subject = subject;
     if (chapter) params.chapter = chapter;
-    const response = await api.get('/matching/stats', { params });
+    const response = await api.get("/matching/stats", { params });
     return response.data;
   },
 
@@ -61,15 +63,20 @@ const matchingService = {
    */
   getStudentPerformance: async (studentId, subject = null) => {
     const params = subject ? { subject } : {};
-    const response = await api.get(`/matching/student/${studentId}/performance`, { params });
+    const response = await api.get(
+      `/matching/student/${studentId}/performance`,
+      { params }
+    );
     return response.data;
   },
 
   /**
    * Get automatic potential match suggestions
    */
-  getPotentialMatches: async () => {
-    const response = await api.get('/matching/all-potential-matches');
+  getPotentialMatches: async (meetingType = "online") => {
+    const response = await api.get("/matching/potential-matches", {
+      params: { meeting_type: meetingType },
+    });
     return response.data;
   },
 
@@ -77,7 +84,7 @@ const matchingService = {
    * Create a help request
    */
   createHelpRequest: async (data) => {
-    const response = await api.post('/matching/help-request', data);
+    const response = await api.post("/matching/help-request", data);
     return response.data;
   },
 
@@ -85,7 +92,7 @@ const matchingService = {
    * Create a help offer
    */
   createHelpOffer: async (data) => {
-    const response = await api.post('/matching/help-offer', data);
+    const response = await api.post("/matching/help-offer", data);
     return response.data;
   },
 
@@ -93,7 +100,7 @@ const matchingService = {
    * Get available help requests
    */
   getAvailableHelpRequests: async () => {
-    const response = await api.get('/matching/help-requests');
+    const response = await api.get("/matching/help-requests");
     return response.data;
   },
 
@@ -101,7 +108,7 @@ const matchingService = {
    * Get available help offers
    */
   getAvailableHelpOffers: async () => {
-    const response = await api.get('/matching/help-offers');
+    const response = await api.get("/matching/help-offers");
     return response.data;
   },
 
@@ -109,7 +116,9 @@ const matchingService = {
    * Respond to a help request
    */
   respondToHelpRequest: async (requestId) => {
-    const response = await api.post(`/matching/help-request/${requestId}/respond`);
+    const response = await api.post(
+      `/matching/help-request/${requestId}/respond`
+    );
     return response.data;
   },
 

@@ -13,6 +13,18 @@ const PeerLearnerCard = ({ peer, onOfferHelp }) => {
         <div className="flex-1 min-w-0">
           <h4 className="font-semibold text-gray-900 truncate">{peer.name}</h4>
           <p className="text-sm text-gray-600">Grade {peer.grade}</p>
+          {peer.email && (
+            <a
+              href={`mailto:${peer.email}`}
+              className="text-xs text-blue-600 hover:text-blue-800 truncate block"
+              title={peer.email}
+            >
+              ✉️ {peer.email}
+            </a>
+          )}
+          {peer.location && (
+            <p className="text-xs text-gray-500 mt-1">📍 {peer.location}</p>
+          )}
         </div>
 
         {/* Request Badge */}
@@ -65,12 +77,12 @@ const PeerLearnerCard = ({ peer, onOfferHelp }) => {
       )}
 
       {/* Action Button */}
-      <button
-        onClick={() => onOfferHelp(peer)}
-        className="w-full px-4 py-2 bg-[#323232] text-white rounded-lg hover:bg-[#5A5A5A] transition text-sm font-medium"
+      <a
+        href={`mailto:${peer.email}?subject=Offer to Help - ${peer.subject}`}
+        className="block w-full px-4 py-2 bg-[#323232] text-white rounded-lg hover:bg-[#5A5A5A] transition text-sm font-medium text-center"
       >
-        {peer.requested_help ? "Accept Request" : "Offer Help"}
-      </button>
+        Send Email
+      </a>
     </div>
   );
 };

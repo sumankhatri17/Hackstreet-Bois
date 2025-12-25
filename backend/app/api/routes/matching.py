@@ -2,24 +2,77 @@
 API routes for peer-to-peer matching
 """
 from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
 
 from app.api import deps
+from app.models.matching import (HelpOffer, HelpRequest, HelpRequestStatus,
+                                 MatchStatus, PeerMatch,
+                                 StudentChapterPerformance)
 from app.models.user import User, UserRole
-from app.models.matching import (
-    PeerMatch, 
-    StudentChapterPerformance, 
-    MatchStatus,
-    HelpRequest,
-    HelpOffer,
-    HelpRequestStatus
-)
 from app.schemas import matching as matching_schemas
 from app.services.matching_service import get_peer_matching_service
-
+from fastapi import APIRouter, Depends, HTTPException, Query, status
+from sqlalchemy.orm import Session
 
 router = APIRouter()
+
+
+@router.post("/update-my-performance")
+def update_my_performance(
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    """
+    Update current user's chapter performance from evaluation files.
+    """
+    matching_service = get_peer_matching_service(db)
+    count = matching_service.update_student_chapter_performances(current_user.id)
+    
+    print(f"[DEBUG] Populated {count} chapter performance records for user {current_user.id}")
+    
+    return {
+        "message": "Performance data updated successfully", 
+        "user_id": current_user.id,
+        "records_created": count
+    }
+
+
+@router.post("/populate-all-performances")
+def populate_all_performances(
+    db: Session = Depends(deps.get_db),
+):
+    """
+    Populate all users' performance data from assessment files.
+    Open endpoint for testing - no authentication required.
+    """
+    matching_service = get_peer_matching_service(db)
+    
+    # Get all users
+    all_users = db.query(User).all()
+    results = []
+    
+    for user in all_users:
+        try:
+            count = matching_service.update_student_chapter_performances(user.id)
+            results.append({
+                "user_id": user.id,
+                "name": user.name,
+                "records_created": count
+            })
+            print(f"[DEBUG] Populated {count} records for user {user.id} ({user.name})")
+        except Exception as e:
+            import traceback
+            print(f"[ERROR] Failed to populate user {user.id}: {e}")
+            print(traceback.format_exc())
+            results.append({
+                "user_id": user.id,
+                "name": user.name,
+                "error": str(e)
+            })
+    
+    return {
+        "message": "Performance data populated for all users",
+        "results": results
+    }
 
 
 @router.post("/update-performance/{user_id}")
@@ -67,6 +120,8 @@ def create_chapter_matches(
     matches = matching_service.create_matches(
         subject=request.subject,
         chapter=request.chapter,
+        meeting_type=request.meeting_type,
+        location=request.location,
         school_id=request.school_id or current_user.school_id,
     )
     
@@ -84,6 +139,7 @@ def create_chapter_matches(
                     learner_id=match.learner_id,
                     chapter=match.chapter,
                     subject=match.subject,
+                    meeting_type=match.meeting_type.value if hasattr(match.meeting_type, 'value') else match.meeting_type,
                     tutor_score=match.tutor_score,
                     learner_score=match.learner_score,
                     compatibility_score=match.compatibility_score,
@@ -95,8 +151,13 @@ def create_chapter_matches(
                     completed_at=match.completed_at,
                     tutor_name=tutor.name,
                     tutor_email=tutor.email,
+                    tutor_grade=tutor.current_level,
+                    tutor_fit_to_teach_level=tutor.fit_to_teach_level,
+                    tutor_location=tutor.location,
                     learner_name=learner.name,
                     learner_email=learner.email,
+                    learner_grade=learner.current_level,
+                    learner_location=learner.location,
                     tutor_school=tutor.school.name if tutor.school else None,
                     learner_school=learner.school.name if learner.school else None,
                 )
@@ -138,6 +199,7 @@ def get_my_matches(
             learner_id=match.learner_id,
             chapter=match.chapter,
             subject=match.subject,
+            meeting_type=match.meeting_type.value if hasattr(match.meeting_type, 'value') else match.meeting_type,
             tutor_score=match.tutor_score,
             learner_score=match.learner_score,
             compatibility_score=match.compatibility_score,
@@ -148,9 +210,14 @@ def get_my_matches(
             accepted_at=match.accepted_at,
             completed_at=match.completed_at,
             tutor_name=tutor.name if tutor else "Unknown",
-            tutor_email=tutor.email if tutor else "",
+            tutor_email=tutor.email if tutor else "unknown@example.com",
+            tutor_grade=tutor.current_level if tutor else None,
+            tutor_fit_to_teach_level=tutor.fit_to_teach_level if tutor else None,
+            tutor_location=tutor.location if tutor else None,
             learner_name=learner.name if learner else "Unknown",
-            learner_email=learner.email if learner else "",
+            learner_email=learner.email if learner else "unknown@example.com",
+            learner_grade=learner.current_level if learner else None,
+            learner_location=learner.location if learner else None,
             tutor_school=tutor.school.name if tutor and tutor.school else None,
             learner_school=learner.school.name if learner and learner.school else None,
         )
@@ -361,147 +428,96 @@ def get_student_performance(
     ]
 
 
-@router.get("/potential-matches", response_model=matching_schemas.PotentialMatchesResponse)
-def get_potential_matches(
-    subject: str,
-    chapter: str,
-    db: Session = Depends(deps.get_db),
+@router.get("/potential-matches")
+async def get_potential_matches(
+    meeting_type: str = "online",
     current_user: User = Depends(deps.get_current_user),
+    db: Session = Depends(deps.get_db),
 ):
     """
-    Get automatic suggestions for potential tutors/learners for the current student.
-    Shows who they can learn from and who they can teach.
+    Get all potential matches for the current student across all subjects.
+    Uses SUBJECT-LEVEL matching to support cross-grade peer learning
+    (e.g., Grade 10 student tutoring Grade 7 student in Science).
+    
+    Returns subjects where they can tutor others and subjects where they need help.
+    
+    Query params:
+    - meeting_type: "online" (default) or "physical" (location-based)
     """
     matching_service = get_peer_matching_service(db)
     
-    # Get student's performance
-    student_perf = db.query(StudentChapterPerformance).filter(
-        StudentChapterPerformance.student_id == current_user.id,
-        StudentChapterPerformance.subject == subject,
-        StudentChapterPerformance.chapter == chapter,
-    ).first()
+    # For physical meetups, use user's location
+    location = current_user.location if meeting_type == "physical" else None
     
-    # Initialize response
-    can_tutor = False
-    can_learn = False
-    potential_tutors = []
-    potential_learners = []
-    student_score = None
+    print(f"[DEBUG MATCHING] Getting matches for user {current_user.id} ({current_user.name})")
+    print(f"  Meeting type: {meeting_type}")
+    print(f"  Location: {location}")
+    print(f"  GPS: lat={current_user.latitude}, lng={current_user.longitude}")
     
-    if student_perf:
-        student_score = student_perf.score
-        
-        # Check if student can be a tutor
-        if student_perf.score >= matching_service.matcher.tutor_threshold:
-            can_tutor = True
-            # Get potential learners they can help
-            learners = matching_service.get_potential_learners_for_student(
-                current_user.id, subject, chapter, limit=10
-            )
-            potential_learners = [
-                matching_schemas.PotentialLearner(
-                    student_id=learner_id,
-                    name=data['name'],
-                    email=data['email'],
-                    score=data['score'],
-                    accuracy=data['accuracy'],
-                    compatibility_score=compatibility,
-                    school=data['school'],
-                )
-                for learner_id, compatibility, data in learners
-            ]
-        
-        # Check if student needs help
-        if student_perf.score <= matching_service.matcher.learner_threshold:
-            can_learn = True
-            # Get potential tutors who can help them
-            tutors = matching_service.get_potential_tutors_for_student(
-                current_user.id, subject, chapter, limit=10
-            )
-            potential_tutors = [
-                matching_schemas.PotentialTutor(
-                    student_id=tutor_id,
-                    name=data['name'],
-                    email=data['email'],
-                    score=data['score'],
-                    accuracy=data['accuracy'],
-                    compatibility_score=compatibility,
-                    school=data['school'],
-                )
-                for tutor_id, compatibility, data in tutors
-            ]
-    
-    return matching_schemas.PotentialMatchesResponse(
-        subject=subject,
-        chapter=chapter,
-        student_score=student_score,
-        can_tutor=can_tutor,
-        can_learn=can_learn,
-        potential_tutors=potential_tutors,
-        potential_learners=potential_learners,
+    # Get subject-level matches (works across different grade levels)
+    subject_matches = matching_service.get_subject_level_matches(
+        current_user.id,
+        meeting_type=meeting_type,
+        location=location,
+        limit=10
     )
-
-
-@router.get("/all-potential-matches")
-def get_all_potential_matches(
-    db: Session = Depends(deps.get_db),
-    current_user: User = Depends(deps.get_current_user),
-):
-    """
-    Get all potential matches for the current student across all chapters.
-    Returns chapters where they can tutor others and chapters where they need help.
-    """
-    matching_service = get_peer_matching_service(db)
     
-    # Get all student's performance data
-    student_performances = db.query(StudentChapterPerformance).filter(
-        StudentChapterPerformance.student_id == current_user.id
-    ).all()
+    print(f"[DEBUG MATCHING] User {current_user.id} ({current_user.name}):")
+    print(f"  Can tutor: {len(subject_matches['can_tutor'])} subjects")
+    print(f"  Needs help: {len(subject_matches['needs_help'])} subjects")
+    for subj in subject_matches['can_tutor']:
+        print(f"    - Can tutor {subj['subject']}: {len(subj['potential_learners'])} learners")
+    for subj in subject_matches['needs_help']:
+        print(f"    - Needs help in {subj['subject']}: {len(subj['potential_tutors'])} tutors")
     
+    # Transform to frontend-friendly format
     potential_matches = []
     
-    for perf in student_performances:
-        # Check if student can be a tutor for this chapter
-        if perf.score >= matching_service.matcher.tutor_threshold:
-            # Get potential learners
-            learners = matching_service.get_potential_learners_for_student(
-                current_user.id, perf.subject, perf.chapter, limit=5
-            )
-            for learner_id, compatibility, data in learners:
-                potential_matches.append({
-                    'as_tutor': True,
-                    'as_learner': False,
-                    'subject': perf.subject,
-                    'chapter': perf.chapter,
-                    'tutor_id': current_user.id,
-                    'tutor_name': current_user.name,
-                    'tutor_score': perf.score,
-                    'learner_id': learner_id,
-                    'learner_name': data['name'],
-                    'learner_score': data['score'],
-                    'compatibility_score': compatibility,
-                })
-        
-        # Check if student needs help for this chapter
-        if perf.score <= matching_service.matcher.learner_threshold:
-            # Get potential tutors
-            tutors = matching_service.get_potential_tutors_for_student(
-                current_user.id, perf.subject, perf.chapter, limit=5
-            )
-            for tutor_id, compatibility, data in tutors:
-                potential_matches.append({
-                    'as_tutor': False,
-                    'as_learner': True,
-                    'subject': perf.subject,
-                    'chapter': perf.chapter,
-                    'tutor_id': tutor_id,
-                    'tutor_name': data['name'],
-                    'tutor_score': data['score'],
-                    'learner_id': current_user.id,
-                    'learner_name': current_user.name,
-                    'learner_score': perf.score,
-                    'compatibility_score': compatibility,
-                })
+    # Add tutoring opportunities
+    for tutor_subject in subject_matches['can_tutor']:
+        for learner in tutor_subject['potential_learners']:
+            potential_matches.append({
+                'as_tutor': True,
+                'as_learner': False,
+                'subject': tutor_subject['subject'],
+                'chapter': None,  # Subject-level match, no specific chapter
+                'tutor_id': current_user.id,
+                'tutor_name': current_user.name,
+                'tutor_email': current_user.email,
+                'tutor_score': tutor_subject['my_average_score'],
+                'tutor_grade': current_user.current_level,
+                'tutor_location': current_user.location,
+                'learner_id': learner['user_id'],
+                'learner_name': learner['name'],
+                'learner_email': learner['email'],
+                'learner_score': learner['average_score'],
+                'learner_grade': learner['grade'],
+                'learner_location': learner['location'],
+                'compatibility_score': learner['compatibility_score'],
+            })
+    
+    # Add learning opportunities
+    for help_subject in subject_matches['needs_help']:
+        for tutor in help_subject['potential_tutors']:
+            potential_matches.append({
+                'as_tutor': False,
+                'as_learner': True,
+                'subject': help_subject['subject'],
+                'chapter': None,  # Subject-level match, no specific chapter
+                'tutor_id': tutor['user_id'],
+                'tutor_name': tutor['name'],
+                'tutor_email': tutor['email'],
+                'tutor_score': tutor['average_score'],
+                'tutor_grade': tutor['grade'],
+                'tutor_location': tutor['location'],
+                'learner_id': current_user.id,
+                'learner_name': current_user.name,
+                'learner_email': current_user.email,
+                'learner_score': help_subject['my_average_score'],
+                'learner_grade': current_user.current_level,
+                'learner_location': current_user.location,
+                'compatibility_score': tutor['compatibility_score'],
+            })
     
     return {
         'potential_matches': potential_matches,

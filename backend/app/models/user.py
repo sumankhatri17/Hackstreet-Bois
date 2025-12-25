@@ -5,8 +5,8 @@ import enum
 from datetime import datetime
 
 from app.db.database import Base
-from sqlalchemy import (Boolean, Column, DateTime, Enum, ForeignKey, Integer,
-                        String)
+from sqlalchemy import (Boolean, Column, DateTime, Enum, Float, ForeignKey,
+                        Integer, String)
 from sqlalchemy.orm import relationship
 
 
@@ -45,3 +45,6 @@ class User(Base):
     science_level = Column(Integer, nullable=True)
     english_level = Column(Integer, nullable=True)
     fit_to_teach_level = Column(Integer, nullable=True)  # Grade level student can teach
+    location = Column(String, nullable=True)  # City/area for physical meetups
+    latitude = Column(Float, nullable=True)  # GPS coordinate for proximity matching
+    longitude = Column(Float, nullable=True)  # GPS coordinate for proximity matching

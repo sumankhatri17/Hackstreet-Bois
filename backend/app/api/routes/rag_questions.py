@@ -306,6 +306,19 @@ async def submit_assessment(
             db.commit()
             db.refresh(current_user)
             
+            # Update student chapter performance for peer matching
+            try:
+                from app.services.matching_service import \
+                    get_peer_matching_service
+                matching_service = get_peer_matching_service(db)
+                count = matching_service.update_student_chapter_performances(current_user.id)
+                print(f"[DEBUG POPULATE] Updated {count} chapter performance records for user {current_user.id} after submission")
+            except Exception as e:
+                # Log error but don't fail the evaluation
+                import traceback
+                print(f"[ERROR POPULATE] Failed to update chapter performance: {e}")
+                print(traceback.format_exc())
+            
             # Update assessment status
             assessment_data["status"] = "evaluated"
             with open(assessment_file, "w", encoding="utf-8") as f:
@@ -541,11 +554,13 @@ async def evaluate_assessment(
         try:
             from app.services.matching_service import get_peer_matching_service
             matching_service = get_peer_matching_service(db)
-            matching_service.update_student_chapter_performances(current_user.id)
-            print(f"Updated chapter performance for user {current_user.id}")
+            count = matching_service.update_student_chapter_performances(current_user.id)
+            print(f"[DEBUG POPULATE] Updated {count} chapter performance records for user {current_user.id}")
         except Exception as e:
             # Log error but don't fail the evaluation
-            print(f"Failed to update chapter performance: {e}")
+            import traceback
+            print(f"[ERROR POPULATE] Failed to update chapter performance: {e}")
+            print(traceback.format_exc())
         
         return EvaluationResponse(
             assessment_id=assessment_id,
@@ -662,6 +677,12 @@ async def get_subject_progress(
             try:
                 with open(assessment_file, "r", encoding="utf-8") as f:
                     assessment_data = json.load(f)
+                
+                # SECURITY: Verify this assessment belongs to current user
+                assessment_user_email = assessment_data.get("user_email") or assessment_data.get("email")
+                if assessment_user_email and assessment_user_email != current_user.email:
+                    print(f"Warning: Assessment {assessment_file} belongs to {assessment_user_email}, not {current_user.email}")
+                    continue  # Skip assessments from other users
                 
                 if assessment_data.get("subject", "").lower() == subject.lower():
                     submitted_at = assessment_data.get("submitted_at", "")

@@ -48,6 +48,14 @@ class AuthService {
     }
     return response.data;
   }
+
+  async updateProfile(userData) {
+    const response = await api.patch("/auth/profile", userData);
+    if (response.data) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+    }
+    return response.data;
+  }
 }
 
 export default new AuthService();

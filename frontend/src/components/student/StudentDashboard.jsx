@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-import ragQuestionService from "../../services/ragQuestion.service";
 import matchingService from "../../services/matching.service";
+import ragQuestionService from "../../services/ragQuestion.service";
 import useAuthStore from "../../store/authStore";
 import Badge from "../common/Badge";
 import Card from "../common/Card";
+import LocationMap from "../map/LocationMap";
 import PeerLearnerCard from "../peers/PeerLearnerCard";
 import PeerTutorCard from "../peers/PeerTutorCard";
 
@@ -16,6 +17,14 @@ const StudentDashboard = () => {
   const [peerMatches, setPeerMatches] = useState([]);
   const [potentialMatches, setPotentialMatches] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [meetingType, setMeetingType] = useState("physical");
+  const [showLocationUpdate, setShowLocationUpdate] = useState(false);
+  const [locationData, setLocationData] = useState({
+    location: user?.location || "",
+    latitude: user?.latitude || null,
+    longitude: user?.longitude || null,
+  });
+  const [updatingLocation, setUpdatingLocation] = useState(false);
 
   // Debug: Log user data
   console.log("Dashboard user data:", user);
@@ -78,9 +87,9 @@ const StudentDashboard = () => {
         try {
           const [myMatchesData, potentialMatchesData] = await Promise.all([
             matchingService.getMyMatches(),
-            matchingService.getPotentialMatches(),
+            matchingService.getPotentialMatches(meetingType),
           ]);
-          
+
           setPeerMatches(myMatchesData.matches || []);
           setPotentialMatches(potentialMatchesData.potential_matches || []);
         } catch (error) {
@@ -94,7 +103,7 @@ const StudentDashboard = () => {
     };
 
     fetchDashboardData();
-  }, []);
+  }, [meetingType]);
 
   const handleRequestHelp = (peer) => {
     setSelectedPeer(peer);
@@ -111,6 +120,41 @@ const StudentDashboard = () => {
     console.log("Submitting help request/offer:", data);
     setSelectedPeer(null);
     setModalType(null);
+  };
+
+  const handleUpdateLocation = async () => {
+    setUpdatingLocation(true);
+    try {
+      const updateData = {
+        location: locationData.location,
+        latitude: locationData.latitude,
+        longitude: locationData.longitude,
+      };
+
+      // Update profile via API
+      const authService = (await import("../../services/auth.service.js"))
+        .default;
+      await authService.updateProfile(updateData);
+      await refreshUser();
+
+      setShowLocationUpdate(false);
+      alert(
+        "Location updated successfully! Your peer matches will now reflect this."
+      );
+    } catch (error) {
+      console.error("Failed to update location:", error);
+      alert("Failed to update location. Please try again.");
+    } finally {
+      setUpdatingLocation(false);
+    }
+  };
+
+  const handleMapLocationSelect = (locationInfo) => {
+    setLocationData({
+      location: locationInfo.location,
+      latitude: locationInfo.latitude,
+      longitude: locationInfo.longitude,
+    });
   };
 
   const stats = [
@@ -150,13 +194,16 @@ const StudentDashboard = () => {
   const strongAreas = [];
   const studyMaterials = [];
   const teachingMaterials = [];
-  
+
   // Process peer matching data
   const peerTutors = potentialMatches
-    .filter(match => match.as_learner)
-    .map(match => ({
+    .filter((match) => match.as_learner)
+    .map((match) => ({
       id: match.tutor_id,
       name: match.tutor_name,
+      email: match.tutor_email,
+      grade: match.tutor_grade,
+      location: match.tutor_location,
       subject: match.subject,
       chapter: match.chapter,
       score: match.tutor_score,
@@ -165,10 +212,13 @@ const StudentDashboard = () => {
     .slice(0, 6); // Limit to 6 tutors
 
   const peersToHelp = potentialMatches
-    .filter(match => match.as_tutor)
-    .map(match => ({
+    .filter((match) => match.as_tutor)
+    .map((match) => ({
       id: match.learner_id,
       name: match.learner_name,
+      email: match.learner_email,
+      grade: match.learner_grade,
+      location: match.learner_location,
       subject: match.subject,
       chapter: match.chapter,
       score: match.learner_score,
@@ -177,9 +227,15 @@ const StudentDashboard = () => {
     .slice(0, 6); // Limit to 6 learners
 
   const helpStats = {
-    given: peerMatches.filter(m => m.role === 'tutor' && m.status === 'active').length,
-    received: peerMatches.filter(m => m.role === 'learner' && m.status === 'active').length,
-    peersHelped: new Set(peerMatches.filter(m => m.role === 'tutor').map(m => m.other_user_id)).size,
+    given: peerMatches.filter(
+      (m) => m.role === "tutor" && m.status === "active"
+    ).length,
+    received: peerMatches.filter(
+      (m) => m.role === "learner" && m.status === "active"
+    ).length,
+    peersHelped: new Set(
+      peerMatches.filter((m) => m.role === "tutor").map((m) => m.other_user_id)
+    ).size,
   };
 
   return (
@@ -187,13 +243,83 @@ const StudentDashboard = () => {
       {/* Welcome Section */}
       <div className="bg-gradient-to-r from-slate-800 via-slate-900 to-gray-900 rounded-2xl p-8 sm:p-10 text-white shadow-lg border border-slate-700/50">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
-          <div>
+          <div className="flex-1">
             <h1 className="text-3xl sm:text-4xl font-bold mb-3 tracking-tight">
               Welcome back, {user?.name || "Student"}
             </h1>
-            <p className="text-base sm:text-lg text-slate-300 font-light">
+            <p className="text-base sm:text-lg text-slate-300 font-light mb-3">
               Continue your learning journey
             </p>
+            {user?.location && (
+              <div className="flex items-center gap-2 text-sm text-slate-400">
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+                <span>{user.location}</span>
+                <button
+                  onClick={() => setShowLocationUpdate(!showLocationUpdate)}
+                  className="ml-2 p-1 hover:bg-slate-700 rounded transition-colors"
+                  title="Update location"
+                >
+                  <svg
+                    className="w-4 h-4 text-blue-400"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    />
+                  </svg>
+                </button>
+              </div>
+            )}
+            {!user?.location && (
+              <button
+                onClick={() => setShowLocationUpdate(!showLocationUpdate)}
+                className="flex items-center gap-1 text-sm text-slate-400 hover:text-slate-300 transition-colors"
+                title="Add location"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+              </button>
+            )}
           </div>
           <a
             href="/assessment"
@@ -203,6 +329,58 @@ const StudentDashboard = () => {
             {user?.current_level ? "Retake Assessment" : "Take Assessment"}
           </a>
         </div>
+
+        {/* Location Update Form */}
+        {showLocationUpdate && (
+          <div className="mt-6 p-6 bg-slate-800 rounded-xl border border-slate-700">
+            <h3 className="text-lg font-semibold mb-4">Update Your Location</h3>
+
+            <LocationMap
+              onLocationSelect={handleMapLocationSelect}
+              initialLocation={
+                user?.latitude && user?.longitude
+                  ? { lat: user.latitude, lng: user.longitude }
+                  : null
+              }
+            />
+
+            {locationData.location && (
+              <div className="mt-4 p-3 bg-slate-700 rounded-lg">
+                <p className="text-sm text-slate-300">
+                  <span className="font-medium">Selected Location:</span>{" "}
+                  {locationData.location}
+                </p>
+                {locationData.latitude && locationData.longitude && (
+                  <p className="text-xs text-slate-400 mt-1">
+                    Coordinates: {locationData.latitude.toFixed(4)},{" "}
+                    {locationData.longitude.toFixed(4)}
+                  </p>
+                )}
+              </div>
+            )}
+
+            <div className="flex gap-3 mt-4">
+              <button
+                onClick={handleUpdateLocation}
+                disabled={updatingLocation || !locationData.location}
+                className="px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50"
+              >
+                {updatingLocation ? "Updating..." : "Save Location"}
+              </button>
+              <button
+                onClick={() => setShowLocationUpdate(false)}
+                className="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-lg font-medium transition-colors"
+              >
+                Cancel
+              </button>
+            </div>
+
+            <p className="text-xs text-slate-400 mt-4">
+              💡 Physical meetups will match you with nearby peers within 10km.
+              Online meetups work with anyone!
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Stats Grid */}
@@ -226,126 +404,94 @@ const StudentDashboard = () => {
         ))}
       </div>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-        {/* Recent Activities */}
-        <Card title="Recent Activities">
-          {loading ? (
-            <div className="text-center py-8">
-              <div
-                className="inline-block animate-spin rounded-full h-8 w-8 border-b-2"
-                style={{ borderColor: "#323232" }}
-              ></div>
-            </div>
-          ) : recentActivities.length > 0 ? (
-            <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
-              {recentActivities.map((activity, index) => {
-                const submittedDate = new Date(activity.submitted_at);
-                const formattedDate = submittedDate.toLocaleDateString(
-                  "en-US",
-                  {
-                    month: "short",
-                    day: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  }
-                );
+      {/* Recent Activities */}
+      <Card title="Recent Activities">
+        {loading ? (
+          <div className="text-center py-8">
+            <div
+              className="inline-block animate-spin rounded-full h-8 w-8 border-b-2"
+              style={{ borderColor: "#323232" }}
+            ></div>
+          </div>
+        ) : recentActivities.length > 0 ? (
+          <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+            {recentActivities.map((activity, index) => {
+              const submittedDate = new Date(activity.submitted_at);
+              const formattedDate = submittedDate.toLocaleDateString("en-US", {
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              });
 
-                return (
-                  <div
-                    key={activity.id}
-                    className="flex items-center space-x-4 p-3 rounded-lg transition-colors border-l-4"
-                    style={{ borderColor: "#323232" }}
-                  >
-                    <div
-                      className="w-10 h-10 rounded-lg flex items-center justify-center"
-                      style={{ backgroundColor: "#E8DDD3", color: "#323232" }}
-                    >
-                      <svg
-                        className="w-5 h-5"
-                        fill="none"
-                        stroke="#5A5A5A"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                        />
-                      </svg>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-900 truncate">
-                        Completed{" "}
-                        {activity.subject.charAt(0).toUpperCase() +
-                          activity.subject.slice(1)}{" "}
-                        Assessment
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {formattedDate} • {activity.total_questions} questions
-                        {activity.score !== undefined &&
-                          ` • ${activity.score}%`}
-                      </p>
-                    </div>
-                    <Badge
-                      variant={
-                        activity.status === "evaluated"
-                          ? "success"
-                          : activity.status === "evaluating"
-                          ? "warning"
-                          : "secondary"
-                      }
-                    >
-                      {activity.status === "evaluated"
-                        ? "Done"
-                        : activity.status === "evaluating"
-                        ? "Processing"
-                        : activity.status}
-                    </Badge>
-                  </div>
-                );
-              })}
-            </div>
-          ) : (
-            <div className="text-center py-8">
-              <p className="text-gray-400 mb-4">No recent activities</p>
-              <a
-                href="/assessment"
-                className="text-sm font-medium"
-                style={{ color: "#323232" }}
-              >
-                Take your first assessment →
-              </a>
-            </div>
-          )}
-        </Card>
-
-        {/* Upcoming Tests */}
-        <Card title="Upcoming Tests">
-          {upcomingTests.length > 0 ? (
-            <div className="space-y-4">
-              {upcomingTests.map((test, index) => (
+              return (
                 <div
-                  key={index}
-                  className="p-4 rounded-lg"
-                  style={{ backgroundColor: "#E8DDD3" }}
+                  key={activity.id}
+                  className="flex items-center space-x-4 p-3 rounded-lg transition-colors border-l-4"
+                  style={{ borderColor: "#323232" }}
                 >
-                  <div className="flex justify-between items-start mb-2">
-                    <h4 className="font-medium text-gray-900">
-                      {test.subject}
-                    </h4>
-                    <Badge variant="info">{test.date}</Badge>
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: "#E8DDD3", color: "#323232" }}
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="#5A5A5A"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
                   </div>
-                  <p className="text-sm text-gray-600">{test.description}</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-gray-900 truncate">
+                      Completed{" "}
+                      {activity.subject.charAt(0).toUpperCase() +
+                        activity.subject.slice(1)}{" "}
+                      Assessment
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {formattedDate} • {activity.total_questions} questions
+                      {activity.score !== undefined && ` • ${activity.score}%`}
+                    </p>
+                  </div>
+                  <Badge
+                    variant={
+                      activity.status === "evaluated"
+                        ? "success"
+                        : activity.status === "evaluating"
+                        ? "warning"
+                        : "secondary"
+                    }
+                  >
+                    {activity.status === "evaluated"
+                      ? "Done"
+                      : activity.status === "evaluating"
+                      ? "Processing"
+                      : activity.status}
+                  </Badge>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-gray-500 text-center py-8">No upcoming tests</p>
-          )}
-        </Card>
-      </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="text-center py-8">
+            <p className="text-gray-400 mb-4">No recent activities</p>
+            <a
+              href="/assessment"
+              className="text-sm font-medium"
+              style={{ color: "#323232" }}
+            >
+              Take your first assessment →
+            </a>
+          </div>
+        )}
+      </Card>
 
       {/* Weaknesses & Improvement Areas */}
       <Card title="Areas for Improvement">
@@ -438,10 +584,47 @@ const StudentDashboard = () => {
         )}
       </Card>
 
+      {/* Filter Options */}
+      <div
+        className="flex items-center justify-between p-4 rounded-xl border"
+        style={{ backgroundColor: "#F5EDE5", borderColor: "#C9BDB3" }}
+      >
+        <div className="flex items-center gap-3">
+          <input
+            type="checkbox"
+            id="nearMeFilter"
+            checked={meetingType === "physical"}
+            onChange={(e) =>
+              setMeetingType(e.target.checked ? "physical" : "online")
+            }
+            className="w-4 h-4 rounded border-2 cursor-pointer"
+            style={{ accentColor: "#323232" }}
+          />
+          <label
+            htmlFor="nearMeFilter"
+            className="text-sm font-medium cursor-pointer"
+            style={{ color: "#323232" }}
+          >
+            📍 Show only peers near me
+            {meetingType === "physical" && user?.location && (
+              <span className="ml-2 text-xs" style={{ color: "#5A5A5A" }}>
+                ({user.location})
+              </span>
+            )}
+          </label>
+        </div>
+        {meetingType === "physical" && !user?.location && (
+          <span className="text-xs font-medium" style={{ color: "#c2410c" }}>
+            ⚠️ Set your location to filter by proximity
+          </span>
+        )}
+      </div>
+
       {/* Peer Tutors Who Can Help Me */}
       <Card title="Your Peer Tutors">
         <p className="text-sm text-gray-500 mb-5">
-          Connect with students who excel in areas where you need help
+          Connect with students who excel in areas where you need help. Reach
+          out via email to schedule a session.
         </p>
         {peerTutors.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto pr-2">
@@ -521,8 +704,8 @@ const StudentDashboard = () => {
       {peersToHelp.length > 0 && (
         <Card title="🤝 Peers You Can Help">
           <p className="text-sm text-gray-600 mb-4">
-            Students who need help in topics where you're strong - help them
-            learn!
+            Students who need help in topics where you're strong. Send them an
+            email to offer your help!
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {peersToHelp.map((peer, index) => (

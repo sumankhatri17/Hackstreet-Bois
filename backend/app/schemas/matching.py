@@ -2,7 +2,8 @@
 Pydantic schemas for peer-to-peer matching
 """
 from datetime import datetime
-from typing import Optional, List
+from typing import List, Optional
+
 from pydantic import BaseModel, Field
 
 
@@ -37,6 +38,7 @@ class StudentChapterPerformance(StudentChapterPerformanceBase):
 class PeerMatchBase(BaseModel):
     chapter: str
     subject: str
+    meeting_type: str = "online"  # physical or online
     tutor_score: float
     learner_score: float
     compatibility_score: Optional[float] = None
@@ -66,14 +68,23 @@ class PeerMatchWithDetails(PeerMatch):
     """Match with tutor and learner details"""
     tutor_name: str
     tutor_email: str
+    tutor_grade: Optional[int] = None
+    tutor_fit_to_teach_level: Optional[int] = None
+    tutor_location: Optional[str] = None
     learner_name: str
     learner_email: str
+    learner_grade: Optional[int] = None
+    learner_location: Optional[str] = None
     tutor_school: Optional[str] = None
     learner_school: Optional[str] = None
+    overlapping_chapters: Optional[int] = None
 
 
 # TutoringSession Schemas
 class TutoringSessionBase(BaseModel):
+    meeting_type: str  # physical or online
+    meeting_link: Optional[str] = None
+    physical_location: Optional[str] = None
     topics_covered: Optional[List[str]] = None
     notes: Optional[str] = None
     tutor_rating: Optional[int] = Field(None, ge=1, le=5)
@@ -111,7 +122,10 @@ class TutoringSession(TutoringSessionBase):
 class MatchingRequest(BaseModel):
     subject: str
     chapter: str
+    meeting_type: str = "online"  # physical or online
     school_id: Optional[int] = None
+    location: Optional[str] = None  # For physical meetups (text-based)
+    max_distance_km: Optional[float] = 10.0  # For GPS proximity matching
 
 
 class MatchingResponse(BaseModel):
@@ -150,6 +164,9 @@ class MatchingStatsResponse(BaseModel):
 class HelpRequestBase(BaseModel):
     subject: str
     chapter: str
+    request_type: str = "asking_help"  # asking_help or offering_help
+    meeting_type: str = "online"  # physical or online
+    preferred_location: Optional[str] = None
     description: Optional[str] = None
     urgency: str = "normal"  # low, normal, high, urgent
 
@@ -176,6 +193,8 @@ class HelpRequestWithDetails(HelpRequest):
     """Help request with student details"""
     student_name: str
     student_email: str
+    student_grade: Optional[int] = None
+    student_location: Optional[str] = None
     student_school: Optional[str] = None
     tutor_name: Optional[str] = None
 
@@ -183,6 +202,9 @@ class HelpRequestWithDetails(HelpRequest):
 class HelpOfferBase(BaseModel):
     subject: str
     chapter: str
+    request_type: str = "offering_help"  # asking_help or offering_help
+    meeting_type: str = "online"  # physical or online
+    available_location: Optional[str] = None
     description: Optional[str] = None
     availability: Optional[str] = None
     max_students: int = 3
@@ -209,6 +231,9 @@ class HelpOfferWithDetails(HelpOffer):
     """Help offer with tutor details"""
     tutor_name: str
     tutor_email: str
+    tutor_grade: Optional[int] = None
+    tutor_fit_to_teach_level: Optional[int] = None
+    tutor_location: Optional[str] = None
     tutor_school: Optional[str] = None
 
 
@@ -218,6 +243,9 @@ class PotentialTutor(BaseModel):
     student_id: int
     name: str
     email: str
+    grade: Optional[int] = None
+    fit_to_teach_level: Optional[int] = None
+    location: Optional[str] = None
     score: float
     accuracy: int
     compatibility_score: float
@@ -229,6 +257,8 @@ class PotentialLearner(BaseModel):
     student_id: int
     name: str
     email: str
+    grade: Optional[int] = None
+    location: Optional[str] = None
     score: float
     accuracy: int
     compatibility_score: float

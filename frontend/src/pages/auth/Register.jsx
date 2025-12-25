@@ -162,6 +162,7 @@ const Register = () => {
               }
               options={[
                 { value: "", label: "Select your grade" },
+                { value: "5", label: "Grade 5" },
                 { value: "6", label: "Grade 6" },
                 { value: "7", label: "Grade 7" },
                 { value: "8", label: "Grade 8" },
@@ -172,25 +173,6 @@ const Register = () => {
               ]}
               required
             />
-
-            {/* <div className="p-4 bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg">
-              <p className="text-sm text-gray-800 leading-relaxed">
-                <strong>📚 Peer-to-Peer Learning:</strong> You'll take
-                assessments in Math and English based on your grade level. Based
-                on your performance:
-              </p>
-              <ul className="text-sm text-gray-700 mt-2 ml-4 space-y-1">
-                <li>
-                  ✓ Get matched with <strong>peer tutors</strong> who excel in
-                  your weak areas
-                </li>
-                <li>
-                  ✓ Help <strong>other peers</strong> in topics where you're
-                  strong
-                </li>
-                <li>✓ Learn by teaching and being taught by fellow students</li>
-              </ul>
-            </div> */}
 
             <Button type="submit" fullWidth loading={loading}>
               Register

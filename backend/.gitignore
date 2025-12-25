@@ -151,3 +151,6 @@ eduassess.db
 # OS
 .DS_Store
 Thumbs.db
+
+# Assessment files (device dependent)
+assessments/**/*.json

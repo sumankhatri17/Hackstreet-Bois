@@ -18,6 +18,10 @@ class UserCreate(UserBase):
     password: str
     school_id: Optional[int] = None
     current_level: Optional[int] = None
+    fit_to_teach_level: Optional[int] = None
+    location: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
 
 
 class UserUpdate(BaseModel):
@@ -25,6 +29,9 @@ class UserUpdate(BaseModel):
     email: Optional[EmailStr] = None
     school_id: Optional[int] = None
     is_active: Optional[bool] = None
+    location: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
 
 
 class UserResponse(UserBase):
@@ -36,6 +43,9 @@ class UserResponse(UserBase):
     science_level: Optional[int] = None
     english_level: Optional[int] = None
     fit_to_teach_level: Optional[int] = None
+    location: Optional[str] = None
+    latitude: Optional[float] = None
+    longitude: Optional[float] = None
     created_at: datetime
     
     class Config:

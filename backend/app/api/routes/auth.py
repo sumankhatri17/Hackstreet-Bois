@@ -9,7 +9,8 @@ from app.core.security import (create_access_token, decode_token,
                                get_password_hash, verify_password)
 from app.db.database import get_db
 from app.models.user import User
-from app.schemas.user import LoginRequest, Token, UserCreate, UserResponse
+from app.schemas.user import (LoginRequest, Token, UserCreate, UserResponse,
+                              UserUpdate)
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
@@ -71,7 +72,10 @@ def register(user_data: UserCreate, db: Session = Depends(get_db)):
         math_level=None,
         science_level=None,
         english_level=None,
-        fit_to_teach_level=None
+        fit_to_teach_level=user_data.fit_to_teach_level,
+        location=user_data.location,
+        latitude=user_data.latitude,
+        longitude=user_data.longitude
     )
     
     db.add(user)
@@ -125,7 +129,11 @@ def login(
             "current_level": user.current_level,
             "math_level": user.math_level,
             "science_level": user.science_level,
-            "english_level": user.english_level
+            "english_level": user.english_level,
+            "fit_to_teach_level": user.fit_to_teach_level,
+            "location": user.location,
+            "latitude": user.latitude,
+            "longitude": user.longitude
         }
     }
 
@@ -133,4 +141,30 @@ def login(
 @router.get("/me", response_model=UserResponse)
 def get_me(current_user: User = Depends(get_current_user)):
     """Get current user information"""
+    return current_user
+
+
+@router.patch("/profile", response_model=UserResponse)
+def update_profile(
+    profile_data: UserUpdate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db)
+):
+    """Update user profile (location)"""
+    print(f"[DEBUG UPDATE PROFILE] User ID: {current_user.id}")
+    
+    if profile_data.location is not None:
+        current_user.location = profile_data.location
+        print(f"[DEBUG UPDATE PROFILE] Updated location: {profile_data.location}")
+    if profile_data.latitude is not None:
+        current_user.latitude = profile_data.latitude
+        print(f"[DEBUG UPDATE PROFILE] Updated latitude: {profile_data.latitude}")
+    if profile_data.longitude is not None:
+        current_user.longitude = profile_data.longitude
+        print(f"[DEBUG UPDATE PROFILE] Updated longitude: {profile_data.longitude}")
+    
+    db.commit()
+    db.refresh(current_user)
+    
+    print(f"[DEBUG UPDATE PROFILE] Profile updated successfully")
     return current_user

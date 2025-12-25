@@ -1,11 +1,13 @@
 """
 Peer-to-peer matching models for student tutoring
 """
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Float, Enum, Boolean, JSON, Text
-from sqlalchemy.orm import relationship
-from datetime import datetime
 import enum
+from datetime import datetime
+
 from app.db.database import Base
+from sqlalchemy import (JSON, Boolean, Column, DateTime, Enum, Float,
+                        ForeignKey, Integer, String, Text)
+from sqlalchemy.orm import relationship
 
 
 class MatchStatus(str, enum.Enum):
@@ -13,6 +15,16 @@ class MatchStatus(str, enum.Enum):
     ACCEPTED = "accepted"
     REJECTED = "rejected"
     COMPLETED = "completed"
+
+
+class MeetingType(str, enum.Enum):
+    PHYSICAL = "physical"  # In-person meetup
+    ONLINE = "online"      # Virtual session
+
+
+class RequestType(str, enum.Enum):
+    ASKING_HELP = "asking_help"    # Student needs help
+    OFFERING_HELP = "offering_help"  # Student can help others
 
 
 class PeerMatch(Base):
@@ -30,6 +42,9 @@ class PeerMatch(Base):
     # Chapter-specific matching
     chapter = Column(String, nullable=False)
     subject = Column(String, nullable=False)
+    
+    # Meeting type
+    meeting_type = Column(Enum(MeetingType), default=MeetingType.ONLINE, nullable=False)
     
     # Matching scores
     tutor_score = Column(Float, nullable=False)  # Tutor's score in this chapter (0-10)
@@ -60,6 +75,11 @@ class TutoringSession(Base):
     
     id = Column(Integer, primary_key=True, index=True)
     match_id = Column(Integer, ForeignKey("peer_matches.id"), nullable=False)
+    
+    # Session type and location
+    meeting_type = Column(Enum(MeetingType), nullable=False)
+    meeting_link = Column(String, nullable=True)  # For online sessions
+    physical_location = Column(String, nullable=True)  # For physical meetups
     
     # Session details
     scheduled_at = Column(DateTime, nullable=True)
@@ -131,6 +151,11 @@ class HelpRequest(Base):
     subject = Column(String, nullable=False)
     chapter = Column(String, nullable=False)
     
+    # Request type and meeting preference
+    request_type = Column(Enum(RequestType), default=RequestType.ASKING_HELP, nullable=False)
+    meeting_type = Column(Enum(MeetingType), default=MeetingType.ONLINE, nullable=False)
+    preferred_location = Column(String, nullable=True)  # For physical meetups
+    
     # Request details
     description = Column(Text, nullable=True)  # What specifically they need help with
     urgency = Column(String, default="normal")  # low, normal, high, urgent
@@ -160,6 +185,11 @@ class HelpOffer(Base):
     tutor_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     subject = Column(String, nullable=False)
     chapter = Column(String, nullable=False)
+    
+    # Offer type and meeting preference
+    request_type = Column(Enum(RequestType), default=RequestType.OFFERING_HELP, nullable=False)
+    meeting_type = Column(Enum(MeetingType), default=MeetingType.ONLINE, nullable=False)
+    available_location = Column(String, nullable=True)  # For physical meetups
     
     # Offer details
     description = Column(Text, nullable=True)  # What they can help with
