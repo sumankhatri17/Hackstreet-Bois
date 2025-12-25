@@ -7,7 +7,7 @@ import PeerLearnerCard from "../peers/PeerLearnerCard";
 import PeerTutorCard from "../peers/PeerTutorCard";
 
 const StudentDashboard = () => {
-  const { user } = useAuthStore();
+  const { user, refreshUser } = useAuthStore();
   const [selectedPeer, setSelectedPeer] = useState(null);
   const [modalType, setModalType] = useState(null);
   const [recentActivities, setRecentActivities] = useState([]);
@@ -16,12 +16,21 @@ const StudentDashboard = () => {
 
   // Debug: Log user data
   console.log("Dashboard user data:", user);
+  console.log("User ID:", user?.id);
+  console.log("User email:", user?.email);
+  console.log("Math level:", user?.math_level);
+  console.log("Science level:", user?.science_level);
+  console.log("English level:", user?.english_level);
+  console.log("Fit to teach:", user?.fit_to_teach_level);
 
   // Fetch recent activities and areas for improvement
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         setLoading(true);
+
+        // Refresh user data to get latest levels
+        await refreshUser();
 
         // Fetch recent activities
         const activitiesData = await ragQuestionService.getRecentActivities(5);
@@ -103,17 +112,19 @@ const StudentDashboard = () => {
     },
     {
       label: "Math Level",
-      value: user?.math_level ? `${user.math_level}%` : "Not Assessed",
+      value: user?.math_level != null ? `${user.math_level}%` : "Not Assessed",
       color: "success",
     },
     {
       label: "Science Level",
-      value: user?.science_level ? `${user.science_level}%` : "Not Assessed",
+      value:
+        user?.science_level != null ? `${user.science_level}%` : "Not Assessed",
       color: "info",
     },
     {
       label: "English Level",
-      value: user?.english_level ? `${user.english_level}%` : "Not Assessed",
+      value:
+        user?.english_level != null ? `${user.english_level}%` : "Not Assessed",
       color: "warning",
     },
   ];

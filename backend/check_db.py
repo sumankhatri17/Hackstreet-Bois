@@ -6,45 +6,30 @@ db_path = Path(__file__).parent / "eduassess.db"
 conn = sqlite3.connect(db_path)
 cursor = conn.cursor()
 
-# List all tables
-cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
-tables = cursor.fetchall()
-print("=" * 50)
-print("TABLES IN DATABASE:")
-print("=" * 50)
-for table in tables:
-    print(f"- {table[0]}")
-
-print("\n" + "=" * 50)
+print("=" * 80)
 print("USERS TABLE:")
-print("=" * 50)
+print("=" * 80)
 
 # First check what columns exist
 cursor.execute("PRAGMA table_info(users)")
 columns = cursor.fetchall()
-print("\nColumns in users table:")
-for col in columns:
-    print(f"  - {col[1]} ({col[2]})")
+col_names = [col[1] for col in columns]
+print("\nColumns:", ", ".join(col_names))
 
 # Get user data
-cursor.execute("SELECT * FROM questions")
+cursor.execute("SELECT id, email, name, current_level, math_level, science_level, english_level, fit_to_teach_level FROM users")
 users = cursor.fetchall()
-print(f"\nTotal questions: {len(users)}")
+print(f"\nTotal users: {len(users)}\n")
 for user in users:
-    print(f"\nUser data: {user}")
-
-cursor.execute("PRAGMA table_info(questions)")
-columns = cursor.fetchall()
-print("\nColumns in questions table:")
-for col in columns:
-    print(f"  - {col[1]} ({col[2]})")
-
-# Get user data
-cursor.execute("SELECT * FROM users")
-users = cursor.fetchall()
-print(f"\nTotal users: {len(users)}")
-for user in users:
-    print(f"\nUser data: {user}")
+    print(f"ID: {user[0]}")
+    print(f"Email: {user[1]}")
+    print(f"Name: {user[2]}")
+    print(f"Current Level: {user[3]}")
+    print(f"Math Level: {user[4]}")
+    print(f"Science Level: {user[5]}")
+    print(f"English Level: {user[6]}")
+    print(f"Fit to Teach: {user[7]}")
+    print("-" * 80)
 
 conn.close()
-print("\n" + "=" * 50)
+print("=" * 80)

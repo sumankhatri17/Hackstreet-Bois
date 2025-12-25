@@ -1,0 +1,176 @@
+{
+  "chapter_analysis": {
+    "Real Numbers": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Polynomials": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Linear Equations": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Quadratic Equations": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Arithmetic Progressions": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Triangles": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Coordinate Geometry": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Trigonometry": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Circles": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Statistics": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Probability": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    }
+  },
+  "question_analysis": {
+    "397492d2-2e39-4c59-b2c6-32add0fd7940": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "No proof or example provided."
+    },
+    "2eb57410-c775-4272-81f0-8b84974e0530": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Only one root provided, no polynomial construction."
+    },
+    "46062247-31f2-445c-b8af-2ec74ffea3fc": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "No solution or system of equations set up."
+    },
+    "fbb697a1-ddd5-429a-86d6-bde2449b1589": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "No solution or steps provided."
+    },
+    "ecf70dc6-4613-49f3-a2a8-76780b8efb69": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "No solution or steps provided."
+    },
+    "aae3f327-5441-444e-9e8d-6f130202e216": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "No calculation or reasoning provided."
+    },
+    "0ac5a53b-5277-4627-ac3b-3e35c4c44787": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "No proof or steps provided."
+    },
+    "6fd3b792-e495-4195-a3de-c0aff0fc10a4": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "No calculation or reasoning provided."
+    },
+    "6ff09043-8d96-486c-9b6b-e369a9b9e866": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "No calculation or reasoning provided."
+    },
+    "6563d9f8-213e-4310-8634-040849bc8a03": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "No solution or steps provided."
+    },
+    "ac8b09a8-3267-414c-bd15-af516230bec3": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "No solution or steps provided."
+    }
+  },
+  "overall_analysis": {
+    "final_score_out_of_100": 0,
+    "estimated_student_grade_level": 6,
+    "strongest_chapters": [],
+    "weakest_chapters": [
+      "Real Numbers",
+      "Polynomials",
+      "Linear Equations"
+    ],
+    "learning_gap_summary": [
+      "The student shows severe weaknesses in foundational concepts across all chapters, indicating a lack of understanding of basic principles and procedures.",
+      "There is a consistent pattern of not attempting to solve problems, suggesting a significant gap in problem-solving skills and application of knowledge.",
+      "The student's responses indicate a grade-level mismatch, as the answers do not meet the expectations for Grade 10 maths."
+    ]
+  },
+  "evaluated_at": "2025-12-25T03:36:10.857557"
+}

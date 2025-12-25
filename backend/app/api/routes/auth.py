@@ -20,6 +20,8 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/auth/login")
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):
     """Get current authenticated user"""
+    print(f"[DEBUG AUTH] Validating token: {token[:20]}..." if token else "[DEBUG AUTH] No token provided")
+    
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -28,16 +30,22 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     
     payload = decode_token(token)
     if payload is None:
+        print("[DEBUG AUTH] Token decode failed")
         raise credentials_exception
     
     email: str = payload.get("sub")
+    print(f"[DEBUG AUTH] Token decoded, email: {email}")
+    
     if email is None:
+        print("[DEBUG AUTH] No email in token")
         raise credentials_exception
     
     user = db.query(User).filter(User.email == email).first()
     if user is None:
+        print(f"[DEBUG AUTH] User not found for email: {email}")
         raise credentials_exception
     
+    print(f"[DEBUG AUTH] Authenticated user ID: {user.id}, name: {user.name}, email: {user.email}")
     return user
 
 
@@ -79,19 +87,25 @@ def login(
     db: Session = Depends(get_db)
 ):
     """Login and get access token with user data"""
+    print(f"[DEBUG LOGIN] Login attempt for email: {credentials.email}")
+    
     # Authenticate user
     user = db.query(User).filter(User.email == credentials.email).first()
     if not user or not verify_password(credentials.password, user.hashed_password):
+        print(f"[DEBUG LOGIN] Login failed for: {credentials.email}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Incorrect email or password"
         )
     
     if not user.is_active:
+        print(f"[DEBUG LOGIN] Inactive user: {credentials.email}")
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Inactive user"
         )
+    
+    print(f"[DEBUG LOGIN] Login successful - User ID: {user.id}, Name: {user.name}, Email: {user.email}")
     
     # Create access token
     access_token_expires = timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)

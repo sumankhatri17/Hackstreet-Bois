@@ -1,0 +1,90 @@
+{
+  "assessment_id": "5dbd7e35-9220-4aa4-841b-76500cb55207",
+  "user_id": 1,
+  "user_name": "Hridayanshu Acharya",
+  "user_email": "hridayanshu23@gmail.com",
+  "chapter": "All Chapters",
+  "subject": "science",
+  "answers": [
+    {
+      "question_id": "6f0f7110-cebf-4578-bf59-2e5eadbc35c6",
+      "answer": "Zn + 2HCL = ZnCl2 + H2\nbecause it is exothermic reaction",
+      "chapter": "Chemical Reactions",
+      "question": "A student mixes zinc granules with dilute hydrochloric acid in a test tube and observes effervescence. Write the balanced chemical equation for this reaction and explain why the test tube becomes warm. How would the reaction change if copper turnings were used instead of zinc? *(Application + Analysis)*"
+    },
+    {
+      "question_id": "0c05c5ae-c793-4227-bdf4-660e1e5adcad",
+      "answer": "he can use soap and detergent as basic chemicals which will neutralize the acidity",
+      "chapter": "Acids, Bases and Salts",
+      "question": "A farmer notices that his soil has become too acidic for healthy crop growth. Suggest two different methods he could use to neutralize the soil, naming the specific chemicals involved in each method. Explain the chemical principle behind one of these methods. *(Problem-Solving + Explanation)*"
+    },
+    {
+      "question_id": "8764d414-dc5f-4182-b5a2-c49f0218273a",
+      "answer": "incomplete question given",
+      "chapter": "Metals and Non-metals",
+      "question": "Compare the physical properties of sodium (metal) and sulfur (non-metal) in terms of:"
+    },
+    {
+      "question_id": "988f5500-5019-4b45-a052-beb5a08fa430",
+      "answer": "diethyl ether",
+      "chapter": "Carbon Compounds",
+      "question": "Ethanol (C\u2082H\u2085OH) and ethanoic acid (CH\u2083COOH) are both carbon compounds. When ethanol reacts with ethanoic acid in the presence of concentrated sulfuric acid, a new compound is formed."
+    },
+    {
+      "question_id": "2d506dd8-a40b-4a93-9295-1915388661e0",
+      "answer": "phosphorus",
+      "chapter": "Periodic Classification",
+      "question": "The modern periodic table arranges elements based on increasing atomic number. If an unknown element X has the electronic configuration 2, 8, 5:"
+    },
+    {
+      "question_id": "965b00c2-d5bb-4553-b44b-fedcf6a37213",
+      "answer": "the enzyme that digests the food is blocked due to bile duct is blocked.",
+      "chapter": "Life Processes",
+      "question": "A person with a blocked bile duct experiences difficulty digesting fatty foods. Explain:"
+    },
+    {
+      "question_id": "7b08f62b-5282-412d-b821-a2936dae36ca",
+      "answer": "question is incomplete so give me full marks",
+      "chapter": "Control and Coordination",
+      "question": "A student accidentally touches a hot object and immediately pulls their hand away."
+    },
+    {
+      "question_id": "6754e9de-57cc-46d0-90cb-19fdb01259c7",
+      "answer": "menstrual period is started",
+      "chapter": "Reproduction",
+      "question": "In humans, the menstrual cycle prepares the uterus for a possible pregnancy. If fertilization does not occur, the uterine lining is shed."
+    },
+    {
+      "question_id": "dccd44e0-e995-4fd7-ae3f-f35cf95621ce",
+      "answer": "hybrid seed is generated",
+      "chapter": "Heredity and Evolution",
+      "question": "In pea plants, tall (T) is dominant over dwarf (t), and yellow seeds (Y) are dominant over green seeds (y). A heterozygous tall plant with yellow seeds (TtYy) is crossed with a dwarf plant with green seeds (ttyy)."
+    },
+    {
+      "question_id": "d4f26f8a-d3bd-408c-8899-7a4d907715b7",
+      "answer": "object is minimized and inverted",
+      "chapter": "Light \u2013 Reflection and Refraction",
+      "question": "A convex lens has a focal length of 15 cm. An object is placed 20 cm in front of it."
+    },
+    {
+      "question_id": "6bdd0c39-103a-4e03-98ed-ac19c5e97cb6",
+      "answer": "true",
+      "chapter": "Human Eye",
+      "question": "A person with myopia (short-sightedness) can see nearby objects clearly but struggles with distant objects."
+    },
+    {
+      "question_id": "3736e599-55d1-4b98-b2af-e85453820e69",
+      "answer": "12/11 ampere current",
+      "chapter": "Electricity",
+      "question": "Three resistors of 2 \u03a9, 3 \u03a9, and 6 \u03a9 are connected in parallel to a 12 V battery."
+    },
+    {
+      "question_id": "90fee0d3-5fc1-4864-b153-9b09f9b6697e",
+      "answer": "electricity is produced",
+      "chapter": "Magnetic Effects of Current",
+      "question": "A current-carrying wire is placed between the poles of a U-shaped magnet."
+    }
+  ],
+  "submitted_at": "2025-12-25T03:43:53.212447",
+  "status": "evaluated"
+}
