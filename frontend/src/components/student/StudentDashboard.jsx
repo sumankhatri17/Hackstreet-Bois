@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import ragQuestionService from "../../services/ragQuestion.service";
+import matchingService from "../../services/matching.service";
 import useAuthStore from "../../store/authStore";
 import Badge from "../common/Badge";
 import Card from "../common/Card";
@@ -12,6 +13,8 @@ const StudentDashboard = () => {
   const [modalType, setModalType] = useState(null);
   const [recentActivities, setRecentActivities] = useState([]);
   const [areasForImprovement, setAreasForImprovement] = useState([]);
+  const [peerMatches, setPeerMatches] = useState([]);
+  const [potentialMatches, setPotentialMatches] = useState([]);
   const [loading, setLoading] = useState(true);
 
   // Debug: Log user data
@@ -61,6 +64,19 @@ const StudentDashboard = () => {
         // Sort by accuracy (worst first) and limit to top 6
         allWeaknesses.sort((a, b) => a.accuracy - b.accuracy);
         setAreasForImprovement(allWeaknesses.slice(0, 6));
+
+        // Fetch peer matching data
+        try {
+          const [myMatchesData, potentialMatchesData] = await Promise.all([
+            matchingService.getMyMatches(),
+            matchingService.getPotentialMatches(),
+          ]);
+          
+          setPeerMatches(myMatchesData.matches || []);
+          setPotentialMatches(potentialMatchesData.potential_matches || []);
+        } catch (error) {
+          console.error("Failed to load peer matching data:", error);
+        }
       } catch (error) {
         console.error("Failed to load dashboard data:", error);
       } finally {
@@ -121,14 +137,38 @@ const StudentDashboard = () => {
   // Mock data - in real app, fetch from API
   const upcomingTests = [];
   const strongAreas = [];
-  const peerTutors = [];
-  const peersToHelp = [];
   const studyMaterials = [];
   const teachingMaterials = [];
+  
+  // Process peer matching data
+  const peerTutors = potentialMatches
+    .filter(match => match.as_learner)
+    .map(match => ({
+      id: match.tutor_id,
+      name: match.tutor_name,
+      subject: match.subject,
+      chapter: match.chapter,
+      score: match.tutor_score,
+      compatibility: match.compatibility_score,
+    }))
+    .slice(0, 6); // Limit to 6 tutors
+
+  const peersToHelp = potentialMatches
+    .filter(match => match.as_tutor)
+    .map(match => ({
+      id: match.learner_id,
+      name: match.learner_name,
+      subject: match.subject,
+      chapter: match.chapter,
+      score: match.learner_score,
+      compatibility: match.compatibility_score,
+    }))
+    .slice(0, 6); // Limit to 6 learners
+
   const helpStats = {
-    given: 0,
-    received: 0,
-    peersHelped: 0,
+    given: peerMatches.filter(m => m.role === 'tutor' && m.status === 'active').length,
+    received: peerMatches.filter(m => m.role === 'learner' && m.status === 'active').length,
+    peersHelped: new Set(peerMatches.filter(m => m.role === 'tutor').map(m => m.other_user_id)).size,
   };
 
   return (
