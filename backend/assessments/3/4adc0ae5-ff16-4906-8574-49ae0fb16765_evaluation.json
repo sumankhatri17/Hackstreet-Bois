@@ -1,0 +1,194 @@
+{
+  "chapter_analysis": {
+    "Chemical Reactions": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Acids, Bases and Salts": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Metals and Non-metals": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Carbon Compounds": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Periodic Classification": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Life Processes": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Control and Coordination": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Reproduction": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Heredity and Evolution": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Light \u2013 Reflection and Refraction": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Human Eye": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Electricity": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Magnetic Effects of Current": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    }
+  },
+  "question_analysis": {
+    "66738819-79dc-478f-aeb9-de0570034c0f": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "9403e338-ede6-4cce-a402-e299f3c211b5": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "dd19a62b-d68a-4f94-848a-576ed08bdc65": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "01ac4f13-735e-49bd-bcfe-ff7760636730": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "a8df01ce-dcc4-4c67-b968-8a3db8a63378": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "816de265-cc1c-4a75-a444-8e9cd1238dcb": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "ca66c5f9-aa67-4de5-a0c0-c2eaf08b467a": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "d4564cc6-074f-4a7d-bf89-f28389698013": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "5788b471-60bd-4958-803b-288a755179e1": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "a818d2da-54a2-4a3a-8e5b-d4f10b3123ec": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "dc034d4b-d57f-4eb8-a106-3c90ef765215": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "fa417407-e1c3-40e8-895e-b2ed2a10e5ee": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "9c56e105-3560-41d3-96de-429d5a724f71": {
+      "correctness": "correct",
+      "score": 1
+    }
+  },
+  "overall_analysis": {
+    "final_score_out_of_100": 100,
+    "estimated_student_grade_level": 10,
+    "strongest_chapters": [
+      "Chemical Reactions",
+      "Acids, Bases and Salts"
+    ],
+    "weakest_chapters": [
+      "Metals and Non-metals",
+      "Carbon Compounds",
+      "Periodic Classification"
+    ],
+    "learning_gap_summary": [
+      "The student demonstrates a strong understanding of chemical reactions, acids, bases, and salts, indicating a solid grasp of fundamental chemistry concepts.",
+      "The student's answers in metals and non-metals, carbon compounds, and periodic classification show no weaknesses, suggesting a comprehensive understanding of these topics.",
+      "No significant learning gaps were identified in the student's responses. The student's performance across all chapters is exemplary, indicating a strong grasp of the material."
+    ]
+  },
+  "evaluated_at": "2025-12-25T04:03:52.167588"
+}

@@ -4,6 +4,13 @@ from app.models.progress import Progress
 from app.models.resource import Resource
 from app.models.school import School
 from app.models.user import User
+from app.models.matching import (
+    PeerMatch, 
+    TutoringSession, 
+    StudentChapterPerformance,
+    HelpRequest,
+    HelpOffer
+)
 
 __all__ = [
     "User",
@@ -13,4 +20,9 @@ __all__ = [
     "StudentResponse",
     "Progress",
     "Resource",
+    "PeerMatch",
+    "TutoringSession",
+    "StudentChapterPerformance",
+    "HelpRequest",
+    "HelpOffer",
 ]

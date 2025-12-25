@@ -537,6 +537,16 @@ async def evaluate_assessment(
         db.commit()
         db.refresh(current_user)
         
+        # Update student chapter performance for peer matching
+        try:
+            from app.services.matching_service import get_peer_matching_service
+            matching_service = get_peer_matching_service(db)
+            matching_service.update_student_chapter_performances(current_user.id)
+            print(f"Updated chapter performance for user {current_user.id}")
+        except Exception as e:
+            # Log error but don't fail the evaluation
+            print(f"Failed to update chapter performance: {e}")
+        
         return EvaluationResponse(
             assessment_id=assessment_id,
             chapter_analysis=evaluation_result.get("chapter_analysis", {}),

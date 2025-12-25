@@ -1,0 +1,90 @@
+{
+  "assessment_id": "4adc0ae5-ff16-4906-8574-49ae0fb16765",
+  "user_id": 3,
+  "user_name": "test ",
+  "user_email": "test@gmail.com",
+  "chapter": "All Chapters",
+  "subject": "science",
+  "answers": [
+    {
+      "question_id": "66738819-79dc-478f-aeb9-de0570034c0f",
+      "answer": "Combination reaction: Two or more substances combine to form a single product.\n\nExample: 2Mg + O\u2082 \u2192 2MgO (Magnesium combines with oxygen to form magnesium oxide)\nDecomposition reaction: A single compound breaks down into two or more simpler substances.\n\nExample: 2H\u2082O \u2192 2H\u2082 + O\u2082 (Water decomposes into hydrogen and oxygen when electricity is passed through it)",
+      "chapter": "Chemical Reactions",
+      "question": "Explain the difference between a combination reaction and a decomposition reaction with one example of each."
+    },
+    {
+      "question_id": "9403e338-ede6-4cce-a402-e299f3c211b5",
+      "answer": "The pH scale ranges from 0 to 14 and measures hydrogen ion concentration. A pH less than 7 indicates acidic substances, pH equal to 7 indicates neutral substances, and pH greater than 7 indicates basic substances. The lower the pH, the more acidic; the higher the pH, the more basic.Example of pH 7 substance: Pure water is neutral with a pH of 7.",
+      "chapter": "Acids, Bases and Salts",
+      "question": "How does the pH scale help in determining whether a substance is acidic, basic, or neutral? Give an example of a substance with a pH of 7."
+    },
+    {
+      "question_id": "dd19a62b-d68a-4f94-848a-576ed08bdc65",
+      "answer": "Metals have high melting and boiling points because they have strong metallic bonding. In metallic bonds, atoms release their valence electrons to form a \"sea of electrons\" that holds the metal ions together in a strong lattice structure. This requires significant energy to break.Non-metals typically have low melting and boiling points because they form covalent or molecular compounds with weak intermolecular forces (like van der Waals forces) between molecules, which require less energy to overcome.",
+      "chapter": "Metals and Non-metals",
+      "question": "Why do metals generally have high melting and boiling points, while non-metals do not? Explain with reference to their bonding."
+    },
+    {
+      "question_id": "01ac4f13-735e-49bd-bcfe-ff7760636730",
+      "answer": "Saturated hydrocarbons: Contain only single bonds between carbon atoms; all carbon atoms are bonded to the maximum number of hydrogen atoms.\n\nExample: Ethane (C\u2082H\u2086) with structure H\u2083C-CH\u2083\n\nUnsaturated hydrocarbons: Contain at least one double or triple bond between carbon atoms.\n\nExample: Ethene (C\u2082H\u2084) with structure H\u2082C=CH\u2082",
+      "chapter": "Carbon Compounds",
+      "question": "What is the difference between saturated and unsaturated hydrocarbons? Give one example of each."
+    },
+    {
+      "question_id": "a8df01ce-dcc4-4c67-b968-8a3db8a63378",
+      "answer": "Mendeleev's Periodic Table arranged elements in order of increasing atomic mass and grouped elements with similar properties together. He left gaps for undiscovered elements and sometimes placed elements out of atomic mass order to maintain property patterns.\nThe Modern Periodic Table arranges elements in order of increasing atomic number (number of protons) and is based on the periodic law that properties repeat periodically with atomic number. This arrangement resolved the anomalies in Mendeleev's table.",
+      "chapter": "Periodic Classification",
+      "question": "How did Mendeleev\u2019s Periodic Table differ from the Modern Periodic Table in terms of the arrangement of elements?"
+    },
+    {
+      "question_id": "816de265-cc1c-4a75-a444-8e9cd1238dcb",
+      "answer": "Respiration is essential because it releases energy from food (glucose) in the form of ATP, which powers all cellular activities necessary for life, growth, repair, and movement.\nDifference from breathing: Breathing is the physical process of inhaling oxygen and exhaling carbon dioxide. Respiration is the biochemical process occurring in cells where glucose is broken down with oxygen to release energy (cellular respiration: C\u2086H\u2081\u2082O\u2086 + 6O\u2082 \u2192 6CO\u2082 + 6H\u2082O + Energy).",
+      "chapter": "Life Processes",
+      "question": "Why is respiration considered an essential life process? How does it differ from breathing?"
+    },
+    {
+      "question_id": "ca66c5f9-aa67-4de5-a0c0-c2eaf08b467a",
+      "answer": "The hypothalamus serves as a crucial link between the nervous and endocrine systems.\nNervous system role: It regulates body temperature, hunger, thirst, sleep, and emotional responses by controlling the autonomic nervous system.\nEndocrine system role: It produces releasing and inhibiting hormones that control the pituitary gland, which in turn regulates other endocrine glands. It also produces hormones like ADH (antidiuretic hormone) and oxytocin.",
+      "chapter": "Control and Coordination",
+      "question": "Describe the role of the hypothalamus in the human body\u2019s nervous system and endocrine system."
+    },
+    {
+      "question_id": "d4564cc6-074f-4a7d-bf89-f28389698013",
+      "answer": "Asexual reproduction:\n\nGenetic variation: None or minimal; offspring are genetically identical clones of the parent\nExamples: Binary fission in bacteria, budding in yeast and Hydra, vegetative propagation in potato and sugarcane\n\nSexual reproduction:\n\nGenetic variation: High; offspring have genetic contributions from two parents, creating unique combinations\nExamples: Flowering plants produce seeds through pollination and fertilization; animals like humans reproduce through fusion of male and female gametes",
+      "chapter": "Reproduction",
+      "question": "Compare asexual reproduction and sexual reproduction in terms of genetic variation and examples in plants/animals."
+    },
+    {
+      "question_id": "5788b471-60bd-4958-803b-288a755179e1",
+      "answer": "The Law of Segregation states that each parent carries two copies (alleles) of each gene, and these alleles separate during gamete formation, with each gamete receiving only one allele. During fertilization, offspring receive one allele from each parent.\nIn pea plants, Mendel showed this with traits like height. A tall plant (TT) crossed with a short plant (tt) produces all tall offspring (Tt) in the F1 generation. When F1 plants self-pollinate, the alleles segregate, producing a 3:1 ratio of tall to short plants in the F2 generation (TT, Tt, Tt, tt).",
+      "chapter": "Heredity and Evolution",
+      "question": "How does Mendel\u2019s Law of Segregation explain the inheritance of traits in pea plants?"
+    },
+    {
+      "question_id": "a818d2da-54a2-4a3a-8e5b-d4f10b3123ec",
+      "answer": "When light passes from air (less dense) into water (denser), it bends toward the normal (an imaginary line perpendicular to the surface). This bending is called refraction.\nThe refractive index of water (approximately 1.33) is higher than air (approximately 1.0), meaning light travels slower in water. The amount of bending depends on the angle of incidence and is governed by Snell's law: n\u2081 sin \u03b8\u2081 = n\u2082 sin \u03b8\u2082.",
+      "chapter": "Light \u2013 Reflection and Refraction",
+      "question": "What happens to a ray of light when it passes from air into water? Explain using the concept of refractive index."
+    },
+    {
+      "question_id": "dc034d4b-d57f-4eb8-a106-3c90ef765215",
+      "answer": "The ciliary muscles control the shape of the eye lens to focus on objects at different distances.\nFor near objects: Ciliary muscles contract, releasing tension on suspensory ligaments. The elastic lens becomes thicker and more curved, increasing its converging power to focus near objects on the retina.\nFor distant objects: Ciliary muscles relax, tightening the suspensory ligaments. The lens is pulled thinner and flatter, decreasing its converging power to focus distant objects on the retina.",
+      "chapter": "Human Eye",
+      "question": "How does the ciliary muscle help in accommodation (focusing on near and distant objects)?"
+    },
+    {
+      "question_id": "fa417407-e1c3-40e8-895e-b2ed2a10e5ee",
+      "answer": "Series circuits:\n\nCurrent: Same current flows through all components (I\u2081 = I\u2082 = I\u2083)\nVoltage: Total voltage is divided among components (V_total = V\u2081 + V\u2082 + V\u2083)\nIf one component fails, the entire circuit breaks\n\nParallel circuits:\n\nCurrent: Total current is divided among branches (I_total = I\u2081 + I\u2082 + I\u2083)\nVoltage: Same voltage across all components (V\u2081 = V\u2082 = V\u2083 = V_total)\nIf one component fails, others continue working",
+      "chapter": "Electricity",
+      "question": "What is the difference between series and parallel circuits in terms of current and voltage distribution?"
+    },
+    {
+      "question_id": "9c56e105-3560-41d3-96de-429d5a724f71",
+      "answer": "An electric motor converts electrical energy into mechanical energy using the magnetic effect of current.\nKey components:\n\nArmature coil: Current-carrying coil that rotates\nPermanent magnets or electromagnets: Create a magnetic field\nCommutator: Split ring that reverses current direction every half rotation\nBrushes: Carbon contacts that supply current to the commutator",
+      "chapter": "Magnetic Effects of Current",
+      "question": "How does an electric motor work based on the magnetic effect of current? Explain its key components."
+    }
+  ],
+  "submitted_at": "2025-12-25T04:03:33.886613",
+  "status": "evaluated"
+}

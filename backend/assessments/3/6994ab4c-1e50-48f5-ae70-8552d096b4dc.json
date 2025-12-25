@@ -1,0 +1,78 @@
+{
+  "assessment_id": "6994ab4c-1e50-48f5-ae70-8552d096b4dc",
+  "user_id": 3,
+  "user_name": "test ",
+  "user_email": "test@gmail.com",
+  "chapter": "All Chapters",
+  "subject": "maths",
+  "answers": [
+    {
+      "question_id": "0137107d-0662-47fa-a217-f0a3ed4aa14b",
+      "answer": "Proof by contradiction:\nAssume \u221a5 is rational. Then \u221a5 can be written as p/q where p and q are integers with no common factors (in lowest terms) and q \u2260 0.\n\u221a5 = p/q\nSquaring both sides:\n5 = p\u00b2/q\u00b2\n5q\u00b2 = p\u00b2\nThis means p\u00b2 is divisible by 5, so p must be divisible by 5 (since 5 is prime).\nLet p = 5m for some integer m.\nSubstituting:\n5q\u00b2 = (5m)\u00b2\n5q\u00b2 = 25m\u00b2\nq\u00b2 = 5m\u00b2\nThis means q\u00b2 is divisible by 5, so q must also be divisible by 5.\nBut if both p and q are divisible by 5, they have a common factor of 5, which contradicts our assumption that p/q is in lowest terms.\nTherefore, our assumption is wrong, and \u221a5 is irrational",
+      "chapter": "Real Numbers",
+      "question": "Prove that \u221a5 is an irrational number using the method of contradiction."
+    },
+    {
+      "question_id": "1309d88e-ba84-498e-9617-45f9a5916406",
+      "answer": "Given: p(x) = 2x\u00b2 - 5x + k, and one zero is 2\nSince 2 is a zero, p(2) = 0:\n2(2)\u00b2 - 5(2) + k = 0\n2(4) - 10 + k = 0\n8 - 10 + k = 0\nk = 2\nNow the polynomial is: p(x) = 2x\u00b2 - 5x + 2\nUsing the relationship between zeros and coefficients:\nSum of zeros = -b/a = -(-5)/2 = 5/2\nIf one zero is 2, let the other zero be \u03b1:\n2 + \u03b1 = 5/2\n\u03b1 = 5/2 - 2 = 5/2 - 4/2 = 1/2\nAnswer: k = 2, and the other zero is 1/2",
+      "chapter": "Polynomials",
+      "question": "If one zero of the polynomial \\( p(x) = 2x^2 - 5x + k \\) is 2, find the value of \\( k \\) and the other zero."
+    },
+    {
+      "question_id": "09955167-8709-4f2b-9536-d9e72ae986eb",
+      "answer": "Note: You didn't provide the specific equations. Here's a general example:\nLet's solve:\n\nx + 2y = 7 ... (1)\n3x - y = 5 ... (2)\n\nFrom equation (1): x = 7 - 2y ... (3)\nSubstitute (3) into equation (2):\n3(7 - 2y) - y = 5\n21 - 6y - y = 5\n21 - 7y = 5\n-7y = -16\ny = 16/7\nSubstitute y back into equation (3):\nx = 7 - 2(16/7)\nx = 49/7 - 32/7\nx = 17/7",
+      "chapter": "Linear Equations",
+      "question": "Solve the following pair of linear equations using the substitution method:"
+    },
+    {
+      "question_id": "7ee33e25-66c7-4104-b2e2-f492e00c8322",
+      "answer": "x\u00b2 - 6x + 9 = 0\nThe left side is already a perfect square:\n(x - 3)\u00b2 = 0\nTaking square root of both sides:\nx - 3 = 0\nx = 3\nAnswer: The equation has a repeated root: x = 3 (or we say both roots are 3)",
+      "chapter": "Quadratic Equations",
+      "question": "Find the roots of the quadratic equation \\( x^2 - 6x + 9 = 0 \\) using the method of completing the square."
+    },
+    {
+      "question_id": "cef63cdc-3c08-4ad9-85c2-55641b21338d",
+      "answer": "Given: 4th term (a\u2084) = 18, 10th term (a\u2081\u2080) = 48\nUsing the formula a\u2099 = a + (n-1)d:\na\u2084 = a + 3d = 18 ... (1)\na\u2081\u2080 = a + 9d = 48 ... (2)\nSubtracting equation (1) from equation (2):\n(a + 9d) - (a + 3d) = 48 - 18\n6d = 30\nd = 5\nSubstituting d = 5 into equation (1):\na + 3(5) = 18\na + 15 = 18\na = 3\nAnswer: First term (a) = 3, Common difference (d) = 5",
+      "chapter": "Arithmetic Progressions",
+      "question": "The 4th term of an arithmetic progression is 18, and the 10th term is 48. Find the first term and the common difference."
+    },
+    {
+      "question_id": "30c5e995-61a8-419b-b1ec-9d99c1697e1b",
+      "answer": "Given: AB = 6 cm, BC = 8 cm, AC = 10 cm\nTo prove the triangle is right-angled, we check if it satisfies the Pythagorean theorem.\nChecking: AB\u00b2 + BC\u00b2 = AC\u00b2?\n6\u00b2 + 8\u00b2 = 10\u00b2?\n36 + 64 = 100?\n100 = 100 \u2713\nSince AB\u00b2 + BC\u00b2 = AC\u00b2, the triangle satisfies the Pythagorean theorem.\nTherefore, triangle ABC is right-angled at B (the right angle is opposite the longest side AC).",
+      "chapter": "Triangles",
+      "question": "In triangle ABC, if \\( AB = 6 \\) cm, \\( BC = 8 \\) cm, and \\( AC = 10 \\) cm, prove that the triangle is right-angled."
+    },
+    {
+      "question_id": "0e79f833-5cd6-46ed-9165-0112bbc89f45",
+      "answer": "First, find the slope:\nm = (y\u2082 - y\u2081)/(x\u2082 - x\u2081) = (5 - (-3))/(4 - 2) = 8/2 = 4\nUsing point-slope form with point (2, -3):\ny - y\u2081 = m(x - x\u2081)\ny - (-3) = 4(x - 2)\ny + 3 = 4x - 8\ny = 4x - 11\nAnswer: y = 4x - 11 or 4x - y - 11 = 0",
+      "chapter": "Coordinate Geometry",
+      "question": "Find the equation of the line passing through the points \\( (2, -3) \\) and \\( (4, 5) \\)."
+    },
+    {
+      "question_id": "c863f942-a2e6-4855-9c73-420fd360435d",
+      "answer": "Given: sin \u03b8 = 3/5 (acute angle)\nUsing the identity: sin\u00b2\u03b8 + cos\u00b2\u03b8 = 1\n(3/5)\u00b2 + cos\u00b2\u03b8 = 1\n9/25 + cos\u00b2\u03b8 = 1\ncos\u00b2\u03b8 = 1 - 9/25 = 16/25\ncos \u03b8 = 4/5 (positive since \u03b8 is acute)\ntan \u03b8 = sin \u03b8 / cos \u03b8 = (3/5) / (4/5) = 3/4\nAnswer: cos \u03b8 = 4/5, tan \u03b8 = 3/4",
+      "chapter": "Trigonometry",
+      "question": "If \\( \\sin \\theta = \\frac{3}{5} \\), find the value of \\( \\cos \\theta \\) and \\( \\tan \\theta \\) for an acute angle \\( \\theta \\)."
+    },
+    {
+      "question_id": "4714a6f4-912f-40ed-9f75-18d9edd89fbd",
+      "answer": "Given: Chord length = 16 cm, Radius = 10 cm\nThe perpendicular from the center to a chord bisects the chord.\nSo, half the chord length = 16/2 = 8 cm\nUsing Pythagorean theorem in the right triangle formed:\n(Radius)\u00b2 = (Perpendicular distance)\u00b2 + (Half chord)\u00b2\n10\u00b2 = d\u00b2 + 8\u00b2\n100 = d\u00b2 + 64\nd\u00b2 = 36\nd = 6 cm\nAnswer: The perpendicular distance is 6 cm",
+      "chapter": "Circles",
+      "question": "A chord of length 16 cm is drawn in a circle of radius 10 cm. Find the perpendicular distance from the center of the circle to the chord."
+    },
+    {
+      "question_id": "390bd117-e6eb-484a-aedf-c1764c12752c",
+      "answer": "Data: 45, 68, 72, 55, 80, 63, 75, 50, 60, 70\nMedian:\nArrange in ascending order: 45, 50, 55, 60, 63, 68, 70, 72, 75, 80\nNumber of observations (n) = 10 (even)\nMedian = Average of 5th and 6th terms = (63 + 68)/2 = 131/2 = 65.5\nMode:\nLooking at the data, no value repeats. Each value appears only once.\nAnswer: Median = 65.5, Mode = No mode (or the data is non-modal)",
+      "chapter": "Statistics",
+      "question": "The marks obtained by 10 students in a test are: 45, 68, 72, 55, 80, 63, 75, 50, 60, 70. Find the median and mode of the data."
+    },
+    {
+      "question_id": "e0b588bb-5f83-44d6-8595-4dc46788184a",
+      "answer": "Given: 5 red, 3 blue, 2 green balls\nTotal balls = 5 + 3 + 2 = 10\nNumber of favorable outcomes (red or green) = 5 + 2 = 7\nProbability = Number of favorable outcomes / Total outcomes = 7/10\nAnswer: P(red or green) = 7/10 or 0.7",
+      "chapter": "Probability",
+      "question": "A bag contains 5 red, 3 blue, and 2 green balls. If a ball is drawn at random, what is the probability that it is either red or green?"
+    }
+  ],
+  "submitted_at": "2025-12-25T04:08:41.311325",
+  "status": "evaluated"
+}
