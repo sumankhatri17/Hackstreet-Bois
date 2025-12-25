@@ -1,10 +1,12 @@
 """
 Migration: Add learning_materials table
 """
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, DateTime, ForeignKey, Text, JSON
-from datetime import datetime
 import os
+from datetime import datetime
+
 from dotenv import load_dotenv
+from sqlalchemy import (JSON, Column, DateTime, ForeignKey, Integer, MetaData,
+                        String, Table, Text, create_engine)
 
 load_dotenv()
 

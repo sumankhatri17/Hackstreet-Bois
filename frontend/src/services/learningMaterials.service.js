@@ -30,7 +30,9 @@ const learningMaterialsService = {
    * Get specific learning material by ID
    */
   async getMaterialById(materialId) {
-    const response = await api.get(`/learning-materials/materials/${materialId}`);
+    const response = await api.get(
+      `/learning-materials/materials/${materialId}`
+    );
     return response.data;
   },
 

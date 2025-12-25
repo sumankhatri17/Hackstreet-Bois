@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import Card from "../common/Card";
-import Badge from "../common/Badge";
-import Button from "../common/Button";
+import { useState } from "react";
 import Modal from "../common/Modal";
 
 const ResourcesList = ({ resources = [] }) => {
@@ -74,13 +71,19 @@ const ResourcesList = ({ resources = [] }) => {
                   </span>
                 )}
               </div>
-              <h3 className="text-lg font-semibold mb-2" style={{ color: "#323232" }}>
+              <h3
+                className="text-lg font-semibold mb-2"
+                style={{ color: "#323232" }}
+              >
                 {resource.title}
               </h3>
               <p className="text-sm mb-4" style={{ color: "#5A5A5A" }}>
                 {resource.description}
               </p>
-              <div className="flex items-center justify-between text-sm" style={{ color: "#5A5A5A" }}>
+              <div
+                className="flex items-center justify-between text-sm"
+                style={{ color: "#5A5A5A" }}
+              >
                 <span>⏱ {resource.duration}</span>
                 <span>📚 {resource.subject}</span>
               </div>
@@ -122,18 +125,18 @@ const ResourcesList = ({ resources = [] }) => {
               </span>
             </div>
             <p style={{ color: "#323232" }}>{selectedResource.description}</p>
-            <div
-              className="pt-4 border-t"
-              style={{ borderColor: "#C9BDB3" }}
-            >
+            <div className="pt-4 border-t" style={{ borderColor: "#C9BDB3" }}>
               <p className="text-sm mb-2" style={{ color: "#5A5A5A" }}>
-                <strong style={{ color: "#323232" }}>Subject:</strong> {selectedResource.subject}
+                <strong style={{ color: "#323232" }}>Subject:</strong>{" "}
+                {selectedResource.subject}
               </p>
               <p className="text-sm mb-2" style={{ color: "#5A5A5A" }}>
-                <strong style={{ color: "#323232" }}>Duration:</strong> {selectedResource.duration}
+                <strong style={{ color: "#323232" }}>Duration:</strong>{" "}
+                {selectedResource.duration}
               </p>
               <p className="text-sm" style={{ color: "#5A5A5A" }}>
-                <strong style={{ color: "#323232" }}>Level:</strong> Grade {selectedResource.level}
+                <strong style={{ color: "#323232" }}>Level:</strong> Grade{" "}
+                {selectedResource.level}
               </p>
             </div>
             <button

@@ -4,17 +4,17 @@ Learning Material Generator Service
 Integrates with existing assessment system to generate personalized learning plans
 """
 
-import os
 import json
+import os
 import re
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional
+
+from app.models.learning_material import LearningMaterial
+from app.models.matching import StudentChapterPerformance
 from dotenv import load_dotenv
 from mistralai import Mistral
 from sqlalchemy.orm import Session
-
-from app.models.matching import StudentChapterPerformance
-from app.models.learning_material import LearningMaterial
 
 load_dotenv()
 client = Mistral(api_key=os.getenv("MISTRAL_API_KEY"))

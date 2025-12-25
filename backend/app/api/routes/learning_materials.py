@@ -3,14 +3,14 @@ Learning Materials API Routes
 Generate and retrieve personalized learning plans
 """
 from typing import Optional
-from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
 
 from app.api import deps
 from app.db.database import get_db
-from app.models.user import User
 from app.models.learning_material import LearningMaterial
+from app.models.user import User
 from app.services.Learning_materials import generate_learning_materials
+from fastapi import APIRouter, Depends, HTTPException, status
+from sqlalchemy.orm import Session
 
 router = APIRouter()
 

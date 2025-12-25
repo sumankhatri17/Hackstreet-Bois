@@ -13,7 +13,8 @@ const MyProgressPage = () => {
             My Progress
           </h1>
           <p className="text-base" style={{ color: "#5A5A5A" }}>
-            Track your learning journey across all subjects with detailed analytics and chapter-wise breakdown
+            Track your learning journey across all subjects with detailed
+            analytics and chapter-wise breakdown
           </p>
         </div>
 

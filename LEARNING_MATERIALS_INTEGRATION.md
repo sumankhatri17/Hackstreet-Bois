@@ -1,6 +1,7 @@
 # Learning Materials Integration - Implementation Summary
 
 ## Overview
+
 Integrated the AI-powered learning materials generator with the existing assessment system to provide personalized study plans for students.
 
 ## What Was Built
@@ -8,13 +9,17 @@ Integrated the AI-powered learning materials generator with the existing assessm
 ### 1. Backend Components
 
 #### Database Model (`backend/app/models/learning_material.py`)
+
 - `LearningMaterial` table stores personalized learning plans
 - Fields: student_id, subject, content (JSON), generated_at, expires_at, is_active
 - Links to User model with relationship
 
 #### Service (`backend/app/services/Learning_materials.py`)
+
 **Key Functions:**
+
 - `generate_learning_materials()` - Main service function that:
+
   - Pulls student weakness data from `StudentChapterPerformance` table
   - Calls Mistral AI for each weak chapter
   - Generates roadmap with resources, prerequisites, study steps
@@ -25,31 +30,37 @@ Integrated the AI-powered learning materials generator with the existing assessm
 - `generate_chapter_plan()` - AI-powered chapter-specific plan generation
 
 **AI Integration:**
+
 - Uses Mistral AI (mistral-small-latest model)
 - Generates JSON with strict schema enforcement
 - 3 retry attempts per chapter
 - Fallback mechanism if AI fails
 
 #### API Routes (`backend/app/api/routes/learning_materials.py`)
+
 - `POST /learning-materials/generate/{subject}` - Generate new plan
 - `GET /learning-materials/my-materials` - Get user's plans (with subject filter)
 - `GET /learning-materials/materials/{id}` - Get specific plan
 - `DELETE /learning-materials/materials/{id}` - Archive plan
 
 #### Migration (`backend/migrations/add_learning_materials.py`)
+
 - Creates learning_materials table
 - Run with: `python backend/migrations/add_learning_materials.py`
 
 ### 2. Frontend Components
 
 #### Service (`frontend/src/services/learningMaterials.service.js`)
+
 - `generateMaterials(subject, forceRegenerate)` - Trigger AI generation
 - `getMyMaterials(subject)` - Fetch saved plans
 - `getMaterialById(id)` - Get specific plan
 - `archiveMaterial(id)` - Delete plan
 
 #### LearningRoadmap Component (`frontend/src/components/student/LearningRoadmap.jsx`)
+
 **Features:**
+
 - Subject-specific learning plans
 - Summary cards: weekly hours, duration, chapter count, critical areas
 - Expandable chapter cards with:
@@ -62,6 +73,7 @@ Integrated the AI-powered learning materials generator with the existing assessm
 - Color-coded by severity (red=severe, orange=moderate, green=mild)
 
 #### Updated ResourcesPage (`frontend/src/pages/student/ResourcesPage.jsx`)
+
 - Two tabs: "Learning Roadmap" and "Browse Resources"
 - Subject filter buttons (Mathematics, English, Science)
 - Integrates new LearningRoadmap with existing ResourcesList
@@ -69,6 +81,7 @@ Integrated the AI-powered learning materials generator with the existing assessm
 ## How It Works
 
 ### Workflow:
+
 1. **Student completes assessments** → Performance stored in `StudentChapterPerformance`
 2. **Student visits Resources page** → Sees "Generate Learning Plan" button
 3. **Clicks Generate** → Backend:
@@ -79,6 +92,7 @@ Integrated the AI-powered learning materials generator with the existing assessm
 5. **Plan cached for 7 days** to avoid repeated AI calls
 
 ### Data Flow:
+
 ```
 Assessments → StudentChapterPerformance (DB)
                         ↓
@@ -92,6 +106,7 @@ Assessments → StudentChapterPerformance (DB)
 ```
 
 ### AI-Generated Content Structure:
+
 ```json
 {
   "subject": "Mathematics",
@@ -135,23 +150,27 @@ Assessments → StudentChapterPerformance (DB)
 ## Testing Steps
 
 1. **Run Migration:**
+
    ```bash
    cd backend
    python migrations/add_learning_materials.py
    ```
 
 2. **Ensure MISTRAL_API_KEY in .env:**
+
    ```
    MISTRAL_API_KEY=your_key_here
    ```
 
 3. **Start Backend:**
+
    ```bash
    cd backend
    python main.py
    ```
 
 4. **Start Frontend:**
+
    ```bash
    cd frontend
    npm run dev
@@ -171,12 +190,14 @@ Assessments → StudentChapterPerformance (DB)
 ### Adjust Settings in `Learning_materials.py`:
 
 **Cache Duration:**
+
 ```python
 LearningMaterial.generated_at > datetime.utcnow() - timedelta(days=7)
 # Change days=7 to your preference
 ```
 
 **Study Time Calculation:**
+
 ```python
 if severe_count >= 3:
     weekly_hours = 8
@@ -185,6 +206,7 @@ if severe_count >= 3:
 ```
 
 **AI Model:**
+
 ```python
 model="mistral-small-latest"
 # Can change to other Mistral models
@@ -203,6 +225,7 @@ model="mistral-small-latest"
 ## Files Modified/Created
 
 **Backend:**
+
 - `app/models/learning_material.py` (new)
 - `app/services/Learning_materials.py` (refactored)
 - `app/api/routes/learning_materials.py` (new)
@@ -212,6 +235,7 @@ model="mistral-small-latest"
 - `migrations/add_learning_materials.py` (new)
 
 **Frontend:**
+
 - `src/services/learningMaterials.service.js` (new)
 - `src/components/student/LearningRoadmap.jsx` (new)
 - `src/pages/student/ResourcesPage.jsx` (modified - added tab)
@@ -220,20 +244,22 @@ model="mistral-small-latest"
 
 Base URL: `/api/v1/learning-materials`
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/generate/{subject}` | Generate learning plan |
-| GET | `/my-materials` | Get all user's plans |
-| GET | `/materials/{id}` | Get specific plan |
-| DELETE | `/materials/{id}` | Archive plan |
+| Method | Endpoint              | Description            |
+| ------ | --------------------- | ---------------------- |
+| POST   | `/generate/{subject}` | Generate learning plan |
+| GET    | `/my-materials`       | Get all user's plans   |
+| GET    | `/materials/{id}`     | Get specific plan      |
+| DELETE | `/materials/{id}`     | Archive plan           |
 
 ## Dependencies
 
 **Required:**
+
 - `mistralai` Python package (already in requirements)
 - Mistral API key in environment variables
 - SQLAlchemy for JSON column type support
 
 **Frontend:**
+
 - Existing components (Card, Badge, Button, Modal)
 - React hooks (useState, useEffect)

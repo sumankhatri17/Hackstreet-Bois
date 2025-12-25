@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import DashboardLayout from "../../components/layout/DashboardLayout";
-import ResourcesList from "../../components/student/ResourcesList";
 import LearningRoadmap from "../../components/student/LearningRoadmap";
 import resourceService from "../../services/resource.service";
 import useAuthStore from "../../store/authStore";
@@ -12,11 +11,13 @@ const ResourcesPage = () => {
   const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   // Get subject from URL params
   const subjectParam = searchParams.get("subject");
-  
-  const [selectedSubject, setSelectedSubject] = useState(subjectParam || "Maths");
+
+  const [selectedSubject, setSelectedSubject] = useState(
+    subjectParam || "Maths"
+  );
 
   const subjects = ["Maths", "English", "Science"];
 
@@ -63,7 +64,8 @@ const ResourcesPage = () => {
         </h1>
 
         {/* Subject Filter */}
-        <div className="flex gap-2 mb-6">{subjects.map((subject) => (
+        <div className="flex gap-2 mb-6">
+          {subjects.map((subject) => (
             <button
               key={subject}
               onClick={() => setSelectedSubject(subject)}

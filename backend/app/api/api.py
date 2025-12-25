@@ -1,8 +1,8 @@
 """
 API router configuration
 """
-from app.api.routes import (assessments, auth, progress, rag_questions,
-                            resources, schools, users, matching, learning_materials)
+from app.api.routes import (assessments, auth, learning_materials, matching,
+                            progress, rag_questions, resources, schools, users)
 from fastapi import APIRouter
 
 api_router = APIRouter()

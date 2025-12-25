@@ -92,7 +92,10 @@ const StudentDashboard = () => {
 
           console.log("My matches data:", myMatchesData);
           console.log("Potential matches data:", potentialMatchesData);
-          console.log("Potential matches array:", potentialMatchesData.potential_matches);
+          console.log(
+            "Potential matches array:",
+            potentialMatchesData.potential_matches
+          );
 
           setPeerMatches(myMatchesData.matches || []);
           setPotentialMatches(potentialMatchesData.potential_matches || []);
@@ -546,7 +549,9 @@ const StudentDashboard = () => {
                   </div>
                 </div>
                 <a
-                  href={`/resources?tab=roadmap&subject=${encodeURIComponent(area.subject)}`}
+                  href={`/resources?tab=roadmap&subject=${encodeURIComponent(
+                    area.subject
+                  )}`}
                   className="inline-flex items-center text-sm font-medium transition-colors"
                   style={{ color: "#323232" }}
                 >
