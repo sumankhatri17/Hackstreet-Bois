@@ -1,0 +1,173 @@
+{
+  "chapter_analysis": {
+    "Real Numbers": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Polynomials": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Linear Equations": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Quadratic Equations": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Arithmetic Progressions": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Triangles": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Coordinate Geometry": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Trigonometry": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Circles": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Statistics": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Probability": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    }
+  },
+  "question_analysis": {
+    "63259523-c916-48e2-bf0b-9250348ab181": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "b94e10a0-7250-4f7b-b1c0-a48bd3970ffb": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "3e12397a-7ff3-4c59-89dc-e1e1ac05fb04": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "9e47994a-1f05-4fb6-900d-1ff49f2940b8": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "f3668ac5-e4f8-4008-9f0b-75a8333e793d": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "725a77ce-4120-409c-87d9-9efafba7be34": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect logic; angle does not imply right triangle."
+    },
+    "c2c4da66-e441-4875-84f3-80e7b11ba8f3": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Missing slope and distance calculations."
+    },
+    "52cb9ff6-ee4f-49fc-856f-3e5881277faa": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "45fbbe5a-3f32-4f40-a83a-9c62b511c96e": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect formula and missing diagram."
+    },
+    "8599861b-e645-4d2b-b2f9-e86cb823c8a8": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "No data provided for calculation."
+    },
+    "b5b71e97-373d-4e0a-9106-bce9ca738d75": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect probability calculation."
+    }
+  },
+  "overall_analysis": {
+    "final_score_out_of_100": 60,
+    "estimated_student_grade_level": 7,
+    "strongest_chapters": [
+      "Real Numbers",
+      "Polynomials"
+    ],
+    "weakest_chapters": [
+      "Triangles",
+      "Coordinate Geometry",
+      "Circles"
+    ],
+    "learning_gap_summary": [
+      "Severe weaknesses in Triangles and Coordinate Geometry indicate a lack of understanding of geometric principles and calculations.",
+      "Incorrect application of the Law of Cosines and missing slope and distance calculations suggest foundational gaps in geometric reasoning.",
+      "Severe weakness in Circles shows a lack of understanding of circle properties and chord length calculations."
+    ]
+  },
+  "evaluated_at": "2025-12-25T04:33:49.573389"
+}
