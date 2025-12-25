@@ -374,12 +374,63 @@ class RAGService:
         
         # Generate ALL questions in one API call for efficiency
         chapters_text = "\n".join([f"- {ch}" for ch in chapters])
+        grade = 10
         
+<<<<<<< HEAD
+        prompt = (
+            f"You are an expert academic question generator.\n\n"
+            f"Subject: {subject}\n"
+            f"Grade Level: {grade if 'grade' in locals() else '10'}\n"
+            f"Chapters to generate questions from:\n"
+            f"{chapters_text}\n\n"
+            f"Instructions:\n"
+            f"1️⃣ Generate exactly {questions_per_chapter} HIGH-QUALITY educational questions for EACH chapter listed.\n"
+            f"2️⃣ Do NOT add or remove chapters — only use the chapters provided above.\n"
+            f"3️⃣ Ensure questions are clear, specific, and appropriate for Grade {grade if 'grade' in locals() else '9'} learning outcomes.\n\n"
+            f"- Do NOT ask Long questions, ask questions that can be answered in 1-2 sentences"
+            f"This in the Context of Nepal, Provide Difficulty level suitable for Nepal"
+
+            f"⚠ Special Rule for English:\n"
+            f"- Do NOT use Retrieval-Augmented content or any provided text passages.\n"
+            f"- Use the model’s own cognition and prior knowledge.\n"
+            f"- ONLY derive question topics based on the chapter titles themselves.\n"
+            f"- English questions should be conceptual,context-independent.\n\n"
+            f"- Correct the following sentence and explain the grammatical rule applied: Dont ask questions like this and even if you ask provide complete question"
+            f"- Do NOT ask Long questions, ask questions that can be answered in 1-2 sentences"
+            f"- Make sure the questions are Complete, Provide something that can be answered "
+            f"- Only as 2 questions from any chapters that are needed to be answered in a descriptive way,other than that, ask Grammatical questions "
+            f"This in the Context of Nepal, Provide Difficulty level suitable for Nepal"
+            
+            f"⚠ Special Rule for Maths:\n"
+            f"Do NOT ask Proving questions, Ask questions That are asked in SATS, That can be answerable with a single sentence or  Numeric values"
+            f"This in the Context of Nepal, Provide Difficulty level suitable for Nepal"
+            f"- Make sure the questions are Complete, Provide something that can be answered "
+            f"- Dont Provide only this -Solve the system of equations :- also provide the inequality or equations that are needed to be solved"
+            
+            f"⚠ Special Rule for Science:\n"
+            f"Do NOT ask Proving questions, Ask questions  That can be answerable with a few sentences or Numeric values"
+            f"This in the Context of Nepal, Provide Difficulty level suitable for Nepal"
+            f"- Make sure the questions are Complete, Provide something that can be answered "
+            
+
+            f"Formatting Requirements (follow EXACTLY):\n"
+            f"### **Chapter: [Exact Chapter Name]**\n"
+            f"**Q1:** [Question]\n"
+            f"**Q2:** [Question]\n"
+            f"... Continue until Q{questions_per_chapter}\n\n"
+            f"Repeat this format for every chapter.\n"
+
+            f" NO answers. NO explanations. NO additional text.\n"
+            f"Do not hallucinate or modify chapter names.\n"
+        )
+
+=======
         import random
         import time
 
         # Add random seed based on time for variation
         random_seed = int(time.time() * 1000) % 10000
+>>>>>>> 79b8cab60d12f40a95ea108a7094487e6c6fa035
         
         # Build hardcoded, structured prompt based on subject
         # Use system + user messages for stronger instruction
