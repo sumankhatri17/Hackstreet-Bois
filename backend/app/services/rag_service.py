@@ -376,7 +376,6 @@ class RAGService:
         chapters_text = "\n".join([f"- {ch}" for ch in chapters])
         grade = 10
         
-<<<<<<< HEAD
         prompt = (
             f"You are an expert academic question generator.\n\n"
             f"Subject: {subject}\n"
@@ -424,13 +423,6 @@ class RAGService:
             f"Do not hallucinate or modify chapter names.\n"
         )
 
-=======
-        import random
-        import time
-
-        # Add random seed based on time for variation
-        random_seed = int(time.time() * 1000) % 10000
->>>>>>> 79b8cab60d12f40a95ea108a7094487e6c6fa035
         
         # Build hardcoded, structured prompt based on subject
         # Use system + user messages for stronger instruction
