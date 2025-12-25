@@ -45,3 +45,9 @@ class User(Base):
     science_level = Column(Integer, nullable=True)
     english_level = Column(Integer, nullable=True)
     fit_to_teach_level = Column(Integer, nullable=True)  # Grade level student can teach
+    
+    # Location fields for proximity matching
+    city = Column(String, nullable=True)
+    state = Column(String, nullable=True)
+    zip_code = Column(String, nullable=True)
+    locality = Column(String, nullable=True)  # Neighborhood/area within city

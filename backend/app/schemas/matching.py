@@ -252,3 +252,106 @@ class DirectMatchRequest(BaseModel):
     subject: str
     chapter: str
     message: Optional[str] = None
+
+
+# Chat Message Schemas
+class ChatMessageCreate(BaseModel):
+    match_id: int
+    receiver_id: int
+    message: str
+    message_type: str = "text"
+    file_url: Optional[str] = None
+    file_name: Optional[str] = None
+    file_size: Optional[int] = None
+    file_type: Optional[str] = None
+
+
+class ChatMessage(BaseModel):
+    id: int
+    match_id: int
+    sender_id: int
+    receiver_id: int
+    message: str
+    message_type: str
+    file_url: Optional[str] = None
+    file_name: Optional[str] = None
+    file_size: Optional[int] = None
+    file_type: Optional[str] = None
+    is_read: bool
+    read_at: Optional[datetime] = None
+    created_at: datetime
+    sender_name: Optional[str] = None
+    receiver_name: Optional[str] = None
+    
+    class Config:
+        from_attributes = True
+
+
+# Session/Video Call Schemas
+class SessionCreate(BaseModel):
+    match_id: int
+    communication_method: str  # text, video_call, in_person
+    scheduled_at: Optional[datetime] = None
+    meeting_location: Optional[str] = None
+
+
+class SessionUpdate(BaseModel):
+    meeting_link: Optional[str] = None
+    topics_covered: Optional[List[str]] = None
+    notes: Optional[str] = None
+    started_at: Optional[datetime] = None
+    ended_at: Optional[datetime] = None
+
+
+class Session(BaseModel):
+    id: int
+    match_id: int
+    scheduled_at: Optional[datetime] = None
+    started_at: Optional[datetime] = None
+    ended_at: Optional[datetime] = None
+    duration_minutes: Optional[int] = None
+    communication_method: str
+    meeting_link: Optional[str] = None
+    meeting_location: Optional[str] = None
+    topics_covered: Optional[List[str]] = None
+    notes: Optional[str] = None
+    created_at: datetime
+    
+    class Config:
+        from_attributes = True
+
+
+# Resource Sharing Schemas
+class SharedResourceCreate(BaseModel):
+    match_id: int
+    title: str
+    description: Optional[str] = None
+    resource_type: str  # pdf, doc, image, video, link, note
+    file_url: Optional[str] = None
+    file_name: Optional[str] = None
+    file_size: Optional[int] = None
+    external_link: Optional[str] = None
+    subject: Optional[str] = None
+    chapter: Optional[str] = None
+    tags: Optional[List[str]] = None
+
+
+class SharedResource(BaseModel):
+    id: int
+    match_id: int
+    uploader_id: int
+    title: str
+    description: Optional[str] = None
+    resource_type: str
+    file_url: Optional[str] = None
+    file_name: Optional[str] = None
+    file_size: Optional[int] = None
+    external_link: Optional[str] = None
+    subject: Optional[str] = None
+    chapter: Optional[str] = None
+    tags: Optional[List[str]] = None
+    created_at: datetime
+    uploader_name: Optional[str] = None
+    
+    class Config:
+        from_attributes = True

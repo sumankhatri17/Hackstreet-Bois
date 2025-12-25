@@ -9,7 +9,9 @@ from app.models.matching import (
     TutoringSession, 
     StudentChapterPerformance,
     HelpRequest,
-    HelpOffer
+    HelpOffer,
+    ChatMessage,
+    SharedResource
 )
 
 __all__ = [
@@ -25,4 +27,6 @@ __all__ = [
     "StudentChapterPerformance",
     "HelpRequest",
     "HelpOffer",
+    "ChatMessage",
+    "SharedResource",
 ]

@@ -42,6 +42,9 @@ class AsymmetricGaleShapleyMatcher:
         learner_score: float,
         tutor_consistency: float = 1.0,
         learner_need: float = 1.0,
+        tutor_grade: int = None,
+        learner_grade: int = None,
+        same_locality: bool = False,
     ) -> float:
         """
         Calculate compatibility score between a tutor and learner.
@@ -50,10 +53,16 @@ class AsymmetricGaleShapleyMatcher:
         - Score gap: Larger gap = better teaching opportunity
         - Tutor expertise: Higher tutor score = better match
         - Learner need: Lower learner score = higher need
+        - Grade level: Tutor must be same grade or higher
+        - Location: Same locality bonus for physical meetings
         - Not too large gap: Prevent mismatched difficulty levels
         
         Returns score between 0-100
         """
+        # Grade level filter - tutor must be same or higher grade
+        if tutor_grade and learner_grade and tutor_grade < learner_grade:
+            return 0.0  # Cannot tutor someone in a higher grade
+        
         # Score difference (optimal gap is 3-5 points)
         score_gap = tutor_score - learner_score
         
@@ -65,14 +74,17 @@ class AsymmetricGaleShapleyMatcher:
         else:
             gap_score = max(0, 80 - (score_gap - 5.0) * 10)  # Decrease after 5 points
         
-        # Tutor expertise (30% weight)
-        expertise_score = (tutor_score / 10.0) * 30
+        # Tutor expertise (25% weight)
+        expertise_score = (tutor_score / 10.0) * 25
         
-        # Learner need (20% weight)
-        need_score = ((10.0 - learner_score) / 10.0) * 20
+        # Learner need (15% weight)
+        need_score = ((10.0 - learner_score) / 10.0) * 15
+        
+        # Location proximity bonus (10% weight)
+        location_bonus = 10 if same_locality else 0
         
         # Combined score
-        compatibility = (gap_score * 0.5) + expertise_score + need_score
+        compatibility = (gap_score * 0.5) + expertise_score + need_score + location_bonus
         
         return min(100.0, max(0.0, compatibility))
     
@@ -101,12 +113,24 @@ class AsymmetricGaleShapleyMatcher:
                 if tutor_id == learner_id:
                     continue
                 
+                # Check if same locality
+                same_locality = (
+                    tutor_data.get('locality') and 
+                    learner_data.get('locality') and
+                    tutor_data['locality'].lower() == learner_data['locality'].lower()
+                )
+                
                 compatibility = self.calculate_compatibility_score(
                     tutor_data['score'],
                     learner_data['score'],
+                    tutor_grade=tutor_data.get('grade'),
+                    learner_grade=learner_data.get('grade'),
+                    same_locality=same_locality,
                 )
                 
-                preferences.append((learner_id, compatibility))
+                # Only include if compatibility > 0 (grade filter may exclude)
+                if compatibility > 0:
+                    preferences.append((learner_id, compatibility))
             
             # Sort by compatibility (descending)
             preferences.sort(key=lambda x: x[1], reverse=True)
@@ -346,17 +370,22 @@ class PeerMatchingService:
         learners = {}
         
         for perf in performances:
+            user = self.db.query(User).filter(User.id == perf.student_id).first()
+            if not user:
+                continue
+            
+            user_data = {
+                'score': perf.score,
+                'accuracy': perf.accuracy_percentage,
+                'grade': user.current_level,
+                'locality': user.locality or user.city,
+            }
+            
             if perf.score >= self.matcher.tutor_threshold:
-                tutors[perf.student_id] = {
-                    'score': perf.score,
-                    'accuracy': perf.accuracy_percentage,
-                }
+                tutors[perf.student_id] = user_data
             
             if perf.score <= self.matcher.learner_threshold:
-                learners[perf.student_id] = {
-                    'score': perf.score,
-                    'accuracy': perf.accuracy_percentage,
-                }
+                learners[perf.student_id] = user_data
         
         # Need both tutors and learners
         if not tutors or not learners:
