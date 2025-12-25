@@ -298,9 +298,11 @@ class PeerMatchingService:
             return {}
         
         performance_data = defaultdict(dict)
+        file_timestamps = {}  # Track file modification times
         
-        # Find all evaluation files
+        # Find all evaluation files and sort by modification time (most recent first)
         eval_files = list(assessments_dir.glob("*_evaluation.json"))
+        eval_files.sort(key=lambda f: f.stat().st_mtime, reverse=True)
         print(f"[DEBUG EXTRACT] Found {len(eval_files)} evaluation files")
         
         for eval_file in eval_files:
@@ -319,15 +321,17 @@ class PeerMatchingService:
                     assessment = json.load(f)
                 
                 subject = assessment.get('subject', 'unknown')
-                print(f"[DEBUG EXTRACT] Subject: {subject}")
+                file_time = eval_file.stat().st_mtime
+                print(f"[DEBUG EXTRACT] Subject: {subject}, File time: {file_time}")
                 chapter_analysis = evaluation.get('chapter_analysis', {})
                 print(f"[DEBUG EXTRACT] Found {len(chapter_analysis)} chapters")
                 
-                # Store each chapter's performance
+                # Store each chapter's performance - use most recent file for each subject/chapter
                 for chapter_name, chapter_data in chapter_analysis.items():
-                    # Use the most recent or best performance
-                    if chapter_name not in performance_data[subject] or \
-                       chapter_data['chapter_score_out_of_10'] > performance_data[subject][chapter_name].get('score', 0):
+                    key = f"{subject}:{chapter_name}"
+                    # Only update if this is the most recent assessment for this chapter
+                    if key not in file_timestamps or file_time > file_timestamps[key]:
+                        file_timestamps[key] = file_time
                         performance_data[subject][chapter_name] = {
                             'score': chapter_data['chapter_score_out_of_10'],
                             'accuracy_percentage': chapter_data['accuracy_percentage'],
@@ -335,6 +339,7 @@ class PeerMatchingService:
                             'total_questions': chapter_data['total_questions'],
                             'correct': chapter_data['correct'],
                         }
+                        print(f"[DEBUG EXTRACT] Updated {chapter_name}: score={chapter_data['chapter_score_out_of_10']}, weakness={chapter_data['weakness_level']}")
             
             except (json.JSONDecodeError, KeyError) as e:
                 print(f"[ERROR EXTRACT] Error processing {eval_file}: {e}")

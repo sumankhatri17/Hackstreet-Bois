@@ -131,11 +131,16 @@ def get_student_weakness_data(db: Session, student_id: int, subject: str) -> Dic
         func.lower(StudentChapterPerformance.subject) == subject.lower()
     ).all()
     
+    print(f"[DEBUG WEAKNESS] Query found {len(performances)} total performance records for student {student_id}, subject {subject}")
+    
     weakness_data = {}
     for perf in performances:
+        print(f"[DEBUG WEAKNESS] Chapter: {perf.chapter}, weakness: {perf.weakness_level}, score: {perf.score}")
         # Only include chapters with some weakness (not "none")
         if perf.weakness_level in ["severe", "moderate", "mild"]:
             weakness_data[perf.chapter] = perf.weakness_level
+    
+    print(f"[DEBUG WEAKNESS] Filtered to {len(weakness_data)} chapters with weakness: {list(weakness_data.keys())}")
     
     return weakness_data
 
@@ -174,15 +179,21 @@ def generate_learning_materials(
     # Get student's weakness data from database
     weakness_data = get_student_weakness_data(db, student_id, subject)
     
+    print(f"[DEBUG LEARNING] Weakness data for user {student_id}, subject {subject}:")
+    print(f"[DEBUG LEARNING] Found {len(weakness_data)} chapters: {list(weakness_data.keys())}")
+    
     if not weakness_data:
         return None  # No weaknesses found
     
     # Generate learning plan for each weak chapter
     chapters = []
     for chapter, weakness_level in weakness_data.items():
-        print(f"Generating plan for {chapter} ({weakness_level})...")
+        print(f"[DEBUG LEARNING] Generating plan for {chapter} ({weakness_level})...")
         chapter_plan = generate_chapter_plan(chapter, weakness_level, subject)
+        print(f"[DEBUG LEARNING] Generated plan for {chapter}: {chapter_plan.get('chapter_name', 'ERROR')}")
         chapters.append(chapter_plan)
+    
+    print(f"[DEBUG LEARNING] Total chapters generated: {len(chapters)}")
     
     # Calculate global recommendations based on weaknesses
     severe_count = sum(1 for w in weakness_data.values() if w == "severe")

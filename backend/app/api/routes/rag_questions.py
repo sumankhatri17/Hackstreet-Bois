@@ -566,6 +566,8 @@ async def evaluate_assessment(
         # Commit changes to database
         db.commit()
         db.refresh(current_user)
+
+        
         
         # Update student chapter performance for peer matching
         try:
