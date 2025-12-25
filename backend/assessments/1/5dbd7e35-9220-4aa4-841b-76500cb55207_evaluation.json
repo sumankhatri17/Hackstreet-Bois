@@ -1,0 +1,205 @@
+{
+  "chapter_analysis": {
+    "Chemical Reactions": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Acids, Bases and Salts": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Metals and Non-metals": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Carbon Compounds": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Periodic Classification": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Life Processes": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Control and Coordination": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Reproduction": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Heredity and Evolution": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Light \u2013 Reflection and Refraction": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Human Eye": {
+      "total_questions": 1,
+      "correct": 1,
+      "partial": 0,
+      "incorrect": 0,
+      "accuracy_percentage": 100,
+      "chapter_score_out_of_10": 10,
+      "weakness_level": "none"
+    },
+    "Electricity": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    },
+    "Magnetic Effects of Current": {
+      "total_questions": 1,
+      "correct": 0,
+      "partial": 0,
+      "incorrect": 1,
+      "accuracy_percentage": 0,
+      "chapter_score_out_of_10": 0,
+      "weakness_level": "severe"
+    }
+  },
+  "question_analysis": {
+    "6f0f7110-cebf-4578-bf59-2e5eadbc35c6": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect explanation of warmth and no comparison with copper."
+    },
+    "0c05c5ae-c793-4227-bdf4-660e1e5adcad": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Only one method suggested, no explanation provided."
+    },
+    "8764d414-dc5f-4182-b5a2-c49f0218273a": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Question is incomplete, no comparison provided."
+    },
+    "988f5500-5019-4b45-a052-beb5a08fa430": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect compound name, no explanation of the reaction."
+    },
+    "2d506dd8-a40b-4a93-9295-1915388661e0": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect element identification, no reasoning provided."
+    },
+    "965b00c2-d5bb-4553-b44b-fedcf6a37213": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect explanation of the digestive process."
+    },
+    "7b08f62b-5282-412d-b821-a2936dae36ca": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Question is incomplete, no explanation provided."
+    },
+    "6754e9de-57cc-46d0-90cb-19fdb01259c7": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "dccd44e0-e995-4fd7-ae3f-f35cf95621ce": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect explanation of the genetic cross."
+    },
+    "d4f26f8a-d3bd-408c-8899-7a4d907715b7": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect description of the image formed by the lens."
+    },
+    "6bdd0c39-103a-4e03-98ed-ac19c5e97cb6": {
+      "correctness": "correct",
+      "score": 1
+    },
+    "3736e599-55d1-4b98-b2af-e85453820e69": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect calculation of the total current."
+    },
+    "90fee0d3-5fc1-4864-b153-9b09f9b6697e": {
+      "correctness": "incorrect",
+      "score": 0,
+      "medium_reason": "Incorrect description of the phenomenon."
+    }
+  },
+  "overall_analysis": {
+    "final_score_out_of_100": 20,
+    "estimated_student_grade_level": 6,
+    "strongest_chapters": [
+      "Reproduction",
+      "Human Eye"
+    ],
+    "weakest_chapters": [
+      "Chemical Reactions",
+      "Acids, Bases and Salts",
+      "Metals and Non-metals"
+    ],
+    "learning_gap_summary": [
+      "The student demonstrates severe weaknesses in understanding chemical reactions, acids, bases, and salts, and metals and non-metals. The lack of foundational knowledge in these areas is evident from the incorrect or incomplete answers provided.",
+      "Patterns of errors include incorrect formula usage, lack of conceptual understanding, and failure to provide detailed explanations. The student struggles with applying scientific principles to solve problems and explain phenomena.",
+      "The student's performance indicates a significant grade-level mismatch, particularly in chapters requiring application and analysis. The inability to compare properties, identify elements, and explain reactions suggests a need for targeted instruction in these areas."
+    ]
+  },
+  "evaluated_at": "2025-12-25T03:44:13.681384"
+}

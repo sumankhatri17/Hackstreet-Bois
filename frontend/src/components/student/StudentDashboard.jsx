@@ -8,7 +8,7 @@ import PeerLearnerCard from "../peers/PeerLearnerCard";
 import PeerTutorCard from "../peers/PeerTutorCard";
 
 const StudentDashboard = () => {
-  const { user } = useAuthStore();
+  const { user, refreshUser } = useAuthStore();
   const [selectedPeer, setSelectedPeer] = useState(null);
   const [modalType, setModalType] = useState(null);
   const [recentActivities, setRecentActivities] = useState([]);
@@ -19,12 +19,21 @@ const StudentDashboard = () => {
 
   // Debug: Log user data
   console.log("Dashboard user data:", user);
+  console.log("User ID:", user?.id);
+  console.log("User email:", user?.email);
+  console.log("Math level:", user?.math_level);
+  console.log("Science level:", user?.science_level);
+  console.log("English level:", user?.english_level);
+  console.log("Fit to teach:", user?.fit_to_teach_level);
 
   // Fetch recent activities and areas for improvement
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
         setLoading(true);
+
+        // Refresh user data to get latest levels
+        await refreshUser();
 
         // Fetch recent activities
         const activitiesData = await ragQuestionService.getRecentActivities(5);
@@ -119,17 +128,19 @@ const StudentDashboard = () => {
     },
     {
       label: "Math Level",
-      value: user?.math_level ? `${user.math_level}%` : "Not Assessed",
+      value: user?.math_level != null ? `${user.math_level}%` : "Not Assessed",
       color: "success",
     },
     {
       label: "Science Level",
-      value: user?.science_level ? `${user.science_level}%` : "Not Assessed",
+      value:
+        user?.science_level != null ? `${user.science_level}%` : "Not Assessed",
       color: "info",
     },
     {
       label: "English Level",
-      value: user?.english_level ? `${user.english_level}%` : "Not Assessed",
+      value:
+        user?.english_level != null ? `${user.english_level}%` : "Not Assessed",
       color: "warning",
     },
   ];
@@ -221,7 +232,10 @@ const StudentDashboard = () => {
         <Card title="Recent Activities">
           {loading ? (
             <div className="text-center py-8">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+              <div
+                className="inline-block animate-spin rounded-full h-8 w-8 border-b-2"
+                style={{ borderColor: "#323232" }}
+              ></div>
             </div>
           ) : recentActivities.length > 0 ? (
             <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
@@ -340,7 +354,10 @@ const StudentDashboard = () => {
         </p>
         {loading ? (
           <div className="text-center py-8">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            <div
+              className="inline-block animate-spin rounded-full h-8 w-8 border-b-2"
+              style={{ borderColor: "#323232" }}
+            ></div>
           </div>
         ) : areasForImprovement.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[32rem] overflow-y-auto pr-2">

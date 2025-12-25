@@ -1,0 +1,78 @@
+{
+  "assessment_id": "bda43c1c-6fb4-4189-9c1b-a39306ca4cbe",
+  "user_id": 1,
+  "user_name": "Hridayanshu Acharya",
+  "user_email": "hridayanshu23@gmail.com",
+  "chapter": "All Chapters",
+  "subject": "maths",
+  "answers": [
+    {
+      "question_id": "397492d2-2e39-4c59-b2c6-32add0fd7940",
+      "answer": "that is the fact.",
+      "chapter": "Real Numbers",
+      "question": "A number is called *irrational* if it cannot be expressed as a fraction of two integers. Prove that the sum of a rational number and an irrational number is always irrational. Provide an example to support your proof."
+    },
+    {
+      "question_id": "2eb57410-c775-4272-81f0-8b84974e0530",
+      "answer": "x=2",
+      "chapter": "Polynomials",
+      "question": "Given the polynomial \\( P(x) = x^3 - 6x^2 + 11x - 6 \\), find all its roots. Then, construct a new polynomial \\( Q(x) \\) that has roots which are the squares of the roots of \\( P(x) \\), without solving for the roots explicitly."
+    },
+    {
+      "question_id": "46062247-31f2-445c-b8af-2ec74ffea3fc",
+      "answer": "i dont care whether they meet or not",
+      "chapter": "Linear Equations",
+      "question": "A train leaves Station A at 8:00 AM traveling at 60 km/h. Another train leaves Station B (300 km away) at 9:00 AM traveling toward Station A at 80 km/h. At what time and at what distance from Station A will the two trains meet? Solve using a system of linear equations."
+    },
+    {
+      "question_id": "fbb697a1-ddd5-429a-86d6-bde2449b1589",
+      "answer": "15",
+      "chapter": "Quadratic Equations",
+      "question": "The height \\( h(t) \\) of a projectile (in meters) at time \\( t \\) (in seconds) is given by \\( h(t) = -5t^2 + 20t + 15 \\). Determine:"
+    },
+    {
+      "question_id": "ecf70dc6-4613-49f3-a2a8-76780b8efb69",
+      "answer": "the question is incomplete",
+      "chapter": "Arithmetic Progressions",
+      "question": "The sum of the first \\( n \\) terms of an arithmetic progression (AP) is given by \\( S_n = 3n^2 + 5n \\). Find:"
+    },
+    {
+      "question_id": "aae3f327-5441-444e-9e8d-6f130202e216",
+      "answer": "obtuse",
+      "chapter": "Triangles",
+      "question": "In \\( \\triangle ABC \\), \\( AB = 7 \\) cm, \\( BC = 5 \\) cm, and \\( \\angle B = 60^\\circ \\). Using the Law of Cosines, find the length of side \\( AC \\). Then, determine whether \\( \\triangle ABC \\) is acute, right, or obtuse."
+    },
+    {
+      "question_id": "0ac5a53b-5277-4627-ac3b-3e35c4c44787",
+      "answer": "it is obvious",
+      "chapter": "Coordinate Geometry",
+      "question": "The vertices of a quadrilateral are \\( A(1, 2) \\), \\( B(4, 6) \\), \\( C(7, 2) \\), and \\( D(4, -2) \\). Prove that \\( ABCD \\) is a rhombus by showing:"
+    },
+    {
+      "question_id": "6fd3b792-e495-4195-a3de-c0aff0fc10a4",
+      "answer": "36m",
+      "chapter": "Trigonometry",
+      "question": "A lighthouse stands on a cliff 100 meters above sea level. From a boat, the angle of elevation to the top of the lighthouse is \\( 30^\\circ \\), and the angle of depression to the base of the cliff is \\( 15^\\circ \\). Find the horizontal distance of the boat from the cliff."
+    },
+    {
+      "question_id": "6ff09043-8d96-486c-9b6b-e369a9b9e866",
+      "answer": "3cm",
+      "chapter": "Circles",
+      "question": "Two circles with radii 5 cm and 3 cm intersect at points \\( P \\) and \\( Q \\). The distance between their centers is 4 cm. Find the length of the common chord \\( PQ \\). (Hint: Use the perpendicular from the centers to the chord.)"
+    },
+    {
+      "question_id": "6563d9f8-213e-4310-8634-040849bc8a03",
+      "answer": "there is no data provided",
+      "chapter": "Statistics",
+      "question": "The following data represents the number of books read by 10 students in a month:"
+    },
+    {
+      "question_id": "ac8b09a8-3267-414c-bd15-af516230bec3",
+      "answer": "incomplete question given",
+      "chapter": "Probability",
+      "question": "A bag contains 4 red, 5 blue, and 3 green marbles. Two marbles are drawn without replacement."
+    }
+  ],
+  "submitted_at": "2025-12-25T03:35:58.770919",
+  "status": "evaluated"
+}
