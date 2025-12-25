@@ -104,7 +104,9 @@ const StudentDashboard = () => {
 
           // Fetch my own chapter performance
           try {
-            const myPerfData = await matchingService.getStudentPerformance(user.id);
+            const myPerfData = await matchingService.getStudentPerformance(
+              user.id
+            );
             setMyPerformance(myPerfData || []);
             console.log("My performance data:", myPerfData);
           } catch (err) {
@@ -118,15 +120,22 @@ const StudentDashboard = () => {
             if (match.as_learner) uniquePeerIds.add(match.tutor_id);
           });
 
-          const peerPerfPromises = Array.from(uniquePeerIds).map(async (peerId) => {
-            try {
-              const perfData = await matchingService.getStudentPerformance(peerId);
-              return { peerId, perfData };
-            } catch (err) {
-              console.error(`Failed to load performance for peer ${peerId}:`, err);
-              return { peerId, perfData: [] };
+          const peerPerfPromises = Array.from(uniquePeerIds).map(
+            async (peerId) => {
+              try {
+                const perfData = await matchingService.getStudentPerformance(
+                  peerId
+                );
+                return { peerId, perfData };
+              } catch (err) {
+                console.error(
+                  `Failed to load performance for peer ${peerId}:`,
+                  err
+                );
+                return { peerId, perfData: [] };
+              }
             }
-          });
+          );
 
           const peerPerfResults = await Promise.all(peerPerfPromises);
           const peerPerfMap = {};
@@ -262,15 +271,19 @@ const StudentDashboard = () => {
       // Find overlapping topics where peer needs help and I'm strong
       const learnerPerf = peerPerformances[match.learner_id] || [];
       const overlappingTopics = [];
-      
+
       // Find chapters where learner has weakness and I have strength
       learnerPerf.forEach((learnerChapter) => {
-        if (learnerChapter.weakness_level !== 'none') {
+        if (learnerChapter.weakness_level !== "none") {
           const myChapter = myPerformance.find(
-            (ch) => ch.subject === learnerChapter.subject && ch.chapter === learnerChapter.chapter
+            (ch) =>
+              ch.subject === learnerChapter.subject &&
+              ch.chapter === learnerChapter.chapter
           );
-          if (myChapter && myChapter.weakness_level === 'none') {
-            overlappingTopics.push(`${learnerChapter.subject}: ${learnerChapter.chapter}`);
+          if (myChapter && myChapter.weakness_level === "none") {
+            overlappingTopics.push(
+              `${learnerChapter.subject}: ${learnerChapter.chapter}`
+            );
           }
         }
       });
@@ -285,7 +298,8 @@ const StudentDashboard = () => {
         chapter: match.chapter,
         score: match.learner_score,
         compatibility: match.compatibility_score,
-        needs_help_with: overlappingTopics.length > 0 ? overlappingTopics : [match.subject],
+        needs_help_with:
+          overlappingTopics.length > 0 ? overlappingTopics : [match.subject],
       };
     })
     .slice(0, 6); // Limit to 6 learners
