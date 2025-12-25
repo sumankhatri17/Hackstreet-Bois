@@ -7,6 +7,7 @@ Original file is located at
     https://colab.research.google.com/drive/1A7t3CZMvF8n6rcgN6uIgMykpcJhw_uyR
 """
 from typing import Any, Dict, List
+import argparse
 
 from dotenv import load_dotenv
 
@@ -613,15 +614,21 @@ index_path = out_dir / index_filename
 metadata_path = out_dir / metadata_filename
 
 index_obj: Optional[faiss.Index] = None
+parser = argparse.ArgumentParser(description="Build FAISS index from python_RAG/data")
+parser.add_argument("--use-existing", action="store_true", help="If set and an existing index is present, load it instead of rebuilding")
+args = parser.parse_args()
+
 index_exists = index_path.exists() and metadata_path.exists()
 
-if index_exists:
+if index_exists and args.use_existing:
     try:
         print(f"Loading existing FAISS index from {index_path} ...")
         index_obj = faiss.read_index(str(index_path))
         print("Index loaded.")
     except Exception as e:
         print(f"Failed to load existing index ({e}). Will rebuild from embeddings.")
+elif index_exists and not args.use_existing:
+    print(f"Existing FAISS index found at {index_path} but --use-existing not provided. Rebuilding index to include new/changed files.")
 
 if index_obj is None:
     if not all_chunks:

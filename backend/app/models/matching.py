@@ -87,6 +87,11 @@ class TutoringSession(Base):
     ended_at = Column(DateTime, nullable=True)
     duration_minutes = Column(Integer, nullable=True)
     
+    # Communication method
+    communication_method = Column(String, default="text")  # text, video_call, in_person
+    meeting_link = Column(String, nullable=True)  # Google Meet link for video calls
+    meeting_location = Column(String, nullable=True)  # Physical location for in-person
+    
     # Session content
     topics_covered = Column(JSON, nullable=True)  # List of topics discussed
     notes = Column(Text, nullable=True)
@@ -207,3 +212,69 @@ class HelpOffer(Base):
     
     # Relationships
     tutor = relationship("User", backref="help_offers")
+
+
+class ChatMessage(Base):
+    """Chat messages between matched peers"""
+    __tablename__ = "chat_messages"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    match_id = Column(Integer, ForeignKey("peer_matches.id"), nullable=False)
+    sender_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    receiver_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    
+    # Message content
+    message = Column(Text, nullable=False)
+    message_type = Column(String, default="text")  # text, file, image, link
+    
+    # File attachment (if any)
+    file_url = Column(String, nullable=True)
+    file_name = Column(String, nullable=True)
+    file_size = Column(Integer, nullable=True)  # in bytes
+    file_type = Column(String, nullable=True)  # mime type
+    
+    # Status
+    is_read = Column(Boolean, default=False)
+    read_at = Column(DateTime, nullable=True)
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    
+    # Relationships
+    match = relationship("PeerMatch", backref="chat_messages")
+    sender = relationship("User", foreign_keys=[sender_id], backref="sent_messages")
+    receiver = relationship("User", foreign_keys=[receiver_id], backref="received_messages")
+
+
+class SharedResource(Base):
+    """Files and resources shared between matched peers"""
+    __tablename__ = "shared_resources"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    match_id = Column(Integer, ForeignKey("peer_matches.id"), nullable=False)
+    uploader_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    
+    # Resource details
+    title = Column(String, nullable=False)
+    description = Column(Text, nullable=True)
+    resource_type = Column(String, nullable=False)  # pdf, doc, image, video, link, note
+    
+    # File information
+    file_url = Column(String, nullable=True)
+    file_name = Column(String, nullable=True)
+    file_size = Column(Integer, nullable=True)
+    
+    # For links
+    external_link = Column(String, nullable=True)
+    
+    # Tags and categorization
+    subject = Column(String, nullable=True)
+    chapter = Column(String, nullable=True)
+    tags = Column(JSON, nullable=True)  # List of tags
+    
+    # Timestamps
+    created_at = Column(DateTime, default=datetime.utcnow)
+    
+    # Relationships
+    match = relationship("PeerMatch", backref="shared_resources")
+    uploader = relationship("User", backref="uploaded_resources")

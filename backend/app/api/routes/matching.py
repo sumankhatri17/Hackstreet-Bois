@@ -856,3 +856,302 @@ def connect_with_peer(
         "compatibility_score": compatibility,
         "you_are": "tutor" if tutor_id == current_user.id else "learner"
     }
+
+
+# ===========================
+# CHAT & COMMUNICATION ROUTES
+# ===========================
+
+@router.post("/chat/send", response_model=matching_schemas.ChatMessage)
+def send_chat_message(
+    message_data: matching_schemas.ChatMessageCreate,
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    """Send a chat message to matched peer"""
+    from app.models.matching import ChatMessage
+    
+    # Verify match exists and user is part of it
+    match = db.query(PeerMatch).filter(PeerMatch.id == message_data.match_id).first()
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+    
+    if current_user.id not in [match.tutor_id, match.learner_id]:
+        raise HTTPException(status_code=403, detail="Not part of this match")
+    
+    # Verify receiver is the other person in the match
+    if message_data.receiver_id not in [match.tutor_id, match.learner_id]:
+        raise HTTPException(status_code=400, detail="Invalid receiver")
+    
+    if message_data.receiver_id == current_user.id:
+        raise HTTPException(status_code=400, detail="Cannot send message to yourself")
+    
+    # Create message
+    message = ChatMessage(
+        match_id=message_data.match_id,
+        sender_id=current_user.id,
+        receiver_id=message_data.receiver_id,
+        message=message_data.message,
+        message_type=message_data.message_type,
+        file_url=message_data.file_url,
+        file_name=message_data.file_name,
+        file_size=message_data.file_size,
+        file_type=message_data.file_type,
+    )
+    
+    db.add(message)
+    db.commit()
+    db.refresh(message)
+    
+    # Add sender/receiver names
+    sender = db.query(User).filter(User.id == current_user.id).first()
+    receiver = db.query(User).filter(User.id == message_data.receiver_id).first()
+    
+    message.sender_name = sender.name if sender else None
+    message.receiver_name = receiver.name if receiver else None
+    
+    return message
+
+
+@router.get("/chat/{match_id}", response_model=List[matching_schemas.ChatMessage])
+def get_chat_history(
+    match_id: int,
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    """Get chat history for a match"""
+    from app.models.matching import ChatMessage
+    
+    # Verify match exists and user is part of it
+    match = db.query(PeerMatch).filter(PeerMatch.id == match_id).first()
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+    
+    if current_user.id not in [match.tutor_id, match.learner_id]:
+        raise HTTPException(status_code=403, detail="Not part of this match")
+    
+    # Get messages
+    messages = db.query(ChatMessage).filter(
+        ChatMessage.match_id == match_id
+    ).order_by(ChatMessage.created_at).all()
+    
+    # Add sender/receiver names
+    for msg in messages:
+        sender = db.query(User).filter(User.id == msg.sender_id).first()
+        receiver = db.query(User).filter(User.id == msg.receiver_id).first()
+        msg.sender_name = sender.name if sender else None
+        msg.receiver_name = receiver.name if receiver else None
+    
+    return messages
+
+
+@router.patch("/chat/{message_id}/read")
+def mark_message_read(
+    message_id: int,
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    """Mark a message as read"""
+    from app.models.matching import ChatMessage
+    from datetime import datetime
+    
+    message = db.query(ChatMessage).filter(ChatMessage.id == message_id).first()
+    if not message:
+        raise HTTPException(status_code=404, detail="Message not found")
+    
+    if message.receiver_id != current_user.id:
+        raise HTTPException(status_code=403, detail="Not the receiver of this message")
+    
+    message.is_read = True
+    message.read_at = datetime.utcnow()
+    db.commit()
+    
+    return {"message": "Marked as read"}
+
+
+# ===========================
+# SESSION & VIDEO CALL ROUTES
+# ===========================
+
+@router.post("/session/create", response_model=matching_schemas.Session)
+def create_session(
+    session_data: matching_schemas.SessionCreate,
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    """Create a tutoring session (text, video call, or in-person)"""
+    from app.models.matching import TutoringSession
+    import secrets
+    import string
+    
+    # Verify match exists and user is part of it
+    match = db.query(PeerMatch).filter(PeerMatch.id == session_data.match_id).first()
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+    
+    if current_user.id not in [match.tutor_id, match.learner_id]:
+        raise HTTPException(status_code=403, detail="Not part of this match")
+    
+    # Generate Google Meet link for video calls
+    meeting_link = None
+    if session_data.communication_method == "video_call":
+        # Generate a unique meeting code
+        meeting_code = ''.join(secrets.choice(string.ascii_lowercase + string.digits) for _ in range(10))
+        meeting_link = f"https://meet.google.com/{meeting_code}"
+    
+    # Create session
+    session = TutoringSession(
+        match_id=session_data.match_id,
+        communication_method=session_data.communication_method,
+        scheduled_at=session_data.scheduled_at,
+        meeting_link=meeting_link,
+        meeting_location=session_data.meeting_location,
+    )
+    
+    db.add(session)
+    db.commit()
+    db.refresh(session)
+    
+    return session
+
+
+@router.patch("/session/{session_id}", response_model=matching_schemas.Session)
+def update_session(
+    session_id: int,
+    update_data: matching_schemas.SessionUpdate,
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    """Update session details (start/end time, notes, topics)"""
+    from app.models.matching import TutoringSession
+    
+    session = db.query(TutoringSession).filter(TutoringSession.id == session_id).first()
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+    
+    # Verify user is part of the match
+    match = db.query(PeerMatch).filter(PeerMatch.id == session.match_id).first()
+    if current_user.id not in [match.tutor_id, match.learner_id]:
+        raise HTTPException(status_code=403, detail="Not part of this session")
+    
+    # Update fields
+    if update_data.meeting_link is not None:
+        session.meeting_link = update_data.meeting_link
+    if update_data.topics_covered is not None:
+        session.topics_covered = update_data.topics_covered
+    if update_data.notes is not None:
+        session.notes = update_data.notes
+    if update_data.started_at is not None:
+        session.started_at = update_data.started_at
+    if update_data.ended_at is not None:
+        session.ended_at = update_data.ended_at
+        # Calculate duration
+        if session.started_at:
+            duration = (update_data.ended_at - session.started_at).total_seconds() / 60
+            session.duration_minutes = int(duration)
+    
+    db.commit()
+    db.refresh(session)
+    
+    return session
+
+
+@router.get("/session/{match_id}/list", response_model=List[matching_schemas.Session])
+def get_sessions(
+    match_id: int,
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    """Get all sessions for a match"""
+    from app.models.matching import TutoringSession
+    
+    # Verify match exists and user is part of it
+    match = db.query(PeerMatch).filter(PeerMatch.id == match_id).first()
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+    
+    if current_user.id not in [match.tutor_id, match.learner_id]:
+        raise HTTPException(status_code=403, detail="Not part of this match")
+    
+    sessions = db.query(TutoringSession).filter(
+        TutoringSession.match_id == match_id
+    ).order_by(TutoringSession.scheduled_at.desc()).all()
+    
+    return sessions
+
+
+# ===========================
+# FILE & RESOURCE SHARING ROUTES
+# ===========================
+
+@router.post("/resource/share", response_model=matching_schemas.SharedResource)
+def share_resource(
+    resource_data: matching_schemas.SharedResourceCreate,
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    """Share a file or resource with matched peer"""
+    from app.models.matching import SharedResource
+    
+    # Verify match exists and user is part of it
+    match = db.query(PeerMatch).filter(PeerMatch.id == resource_data.match_id).first()
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+    
+    if current_user.id not in [match.tutor_id, match.learner_id]:
+        raise HTTPException(status_code=403, detail="Not part of this match")
+    
+    # Create resource
+    resource = SharedResource(
+        match_id=resource_data.match_id,
+        uploader_id=current_user.id,
+        title=resource_data.title,
+        description=resource_data.description,
+        resource_type=resource_data.resource_type,
+        file_url=resource_data.file_url,
+        file_name=resource_data.file_name,
+        file_size=resource_data.file_size,
+        external_link=resource_data.external_link,
+        subject=resource_data.subject,
+        chapter=resource_data.chapter,
+        tags=resource_data.tags,
+    )
+    
+    db.add(resource)
+    db.commit()
+    db.refresh(resource)
+    
+    # Add uploader name
+    uploader = db.query(User).filter(User.id == current_user.id).first()
+    resource.uploader_name = uploader.name if uploader else None
+    
+    return resource
+
+
+@router.get("/resource/{match_id}/list", response_model=List[matching_schemas.SharedResource])
+def get_shared_resources(
+    match_id: int,
+    db: Session = Depends(deps.get_db),
+    current_user: User = Depends(deps.get_current_user),
+):
+    """Get all shared resources for a match"""
+    from app.models.matching import SharedResource
+    
+    # Verify match exists and user is part of it
+    match = db.query(PeerMatch).filter(PeerMatch.id == match_id).first()
+    if not match:
+        raise HTTPException(status_code=404, detail="Match not found")
+    
+    if current_user.id not in [match.tutor_id, match.learner_id]:
+        raise HTTPException(status_code=403, detail="Not part of this match")
+    
+    resources = db.query(SharedResource).filter(
+        SharedResource.match_id == match_id
+    ).order_by(SharedResource.created_at.desc()).all()
+    
+    # Add uploader names
+    for res in resources:
+        uploader = db.query(User).filter(User.id == res.uploader_id).first()
+        res.uploader_name = uploader.name if uploader else None
+    
+    return resources

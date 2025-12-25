@@ -54,11 +54,17 @@ class AsymmetricGaleShapleyMatcher:
         - Score gap: Larger gap = better teaching opportunity
         - Tutor expertise: Higher tutor score = better match
         - Learner need: Lower learner score = higher need
+        - Grade level: Tutor must be same grade or higher
+        - Location: Same locality bonus for physical meetings
         - Not too large gap: Prevent mismatched difficulty levels
         - Overlapping chapters: More chapters in common = better match
         
         Returns score between 0-100
         """
+        # Grade level filter - tutor must be same or higher grade
+        if tutor_grade and learner_grade and tutor_grade < learner_grade:
+            return 0.0  # Cannot tutor someone in a higher grade
+        
         # Score difference (optimal gap is 3-5 points)
         score_gap = tutor_score - learner_score
         
@@ -70,8 +76,8 @@ class AsymmetricGaleShapleyMatcher:
         else:
             gap_score = max(0, 80 - (score_gap - 5.0) * 10)  # Decrease after 5 points
         
-        # Tutor expertise (30% weight)
-        expertise_score = (tutor_score / 10.0) * 30
+        # Tutor expertise (25% weight)
+        expertise_score = (tutor_score / 10.0) * 25
         
         # Learner need (20% weight)
         need_score = ((10.0 - learner_score) / 10.0) * 20
@@ -125,7 +131,9 @@ class AsymmetricGaleShapleyMatcher:
                     overlapping_chapters=overlap_count,
                 )
                 
-                preferences.append((learner_id, compatibility))
+                # Only include if compatibility > 0 (grade filter may exclude)
+                if compatibility > 0:
+                    preferences.append((learner_id, compatibility))
             
             # Sort by compatibility (descending)
             preferences.sort(key=lambda x: x[1], reverse=True)
