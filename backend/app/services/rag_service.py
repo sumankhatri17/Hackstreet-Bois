@@ -7,7 +7,7 @@ import re
 import uuid
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
-
+import random
 import faiss
 import numpy as np
 from mistralai import Mistral
@@ -375,8 +375,8 @@ class RAGService:
         # Generate ALL questions in one API call for efficiency
         chapters_text = "\n".join([f"- {ch}" for ch in chapters])
         grade = 10
-        
-        prompt = (
+        random_seed =  random.randint(1, 100)
+        system_msg = (
             f"You are an expert academic question generator.\n\n"
             f"Subject: {subject}\n"
             f"Grade Level: {grade if 'grade' in locals() else '10'}\n"
@@ -389,6 +389,11 @@ class RAGService:
             f"- Do NOT ask Long questions, ask questions that can be answered in 1-2 sentences"
             f"This in the Context of Nepal, Provide Difficulty level suitable for Nepal"
 
+            
+        )
+
+            
+        user_prompt = (
             f"⚠ Special Rule for English:\n"
             f"- Do NOT use Retrieval-Augmented content or any provided text passages.\n"
             f"- Use the model’s own cognition and prior knowledge.\n"
@@ -421,86 +426,9 @@ class RAGService:
 
             f" NO answers. NO explanations. NO additional text.\n"
             f"Do not hallucinate or modify chapter names.\n"
-        )
-
-        
-        # Build hardcoded, structured prompt based on subject
-        # Use system + user messages for stronger instruction
-        if subject.lower() == "english":
-            system_msg = (
-                "You are a question writer. You write complete, specific questions for students. "
-                "You NEVER write labels like '*Inference-Based Question*' or '*Error Correction*'. "
-                "You ONLY write actual questions with specific details."
+            f"Start writing questions now (seed: {random_seed}):"
             )
-            
-            user_prompt = (
-                f"Write {questions_per_chapter} complete English questions for EACH chapter below. "
-                f"Each question must have specific details that students can answer.\n\n"
-                f"Chapters:\n{chapters_text}\n\n"
-                f"Examples of GOOD questions:\n"
-                f"- Rewrite in passive voice: 'The dog chased the cat.'\n"
-                f"- Correct this error: 'She don't like pizza.'\n"
-                f"- Identify the metaphor in: 'Time is a thief.'\n\n"
-                f"DO NOT write:\n"
-                f"Avoid the passage questions from the Provided RAG context\n"
-                f"Provide exactly 2 passage questions that are out of the context, Generate it without using RAG and make sure to associate a Question\n"
-                f"If Passage question is provided Make sure to include a question that can be asnwered with the help of the Passage Generated\n"
-                f"- *Inference-Based Question*\n"
-                f"- *Error Correction*\n"
-                f"- Any labels or category names\n\n"
-                f"Format:\n"
-                f"### **Chapter: [Name]**\n"
-                f"**Q1:** [Actual complete question]\n"
-                f"**Q2:** [Actual complete question]\n\n"
-                f"Start writing questions now (seed: {random_seed}):"
-            )
-            messages = [
-                {"role": "system", "content": system_msg},
-                {"role": "user", "content": user_prompt}
-            ]
-        elif subject.lower() == "maths":
-            system_msg = (
-                "You are a math question writer. You write complete math questions in plain text. "
-                "You NEVER write labels like '*Algebra Question*' or '*Geometry Problem*'. "
-                "You NEVER use LaTeX symbols. You ONLY write actual questions with numbers and plain text math notation."
-            )
-            
-            user_prompt = (
-                f"Write {questions_per_chapter} complete math questions for EACH chapter below. "
-                f"Use plain text only: sqrt(x), x^2, (a+b)/c format.\n\n"
-                f"Chapters:\n{chapters_text}\n\n"
-                f"Examples of GOOD questions:\n"
-                f"- Solve for x: x^2 + 5x + 6 = 0\n"
-                f"- Find sqrt(144) + sqrt(81)\n"
-                f"- Simplify: (3x + 2)(2x - 5)\n\n"
-                f"DO NOT write:\n"
-                f"- *Quadratic Equation*\n"
-                f"- *Algebra Problem*\n"
-                f"- Any LaTeX: \\(, \\), \\sqrt{{}}, \\frac{{}}\n\n"
-                f"Format:\n"
-                f"### **Chapter: [Name]**\n"
-                f"**Q1:** [Actual complete question]\n"
-                f"**Q2:** [Actual complete question]\n\n"
-                f"Start writing questions now (seed: {random_seed}):"
-            )
-            messages = [
-                {"role": "system", "content": system_msg},
-                {"role": "user", "content": user_prompt}
-            ]
-        else:
-            # Default prompt for science or other subjects
-            system_msg = "You are a question writer. You write complete, specific questions. Never write labels or categories."
-            
-            user_prompt = (
-                f"Write {questions_per_chapter} complete questions for EACH chapter:\n\n"
-                f"{chapters_text}\n\n"
-                f"Format:\n"
-                f"### **Chapter: [Name]**\n"
-                f"**Q1:** [Complete question]\n"
-                f"**Q2:** [Complete question]\n\n"
-                f"Start now (seed: {random_seed}):"
-            )
-            messages = [
+        messages = [
                 {"role": "system", "content": system_msg},
                 {"role": "user", "content": user_prompt}
             ]
