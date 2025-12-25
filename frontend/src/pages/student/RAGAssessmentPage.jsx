@@ -46,7 +46,7 @@ const RAGAssessmentPage = () => {
         selectedSubject,
         5 // 5 questions per chapter
       );
-
+console.log("Generated questions:", data);
       setQuestions(data.questions || []);
       setAnswers({});
       setStep("questions");
@@ -131,13 +131,23 @@ const RAGAssessmentPage = () => {
 
   const renderChapterSelection = () => (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-lg shadow-md p-6">
+      <div
+        className="rounded-lg shadow-md p-6"
+        style={{ backgroundColor: "#F5EDE5" }}
+      >
         <h2 className="text-2xl font-bold mb-6 text-gray-800">
           Generate Assessment Questions
         </h2>
 
         {error && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+          <div
+            className="mb-4 p-4 rounded-lg"
+            style={{
+              backgroundColor: "#FFEEF0",
+              border: "1px solid #FFC9CC",
+              color: "#991B1B",
+            }}
+          >
             {error}
           </div>
         )}
@@ -150,7 +160,8 @@ const RAGAssessmentPage = () => {
           <select
             value={selectedSubject}
             onChange={(e) => setSelectedSubject(e.target.value)}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent"
+            style={{ borderColor: "#C9BDB3", focusRingColor: "#323232" }}
           >
             <option value="">Select a subject...</option>
             {subjects.map((subject) => (
@@ -169,7 +180,8 @@ const RAGAssessmentPage = () => {
         <button
           onClick={handleGenerateQuestions}
           disabled={!selectedSubject || loading}
-          className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors font-medium"
+          className="w-full py-3 px-6 rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+          style={{ backgroundColor: "#323232", color: "#DDD0C8" }}
         >
           {loading ? "Generating..." : "Generate Questions"}
         </button>
@@ -179,7 +191,10 @@ const RAGAssessmentPage = () => {
 
   const renderQuestions = () => (
     <div className="max-w-4xl mx-auto">
-      <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+      <div
+        className="rounded-lg shadow-md p-6 mb-6"
+        style={{ backgroundColor: "#F5EDE5" }}
+      >
         <div className="flex justify-between items-center mb-6">
           <div>
             <h2 className="text-2xl font-bold text-gray-800">
@@ -189,14 +204,22 @@ const RAGAssessmentPage = () => {
           </div>
           <button
             onClick={handleStartNew}
-            className="px-4 py-2 text-blue-600 hover:text-blue-800 font-medium"
+            className="px-4 py-2 font-medium transition-colors"
+            style={{ color: "#323232" }}
           >
             Change Chapter
           </button>
         </div>
 
         {error && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-lg">
+          <div
+            className="mb-4 p-4 rounded-lg"
+            style={{
+              backgroundColor: "#FFEEF0",
+              border: "1px solid #FFC9CC",
+              color: "#991B1B",
+            }}
+          >
             {error}
           </div>
         )}
@@ -206,10 +229,14 @@ const RAGAssessmentPage = () => {
           {questions.map((question, index) => (
             <div
               key={question.id}
-              className="border-b border-gray-200 pb-6 last:border-b-0"
+              className="pb-6 last:border-b-0"
+              style={{ borderBottom: "1px solid #C9BDB3" }}
             >
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center font-medium">
+                <div
+                  className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-medium"
+                  style={{ backgroundColor: "#323232", color: "#DDD0C8" }}
+                >
                   {index + 1}
                 </div>
                 <div className="flex-1">
@@ -223,7 +250,11 @@ const RAGAssessmentPage = () => {
                     }
                     placeholder="Type your answer here..."
                     rows="4"
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-3 rounded-lg resize-none focus:ring-2 focus:border-transparent"
+                    style={{
+                      border: "1px solid #C9BDB3",
+                      backgroundColor: "#FFFFFF",
+                    }}
                   />
                 </div>
               </div>
@@ -240,7 +271,8 @@ const RAGAssessmentPage = () => {
           <button
             onClick={handleSubmitAssessment}
             disabled={loading}
-            className="bg-green-600 text-white py-3 px-8 rounded-lg hover:bg-green-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors font-medium"
+            className="py-3 px-8 rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{ backgroundColor: "#6B8E23", color: "#FFFFFF" }}
           >
             {loading ? "Submitting..." : "Submit Assessment"}
           </button>
@@ -251,10 +283,17 @@ const RAGAssessmentPage = () => {
 
   const renderSubmitted = () => (
     <div className="max-w-2xl mx-auto">
-      <div className="bg-white rounded-lg shadow-md p-8 text-center">
-        <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div
+        className="rounded-lg shadow-md p-8 text-center"
+        style={{ backgroundColor: "#F5EDE5" }}
+      >
+        <div
+          className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+          style={{ backgroundColor: "#E8F5E9" }}
+        >
           <svg
-            className="w-8 h-8 text-green-600"
+            className="w-8 h-8"
+            style={{ color: "#6B8E23" }}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -278,7 +317,10 @@ const RAGAssessmentPage = () => {
         </p>
 
         {submittedAssessment && (
-          <div className="bg-gray-50 rounded-lg p-4 mb-6 text-left">
+          <div
+            className="rounded-lg p-4 mb-6 text-left"
+            style={{ backgroundColor: "#FFFFFF", border: "1px solid #C9BDB3" }}
+          >
             <div className="grid grid-cols-2 gap-4 text-sm">
               <div>
                 <p className="text-gray-600">Subject</p>
@@ -307,13 +349,15 @@ const RAGAssessmentPage = () => {
         <div className="flex gap-4 justify-center">
           <button
             onClick={handleStartNew}
-            className="bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            className="py-3 px-6 rounded-lg transition-colors font-medium"
+            style={{ backgroundColor: "#323232", color: "#DDD0C8" }}
           >
             Start New Assessment
           </button>
           <button
             onClick={() => (window.location.href = "/progress")}
-            className="bg-gray-200 text-gray-800 py-3 px-6 rounded-lg hover:bg-gray-300 transition-colors font-medium"
+            className="py-3 px-6 rounded-lg transition-colors font-medium"
+            style={{ backgroundColor: "#E8DDD3", color: "#323232" }}
           >
             View Progress
           </button>
@@ -327,7 +371,10 @@ const RAGAssessmentPage = () => {
       return (
         <div className="flex justify-center items-center min-h-[400px]">
           <div className="text-center">
-            <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <div
+              className="w-16 h-16 border-4 border-t-transparent rounded-full animate-spin mx-auto mb-4"
+              style={{ borderColor: "#323232", borderTopColor: "transparent" }}
+            ></div>
             <p className="text-gray-600">Generating questions...</p>
           </div>
         </div>

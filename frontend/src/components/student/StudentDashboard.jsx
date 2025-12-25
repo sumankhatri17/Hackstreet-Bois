@@ -181,7 +181,10 @@ const StudentDashboard = () => {
         <Card title="Recent Activities">
           {loading ? (
             <div className="text-center py-8">
-              <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+              <div
+                className="inline-block animate-spin rounded-full h-8 w-8 border-b-2"
+                style={{ borderColor: "#323232" }}
+              ></div>
             </div>
           ) : recentActivities.length > 0 ? (
             <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
@@ -300,7 +303,10 @@ const StudentDashboard = () => {
         </p>
         {loading ? (
           <div className="text-center py-8">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>
+            <div
+              className="inline-block animate-spin rounded-full h-8 w-8 border-b-2"
+              style={{ borderColor: "#323232" }}
+            ></div>
           </div>
         ) : areasForImprovement.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[32rem] overflow-y-auto pr-2">
