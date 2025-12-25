@@ -18,6 +18,8 @@ const StudentDashboard = () => {
   const [potentialMatches, setPotentialMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [meetingType, setMeetingType] = useState("physical");
+  const [peerPerformances, setPeerPerformances] = useState({});
+  const [myPerformance, setMyPerformance] = useState([]);
   const [showLocationUpdate, setShowLocationUpdate] = useState(false);
   const [locationData, setLocationData] = useState({
     location: user?.location || "",
@@ -99,6 +101,40 @@ const StudentDashboard = () => {
 
           setPeerMatches(myMatchesData.matches || []);
           setPotentialMatches(potentialMatchesData.potential_matches || []);
+
+          // Fetch my own chapter performance
+          try {
+            const myPerfData = await matchingService.getStudentPerformance(user.id);
+            setMyPerformance(myPerfData || []);
+            console.log("My performance data:", myPerfData);
+          } catch (err) {
+            console.error("Failed to load own performance:", err);
+          }
+
+          // Fetch chapter performance for each unique peer
+          const uniquePeerIds = new Set();
+          potentialMatchesData.potential_matches?.forEach((match) => {
+            if (match.as_tutor) uniquePeerIds.add(match.learner_id);
+            if (match.as_learner) uniquePeerIds.add(match.tutor_id);
+          });
+
+          const peerPerfPromises = Array.from(uniquePeerIds).map(async (peerId) => {
+            try {
+              const perfData = await matchingService.getStudentPerformance(peerId);
+              return { peerId, perfData };
+            } catch (err) {
+              console.error(`Failed to load performance for peer ${peerId}:`, err);
+              return { peerId, perfData: [] };
+            }
+          });
+
+          const peerPerfResults = await Promise.all(peerPerfPromises);
+          const peerPerfMap = {};
+          peerPerfResults.forEach(({ peerId, perfData }) => {
+            peerPerfMap[peerId] = perfData;
+          });
+          setPeerPerformances(peerPerfMap);
+          console.log("Peer performances:", peerPerfMap);
         } catch (error) {
           console.error("Failed to load peer matching data:", error);
         }
@@ -222,17 +258,36 @@ const StudentDashboard = () => {
 
   const peersToHelp = potentialMatches
     .filter((match) => match.as_tutor)
-    .map((match) => ({
-      id: match.learner_id,
-      name: match.learner_name,
-      email: match.learner_email,
-      grade: match.learner_grade,
-      location: match.learner_location,
-      subject: match.subject,
-      chapter: match.chapter,
-      score: match.learner_score,
-      compatibility: match.compatibility_score,
-    }))
+    .map((match) => {
+      // Find overlapping topics where peer needs help and I'm strong
+      const learnerPerf = peerPerformances[match.learner_id] || [];
+      const overlappingTopics = [];
+      
+      // Find chapters where learner has weakness and I have strength
+      learnerPerf.forEach((learnerChapter) => {
+        if (learnerChapter.weakness_level !== 'none') {
+          const myChapter = myPerformance.find(
+            (ch) => ch.subject === learnerChapter.subject && ch.chapter === learnerChapter.chapter
+          );
+          if (myChapter && myChapter.weakness_level === 'none') {
+            overlappingTopics.push(`${learnerChapter.subject}: ${learnerChapter.chapter}`);
+          }
+        }
+      });
+
+      return {
+        id: match.learner_id,
+        name: match.learner_name,
+        email: match.learner_email,
+        grade: match.learner_grade,
+        location: match.learner_location,
+        subject: match.subject,
+        chapter: match.chapter,
+        score: match.learner_score,
+        compatibility: match.compatibility_score,
+        needs_help_with: overlappingTopics.length > 0 ? overlappingTopics : [match.subject],
+      };
+    })
     .slice(0, 6); // Limit to 6 learners
 
   const helpStats = {

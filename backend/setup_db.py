@@ -9,8 +9,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from app.core.config import settings
-from app.db.base import Base
-from app.db.database import SessionLocal
+from app.db.database import Base, SessionLocal
 from app.models import *  # Import all models
 from sqlalchemy import create_engine
 

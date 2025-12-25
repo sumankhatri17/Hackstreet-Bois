@@ -279,23 +279,31 @@ async def submit_assessment(
             # Update user's subject levels and fit_to_teach_level in database
             overall_analysis = evaluation_result.get("overall_analysis", {})
             final_score = overall_analysis.get("final_score_out_of_100", 0)
+            # Convert to integer to match schema
+            final_score = int(round(final_score))
             
             subject = assessment_data.get("subject", "").lower()
             
             # Update subject-specific level
             if subject == "maths" or subject == "math":
-                current_user.math_level = final_score
+                current_user.math_level = int(final_score)
             elif subject == "science":
-                current_user.science_level = final_score
+                current_user.science_level = int(final_score)
             elif subject == "english":
-                current_user.english_level = final_score
+                current_user.english_level = int(final_score)
             
-            # Calculate fit_to_teach_level based on performance
-            if final_score >= 85:
+            # Calculate fit_to_teach_level based on BEST score across all subjects
+            best_score = max(
+                current_user.math_level or 0,
+                current_user.science_level or 0,
+                current_user.english_level or 0
+            )
+            
+            if best_score >= 85:
                 fit_to_teach = max(1, (current_user.current_level or 10) - 2)
-            elif final_score >= 70:
+            elif best_score >= 70:
                 fit_to_teach = max(1, (current_user.current_level or 10) - 3)
-            elif final_score >= 50:
+            elif best_score >= 50:
                 fit_to_teach = max(1, (current_user.current_level or 10) - 4)
             else:
                 fit_to_teach = None
@@ -522,6 +530,9 @@ async def evaluate_assessment(
         
         subject = assessment_data.get("subject", "").lower()
         
+        # Convert to integer to match schema
+        final_score = int(round(final_score))
+        
         # Update subject-specific level
         if subject == "maths" or subject == "math":
             current_user.math_level = final_score
@@ -530,16 +541,22 @@ async def evaluate_assessment(
         elif subject == "english":
             current_user.english_level = final_score
         
-        # Calculate fit_to_teach_level based on performance
+        # Calculate fit_to_teach_level based on BEST score across all subjects
         # If student scores 85%+, they can teach 2 grades below current
         # If 70-84%, they can teach 3 grades below
         # If 50-69%, they can teach 4 grades below
         # Below 50%, no teaching recommendation
-        if final_score >= 85:
+        best_score = max(
+            current_user.math_level or 0,
+            current_user.science_level or 0,
+            current_user.english_level or 0
+        )
+        
+        if best_score >= 85:
             fit_to_teach = max(1, (current_user.current_level or 10) - 2)
-        elif final_score >= 70:
+        elif best_score >= 70:
             fit_to_teach = max(1, (current_user.current_level or 10) - 3)
-        elif final_score >= 50:
+        elif best_score >= 50:
             fit_to_teach = max(1, (current_user.current_level or 10) - 4)
         else:
             fit_to_teach = None
