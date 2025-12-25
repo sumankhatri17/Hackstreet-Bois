@@ -376,6 +376,7 @@ class RAGService:
         chapters_text = "\n".join([f"- {ch}" for ch in chapters])
         grade = 10
         
+<<<<<<< HEAD
         prompt = (
             f"You are an expert academic question generator.\n\n"
             f"Subject: {subject}\n"
@@ -423,18 +424,109 @@ class RAGService:
             f"Do not hallucinate or modify chapter names.\n"
         )
 
+=======
+        import random
+        import time
+
+        # Add random seed based on time for variation
+        random_seed = int(time.time() * 1000) % 10000
+>>>>>>> 79b8cab60d12f40a95ea108a7094487e6c6fa035
         
-        messages = [{"role": "user", "content": prompt}]
+        # Build hardcoded, structured prompt based on subject
+        # Use system + user messages for stronger instruction
+        if subject.lower() == "english":
+            system_msg = (
+                "You are a question writer. You write complete, specific questions for students. "
+                "You NEVER write labels like '*Inference-Based Question*' or '*Error Correction*'. "
+                "You ONLY write actual questions with specific details."
+            )
+            
+            user_prompt = (
+                f"Write {questions_per_chapter} complete English questions for EACH chapter below. "
+                f"Each question must have specific details that students can answer.\n\n"
+                f"Chapters:\n{chapters_text}\n\n"
+                f"Examples of GOOD questions:\n"
+                f"- Rewrite in passive voice: 'The dog chased the cat.'\n"
+                f"- Correct this error: 'She don't like pizza.'\n"
+                f"- Identify the metaphor in: 'Time is a thief.'\n\n"
+                f"DO NOT write:\n"
+                f"Avoid the passage questions from the Provided RAG context\n"
+                f"Provide exactly 2 passage questions that are out of the context, Generate it without using RAG and make sure to associate a Question\n"
+                f"If Passage question is provided Make sure to include a question that can be asnwered with the help of the Passage Generated\n"
+                f"- *Inference-Based Question*\n"
+                f"- *Error Correction*\n"
+                f"- Any labels or category names\n\n"
+                f"Format:\n"
+                f"### **Chapter: [Name]**\n"
+                f"**Q1:** [Actual complete question]\n"
+                f"**Q2:** [Actual complete question]\n\n"
+                f"Start writing questions now (seed: {random_seed}):"
+            )
+            messages = [
+                {"role": "system", "content": system_msg},
+                {"role": "user", "content": user_prompt}
+            ]
+        elif subject.lower() == "maths":
+            system_msg = (
+                "You are a math question writer. You write complete math questions in plain text. "
+                "You NEVER write labels like '*Algebra Question*' or '*Geometry Problem*'. "
+                "You NEVER use LaTeX symbols. You ONLY write actual questions with numbers and plain text math notation."
+            )
+            
+            user_prompt = (
+                f"Write {questions_per_chapter} complete math questions for EACH chapter below. "
+                f"Use plain text only: sqrt(x), x^2, (a+b)/c format.\n\n"
+                f"Chapters:\n{chapters_text}\n\n"
+                f"Examples of GOOD questions:\n"
+                f"- Solve for x: x^2 + 5x + 6 = 0\n"
+                f"- Find sqrt(144) + sqrt(81)\n"
+                f"- Simplify: (3x + 2)(2x - 5)\n\n"
+                f"DO NOT write:\n"
+                f"- *Quadratic Equation*\n"
+                f"- *Algebra Problem*\n"
+                f"- Any LaTeX: \\(, \\), \\sqrt{{}}, \\frac{{}}\n\n"
+                f"Format:\n"
+                f"### **Chapter: [Name]**\n"
+                f"**Q1:** [Actual complete question]\n"
+                f"**Q2:** [Actual complete question]\n\n"
+                f"Start writing questions now (seed: {random_seed}):"
+            )
+            messages = [
+                {"role": "system", "content": system_msg},
+                {"role": "user", "content": user_prompt}
+            ]
+        else:
+            # Default prompt for science or other subjects
+            system_msg = "You are a question writer. You write complete, specific questions. Never write labels or categories."
+            
+            user_prompt = (
+                f"Write {questions_per_chapter} complete questions for EACH chapter:\n\n"
+                f"{chapters_text}\n\n"
+                f"Format:\n"
+                f"### **Chapter: [Name]**\n"
+                f"**Q1:** [Complete question]\n"
+                f"**Q2:** [Complete question]\n\n"
+                f"Start now (seed: {random_seed}):"
+            )
+            messages = [
+                {"role": "system", "content": system_msg},
+                {"role": "user", "content": user_prompt}
+            ]
         
         try:
             print(f"Generating questions for all {len(chapters)} chapters in {subject}...")
             
             chat_response = self.client.chat.complete(
                 model=self.chat_model,
-                messages=messages
+                messages=messages,
+                temperature=0.8,  # Higher temperature for more variation
+                max_tokens=8000  # Increased to prevent incomplete questions
             )
             
             answer = chat_response.choices[0].message.content
+            
+            # Clean up any LaTeX formatting that might have slipped through
+            answer = self._clean_latex_formatting(answer)
             
             # Debug: Print first 500 chars of response
             print(f"AI Response preview: {answer[:500]}...")
@@ -494,27 +586,91 @@ class RAGService:
     ) -> List[Dict[str, Any]]:
         """Generate questions using Mistral AI chatbot with a prompt"""
         
-        # Build prompt for question generation
-        prompt = (
-            f"Generate exactly {num_questions} {difficulty} difficulty educational questions "
-            f"about '{chapter_name}' in {subject}.\n\n"
-            f"Format each question clearly as:\n"
-            f"Q1: [Your first question here]\n"
-            f"Q2: [Your second question here]\n"
-            f"and so on.\n\n"
-            f"Make the questions clear, specific, appropriate for students, and test understanding of the topic.\n"
-            f"Only return the questions, nothing else."
-        )
+        import random
+        import time
+
+        # Add random seed based on time for variation
+        random_seed = int(time.time() * 1000) % 10000
         
-        messages = [{"role": "user", "content": prompt}]
+        # Build hardcoded, structured prompt based on subject
+        # Use system + user messages for stronger instruction
+        if subject and subject.lower() == "english":
+            system_msg = (
+                "You are a question writer. You write complete, specific questions for students. "
+                "You NEVER write labels like '*Inference-Based Question*' or '*Error Correction*'. "
+                "You ONLY write actual questions with specific details."
+            )
+            
+            user_prompt = (
+                f"Write {num_questions} complete English questions about '{chapter_name}'. "
+                f"Each question must have specific details.\n\n"
+                f"Examples:\n"
+                f"- Rewrite in passive voice: 'The dog chased the cat.'\n"
+                f"- Correct: 'She don't like pizza.'\n"
+                f"- Identify the metaphor: 'Time is a thief.'\n\n"
+                f"Format:\n"
+                f"Q1: [Actual complete question]\n"
+                f"Q2: [Actual complete question]\n\n"
+                f"Difficulty: {difficulty} | Seed: {random_seed}\n"
+                f"Start now:"
+            )
+            messages = [
+                {"role": "system", "content": system_msg},
+                {"role": "user", "content": user_prompt}
+            ]
+        elif subject and subject.lower() == "maths":
+            system_msg = (
+                "You are a math question writer. You write complete math questions in plain text. "
+                "You NEVER write labels like '*Algebra Question*'. "
+                "You NEVER use LaTeX. You ONLY write actual questions with numbers and plain text math."
+            )
+            
+            user_prompt = (
+                f"Write {num_questions} complete math questions about '{chapter_name}'. "
+                f"Use plain text: sqrt(x), x^2, (a+b)/c format.\n\n"
+                f"Examples:\n"
+                f"- Solve for x: x^2 + 5x + 6 = 0\n"
+                f"- Find sqrt(144) + sqrt(81)\n"
+                f"- Simplify: (3x + 2)(2x - 5)\n\n"
+                f"Format:\n"
+                f"Q1: [Actual complete question]\n"
+                f"Q2: [Actual complete question]\n\n"
+                f"Difficulty: {difficulty} | Seed: {random_seed}\n"
+                f"Start now:"
+            )
+            messages = [
+                {"role": "system", "content": system_msg},
+                {"role": "user", "content": user_prompt}
+            ]
+        else:
+            # Default prompt for other subjects
+            system_msg = "You are a question writer. You write complete, specific questions. Never write labels or categories."
+            
+            user_prompt = (
+                f"Write {num_questions} complete questions about '{chapter_name}' in {subject}.\n\n"
+                f"Format:\n"
+                f"Q1: [Complete question]\n"
+                f"Q2: [Complete question]\n\n"
+                f"Difficulty: {difficulty} | Seed: {random_seed}\n"
+                f"Start now:"
+            )
+            messages = [
+                {"role": "system", "content": system_msg},
+                {"role": "user", "content": user_prompt}
+            ]
         
         try:
             chat_response = self.client.chat.complete(
                 model=self.chat_model,
-                messages=messages
+                messages=messages,
+                temperature=0.8,  # Higher temperature for more variation
+                max_tokens=4000  # Increased to prevent incomplete questions
             )
             
             answer = chat_response.choices[0].message.content
+            
+            # Clean up any LaTeX formatting that might have slipped through
+            answer = self._clean_latex_formatting(answer)
             
             # Parse questions from response
             lines = answer.strip().split("\n")
@@ -545,3 +701,27 @@ class RAGService:
         except Exception as e:
             print(f"Error generating questions: {e}")
             raise
+    
+    def _clean_latex_formatting(self, text: str) -> str:
+        """Remove LaTeX formatting and convert to plain text"""
+        # Remove inline math delimiters
+        text = re.sub(r'\\\(|\\\)', '', text)
+        
+        # Convert common LaTeX commands to plain text
+        text = re.sub(r'\\sqrt\{([^}]+)\}', r'sqrt(\1)', text)
+        text = re.sub(r'\\frac\{([^}]+)\}\{([^}]+)\}', r'(\1)/(\2)', text)
+        text = re.sub(r'\\triangle', 'triangle', text)
+        text = re.sub(r'\^\{?\\circ\}?', ' degrees', text)
+        text = re.sub(r'\\angle', 'angle', text)
+        text = re.sub(r'\\sim', '~', text)
+        text = re.sub(r'\\times', '*', text)
+        text = re.sub(r'\\div', '/', text)
+        text = re.sub(r'\\cdot', '*', text)
+        text = re.sub(r'\\left\(|\\right\)', '', text)
+        text = re.sub(r'\\left\[|\\right\]', '', text)
+        
+        # Remove any remaining backslash commands
+        text = re.sub(r'\\[a-zA-Z]+\{([^}]*)\}', r'\1', text)
+        text = re.sub(r'\\[a-zA-Z]+', '', text)
+        
+        return text
