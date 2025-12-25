@@ -16,7 +16,7 @@ from mistralai import Mistral
 class RAGService:
     """Service to generate questions using RAG and Mistral AI"""
     
-    def __init__(self, api_key: str, data_folder: str):
+    def __init__(self, api_key: str, data_folder: str, faiss_index_path: str = None, faiss_metadata_path: str = None):
         """
         Initialize RAG service
         
@@ -38,6 +38,78 @@ class RAGService:
         self.all_chunks = []
         self.index = None
         self.metadata_list = []
+        # Attempt to load FAISS index files placed beside this module (faiss_index.bin, metadata.jsonl)
+        try:
+            module_dir = Path(__file__).resolve().parent
+            local_index = module_dir / "faiss_index.bin"
+            local_meta = module_dir / "metadata.jsonl"
+            if local_index.exists() and local_meta.exists():
+                try:
+                    idx = faiss.read_index(str(local_index))
+                    self.index = idx
+                    # load metadata
+                    metas = []
+                    with local_meta.open("r", encoding="utf8") as mf:
+                        for line in mf:
+                            line = line.strip()
+                            if not line:
+                                continue
+                            try:
+                                metas.append(json.loads(line))
+                            except json.JSONDecodeError:
+                                metas.append({})
+                    self.metadata_list = metas
+                    # reconstruct simple all_chunks from metadata if possible
+                    self.all_chunks = []
+                    for i, m in enumerate(self.metadata_list):
+                        text = m.get("text") or m.get("chunk_text") or ""
+                        chunk_doc = {
+                            "chunk_id": m.get("chunk_id") or m.get("id") or str(uuid.uuid4()),
+                            "source_id": m.get("source_id"),
+                            "source_file": m.get("source_file"),
+                            "section_label": m.get("section_label"),
+                            "chunk_index": m.get("chunk_index") if m.get("chunk_index") is not None else m.get("embedding_index", i),
+                            "text": text,
+                            "orig_length": m.get("orig_length", len(text) if isinstance(text, str) else 0),
+                        }
+                        self.all_chunks.append(chunk_doc)
+                    print(f"Loaded module-local FAISS index: {local_index}")
+                except Exception as e:
+                    print(f"Failed to load module-local FAISS index: {e}")
+        except Exception:
+            pass
+        # Optionally load an existing FAISS index and metadata produced by the external RAG builder
+        # Default paths point to <repo_root>/python_RAG/faiss_index_out/
+        if faiss_index_path is None or faiss_metadata_path is None:
+            try:
+                # Prefer faiss files colocated with this module if present
+                module_dir = Path(__file__).resolve().parent
+                local_index = module_dir / "faiss_index.bin"
+                local_meta = module_dir / "metadata.jsonl"
+                if local_index.exists() and local_meta.exists():
+                    if faiss_index_path is None:
+                        faiss_index_path = str(local_index)
+                    if faiss_metadata_path is None:
+                        faiss_metadata_path = str(local_meta)
+                # otherwise fall back to repo-level default
+                repo_root = Path(__file__).resolve().parents[4]
+                default_out = repo_root / "python_RAG" / "faiss_index_out"
+                default_index = default_out / "faiss_index.bin"
+                default_meta = default_out / "metadata.jsonl"
+                if faiss_index_path is None:
+                    faiss_index_path = str(default_index) if default_index.exists() else None
+                if faiss_metadata_path is None:
+                    faiss_metadata_path = str(default_meta) if default_meta.exists() else None
+            except Exception:
+                faiss_index_path = faiss_index_path
+                faiss_metadata_path = faiss_metadata_path
+
+        if faiss_index_path and faiss_metadata_path:
+            try:
+                self.load_faiss_index_from_disk(faiss_index_path, faiss_metadata_path)
+                print(f"Loaded FAISS index from disk: {faiss_index_path}")
+            except Exception as e:
+                print(f"Failed to load FAISS index from disk: {e}")
         
     def load_data_files(self):
         """Load all JSONL files from data folder"""
@@ -253,19 +325,28 @@ class RAGService:
         
         # Search index
         distances, indices = self.index.search(qvec, k)
-        
+
         # Build results
         retrieved = []
         for i, (idx, dist) in enumerate(zip(indices[0], distances[0])):
-            if idx < 0 or idx >= len(self.all_chunks):
+            if idx < 0:
                 continue
-            
-            chunk = self.all_chunks[idx]
+
+            # Prefer metadata text if available (useful when we loaded index from disk)
+            meta = self.metadata_list[idx] if idx < len(self.metadata_list) else {}
+            text = None
+            if meta:
+                text = meta.get("text") or meta.get("chunk_text")
+
+            # fallback to in-memory chunks
+            if (text is None or text == "") and 0 <= idx < len(self.all_chunks):
+                text = self.all_chunks[idx].get("text", "")
+
             retrieved.append({
                 "index": int(idx),
                 "score": float(dist),
-                "text": chunk.get("text", ""),
-                "metadata": self.metadata_list[idx] if idx < len(self.metadata_list) else {}
+                "text": text or "",
+                "metadata": meta
             })
         
         return retrieved
@@ -347,25 +428,108 @@ class RAGService:
     def generate_questions_by_subject(self, subject: str, questions_per_chapter: int = 1) -> List[Dict[str, Any]]:
         """Generate questions from all chapters in a subject (5 questions per chapter)"""
         
-        # Get all chapters for the subject
-        all_chapters = {
-            "maths": [
-                "Real Numbers", "Polynomials", "Linear Equations", "Quadratic Equations",
-                "Arithmetic Progressions", "Triangles", "Coordinate Geometry", 
-                "Trigonometry", "Circles", "Statistics", "Probability"
-            ],
-            "science": [
-                "Chemical Reactions", "Acids Bases and Salts", "Metals and Non-metals",
-                "Carbon Compounds", "Periodic Classification", "Life Processes",
-                "Control and Coordination", "Reproduction", "Heredity and Evolution",
-                "Light Reflection and Refraction", "Human Eye", "Electricity",
-                "Magnetic Effects of Current"
-            ],
-            "english": [
-                "Reading Comprehension", "Grammar", "Writing Skills", "Literature",
-                "Poetry Analysis", "Essay Writing", "Letter Writing"
-            ]
-        }
+        
+        all_chapters = [
+            {
+                "grade": 6,
+                "maths": ["Set", "Whole Numbers","Integers","Fractional Numbers","Decimal Numbers","Unitary Method","Percentage",
+                          "Profit and Loss","Simple Interest","Mensuration - Perimeter and Area","Basic Geometry", "Ratio and Proportion",
+                          "Mensuration - Perimeter and Area"
+             
+                ],
+                "science": [],
+                "english": []
+            },
+            {
+                "grade": 7,
+                "maths": [
+                    "Set",
+                    "Whole Number",
+                    "Integer",
+                    "Rational Number",
+                    "Fraction and Decimal",
+                    "Unitary Method",
+                    "Percentage",
+                    "Profit and Loss",
+                    "Simple Interest",
+                    "Ratio and Proportion",
+                    "Basic Geometry",
+                    "Mensuration - Perimeter and Area"
+                ],
+                "science": [],
+                "english": []
+            },
+            {
+                "grade": 8,
+                "maths": [ 
+                    "Algebra",
+                    "Geometry",
+                    "Mensuration",
+                    "Statistics",
+                    "Probability",
+                    "Quadrilaterals",
+                    "Coordinate Geometry",
+                    "Commercial Arithmetic",
+                    "Arithmetic",
+                    "Ratio and Proportion",
+                    "Percentage",
+                    "Unitary Method",
+                    "Time and Work",
+                    "Speed, Distance and Time",
+                    "Taxation",
+                    "Set"],   
+                "science": [],
+                "english": []
+            },
+            {
+                "grade": 9,
+                "maths": [
+                    "Set Theory",
+                    "Number System",
+                    "Profit and Loss",
+                    "Commission and Taxation",
+                    "Household Arithmetic (Home Arithmetic)",
+                    "Algebra and Polynomials",
+                    "Indices (Exponents)",
+                    "Linear Equations",
+                    "Quadratic Equations",
+                    "Ratio and Proportion",
+                    "Arithmetic Sequence (AP)",
+                    "Geometric Sequence (GP)",
+                    "Mensuration - Area and Perimeter",
+                    "Mensuration - Solids (Volume and Surface Area)",
+                    "Triangles",
+                    "Similarity",
+                    "Parallelograms",
+                    "Circles",
+                    "Construction",
+                    "Trigonometry",
+                    "Statistics",
+                    "Probability"
+                ],
+                "science": [],
+                "english": []
+            },
+            {
+                "grade": 10,
+                "maths": [
+                    "Real Numbers", "Polynomials", "Linear Equations", "Quadratic Equations",
+                    "Arithmetic Progressions", "Triangles", "Coordinate Geometry",
+                    "Trigonometry", "Circles", "Statistics", "Probability"
+                ],
+                "science": [
+                    "Chemical Reactions", "Acids Bases and Salts", "Metals and Non-metals",
+                    "Carbon Compounds", "Periodic Classification", "Life Processes",
+                    "Control and Coordination", "Reproduction", "Heredity and Evolution",
+                    "Light Reflection and Refraction", "Human Eye", "Electricity",
+                    "Magnetic Effects of Current"
+                ],
+                "english": [
+                    "Reading Comprehension", "Grammar", "Writing Skills", "Literature",
+                    "Poetry Analysis", "Essay Writing", "Letter Writing"
+                ]
+            }
+        ]
         
         chapters = all_chapters.get(subject.lower(), [])
         
