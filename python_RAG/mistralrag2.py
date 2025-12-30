@@ -432,7 +432,6 @@ def build_and_save_faiss_index(
 
     # Optional normalization (in-place copy)
     if normalize_for_cosine:
-        # normalize L2 so we can use inner product as cosine similarity
         faiss.normalize_L2(arr)
 
     # Choose index type

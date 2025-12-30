@@ -51,7 +51,7 @@ const Header = () => {
               </svg>
             </div>
             <h1 className="text-xl font-bold" style={{ color: "#323232" }}>
-              EduAssess
+              Edu Assist
             </h1>
           </Link>
 
