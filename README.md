@@ -43,6 +43,23 @@ An intelligent peer-to-peer learning platform that leverages AI to assess studen
 ---
 
 
+## UI Screenshots
+
+![Login](frontend/src/assets/readme/login.png)
+![Register](frontend/src/assets/readme/register.png)
+![Dashboard](frontend/src/assets/readme/dashboard.png)
+![Areas for Improvement](frontend/src/assets/readme/dashboardareasforimprovement.png)
+![Peers You Can Help](frontend/src/assets/readme/dashboardpeersyoucanhelp.png)
+![Your Peer Tutors](frontend/src/assets/readme/dashboardyourpeertutors.png)
+![Recent Activities](frontend/src/assets/readme/dashboardrecentactivities.png)
+![Assessments](frontend/src/assets/readme/assessments.png)
+![Assessment Questions](frontend/src/assets/readme/assessmentquestions.png)
+![Evaluation](frontend/src/assets/readme/evaluation.png)
+![Learning Material](frontend/src/assets/readme/learningmaterial.png)
+![Learning Resource](frontend/src/assets/readme/learningresource.png)
+![My Progress - Summary](frontend/src/assets/readme/myprogress2.png)
+![My Progress - Maths](frontend/src/assets/readme/myprogressmaths.png)
+![My Progress - Science](frontend/src/assets/readme/myprogressscience.png)
 
 
 
@@ -120,12 +137,25 @@ Fetch student's weak chapters → For each chapter:
 
 ##  License
 
-This project is part of the Hackstreet Bois team initiative.
+This project is part of the Hackstreet Bois's Hackfest 2025 project.
 
 ---
 
 ##  Team
 
-**Hackstreet Bois** - Building the future of peer-to-peer education
+**Hackstreet Bois** - Building the future of peer-to-peer education  
+
+### 👨‍💻 Contributors
+- **Hridayanshu Raj Acharya**  
+  🔗 https://github.com/hridayanshu236
+
+- **Bhism Pd. Bhandari**  
+  🔗 https://github.com/DontHash
+
+- **Akash Kafle**  
+  🔗 https://github.com/Akash-kafle
+
+- **Suman Khatri**  
+  🔗 https://github.com/sumankhatri17
 
 ---
